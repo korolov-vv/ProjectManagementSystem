@@ -14,6 +14,7 @@ CREATE TABLE companies
     number_of_developers integer,
     customer_id integer,
     project_id integer,
+    salary integer,
     PRIMARY KEY (company_id)
 );
 

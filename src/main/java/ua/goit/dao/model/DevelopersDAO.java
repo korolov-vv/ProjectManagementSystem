@@ -1,4 +1,4 @@
-package ua.goit.repository.model;
+package ua.goit.dao.model;
 
 import lombok.Getter;
 import lombok.Setter;

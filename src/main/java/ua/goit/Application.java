@@ -8,7 +8,8 @@ public class Application {
         PropertiesLoader propertiesLoader = new PropertiesLoader();
         propertiesLoader.loadPropertiesFile("application.properties");
 
-        DatabaseConnectionManager databaseConnectionManager = new DatabaseConnectionManager(propertiesLoader.getProperty("host"),
+        DatabaseConnectionManager databaseConnectionManager = new DatabaseConnectionManager(
+                propertiesLoader.getProperty("host"),
                 propertiesLoader.getProperty("database.name"),
                 propertiesLoader.getProperty("username"),
                 propertiesLoader.getProperty("password"));

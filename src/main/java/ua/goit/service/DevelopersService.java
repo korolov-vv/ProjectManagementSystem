@@ -1,8 +1,8 @@
 package ua.goit.service;
 
 import ua.goit.dto.DevelopersDTO;
-import ua.goit.repository.Repository;
-import ua.goit.repository.model.DevelopersDAO;
+import ua.goit.dao.Repository;
+import ua.goit.dao.model.DevelopersDAO;
 
 public class DevelopersService {
     private Repository<DevelopersDAO> repository;

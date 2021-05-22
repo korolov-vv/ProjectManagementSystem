@@ -1,6 +1,6 @@
-package ua.goit.repository;
+package ua.goit.dao;
 
-import ua.goit.repository.model.DevelopersDAO;
+import ua.goit.dao.model.DevelopersDAO;
 
 public interface Repository<T> {
     T findById(Integer id);
