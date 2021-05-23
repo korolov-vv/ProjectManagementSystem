@@ -2,7 +2,7 @@ package ua.goit.dao;
 
 import ua.goit.config.DatabaseConnectionManager;
 import ua.goit.dao.model.DevelopersDAO;
-import ua.goit.service.DevelopersConverter;
+import ua.goit.service.developers.DevelopersConverter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,17 +42,17 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     }
 
     @Override
-    public void create(DevelopersDAO entity) {
+    public void create(DevelopersDAO developersDAO) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT)) {
-            statement.setString(1, entity.getFirstName());
-            statement.setString(2, entity.getLastName());
-            statement.setString(3, entity.getGender());
-            statement.setInt(4, entity.getAge());
-            statement.setInt(5, entity.getExperienceInYears());
-            statement.setInt(6, entity.getCompanyId());
-            statement.setInt(5, entity.getProjectId());
-            statement.setInt(5, entity.getSalary());
+            statement.setString(1, developersDAO.getFirstName());
+            statement.setString(2, developersDAO.getLastName());
+            statement.setString(3, developersDAO.getGender());
+            statement.setInt(4, developersDAO.getAge());
+            statement.setInt(5, developersDAO.getExperienceInYears());
+            statement.setInt(6, developersDAO.getCompanyId());
+            statement.setInt(5, developersDAO.getProjectId());
+            statement.setInt(5, developersDAO.getSalary());
             statement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -60,18 +60,18 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     }
 
     @Override
-    public void update(DevelopersDAO locationDAO) {
+    public void update(DevelopersDAO developersDAO) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE)) {
-            preparedStatement.setString(1, locationDAO.getFirstName());
-            preparedStatement.setString(2, locationDAO.getLastName());
-            preparedStatement.setString(3, locationDAO.getGender());
-            preparedStatement.setInt(4, locationDAO.getAge());
-            preparedStatement.setInt(5, locationDAO.getExperienceInYears());
-            preparedStatement.setInt(6, locationDAO.getCompanyId());
-            preparedStatement.setInt(7, locationDAO.getProjectId());
-            preparedStatement.setInt(8, locationDAO.getSalary());
-            preparedStatement.setInt(9, locationDAO.getDeveloperId());
+            preparedStatement.setString(1, developersDAO.getFirstName());
+            preparedStatement.setString(2, developersDAO.getLastName());
+            preparedStatement.setString(3, developersDAO.getGender());
+            preparedStatement.setInt(4, developersDAO.getAge());
+            preparedStatement.setInt(5, developersDAO.getExperienceInYears());
+            preparedStatement.setInt(6, developersDAO.getCompanyId());
+            preparedStatement.setInt(7, developersDAO.getProjectId());
+            preparedStatement.setInt(8, developersDAO.getSalary());
+            preparedStatement.setInt(9, developersDAO.getDeveloperId());
             preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();

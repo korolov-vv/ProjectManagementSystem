@@ -1,4 +1,4 @@
-package ua.goit.service;
+package ua.goit.service.developers;
 
 import ua.goit.dto.DevelopersDTO;
 import ua.goit.dao.Repository;
@@ -18,10 +18,10 @@ public class DevelopersService {
         return DevelopersConverter.fromDeveloper(savedLocationDAO);
     }
 
-    public DevelopersDTO update(DevelopersDTO dto) {
-        DevelopersDAO developersDAO = DevelopersConverter.toDeveloper(dto);
+    public DevelopersDTO update(DevelopersDTO developersDTO) {
+        DevelopersDAO developersDAO = DevelopersConverter.toDeveloper(developersDTO);
         repository.update(developersDAO);
-        DevelopersDAO updatedDevelopersDAO = repository.findById(dto.getDeveloperId());
+        DevelopersDAO updatedDevelopersDAO = repository.findById(developersDTO.getDeveloperId());
         return DevelopersConverter.fromDeveloper(updatedDevelopersDAO);
     }
 

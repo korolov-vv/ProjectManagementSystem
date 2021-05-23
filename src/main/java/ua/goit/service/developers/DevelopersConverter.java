@@ -1,4 +1,4 @@
-package ua.goit.service;
+package ua.goit.service.developers;
 
 import ua.goit.dto.DevelopersDTO;
 import ua.goit.dao.model.DevelopersDAO;

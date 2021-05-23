@@ -8,15 +8,13 @@ import java.util.Properties;
 public class PropertiesLoader {
     private Properties properties = new Properties();
 
-    public String getProperty(String name){
+    public String getProperty(String name) {
         return properties.getProperty(name);
     }
 
     public void loadPropertiesFile(String fileName) {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName)) {
             properties.load(inputStream);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -57,6 +57,7 @@ CREATE TYPE level AS ENUM('Junior', 'Middle', 'Senior');
 
 CREATE TABLE skills
 (
+    record_id SERIAL PRIMARY KEY,
 	developer_id integer NOT NULL,
     stack stack,
     level level,

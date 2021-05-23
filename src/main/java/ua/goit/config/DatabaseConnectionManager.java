@@ -13,8 +13,8 @@ public class DatabaseConnectionManager {
         initDataSource(host, databaseName, username, password);
     }
 
-    public Connection getConnection(){
-        try{
+    public Connection getConnection() {
+        try {
             return ds.getConnection();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
