@@ -1,12 +1,7 @@
 package ua.goit.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class DevelopersDTO {
-    int developerId;
+    long developerId;
     String firstName;
     String lastName;
     String gender;
@@ -19,7 +14,7 @@ public class DevelopersDTO {
     public DevelopersDTO() {
     }
 
-    public DevelopersDTO(int developerId, String firstName, String lastName, String gender, int age,
+    public DevelopersDTO(long developerId, String firstName, String lastName, String gender, int age,
                          int experienceInYears, int companyId, int projectId, int salary) {
         this.developerId = developerId;
         this.firstName = firstName;
@@ -29,6 +24,78 @@ public class DevelopersDTO {
         this.experienceInYears = experienceInYears;
         this.companyId = companyId;
         this.projectId = projectId;
+        this.salary = salary;
+    }
+
+    public long getDeveloperId() {
+        return developerId;
+    }
+
+    public void setDeveloperId(long developerId) {
+        this.developerId = developerId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getExperienceInYears() {
+        return experienceInYears;
+    }
+
+    public void setExperienceInYears(int experienceInYears) {
+        this.experienceInYears = experienceInYears;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
         this.salary = salary;
     }
 

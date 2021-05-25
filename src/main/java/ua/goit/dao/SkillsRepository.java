@@ -12,8 +12,8 @@ import java.sql.SQLException;
 public class SkillsRepository implements Repository<SkillsDAO> {
     private final DatabaseConnectionManager connectionManager;
 
-    private static final String INSERT = "INSRT INTO skills (developer_id, stack, level)" +
-            "VALUES (?, ?, ?, ?);";
+    private static final String INSERT = "INSERT INTO skills (record_id, developer_id, stack, level)" +
+            "VALUES (default, ?, ?, ?);";
     private static final String SELECT_SKILLS_BY_DEVELOPER_ID = "SELECT developer_id, stack, level" +
             "FROM skills WHERE developer_id=?;";
     private static final String UPDATE = "UPDATE skills SET developer_id=?, stack=?, level=?)" +
@@ -26,10 +26,10 @@ public class SkillsRepository implements Repository<SkillsDAO> {
 
 
     @Override
-    public SkillsDAO findById(Integer id) {
+    public SkillsDAO findById(long id) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connectionManager.getConnection().prepareStatement(SELECT_SKILLS_BY_DEVELOPER_ID)) {
-            preparedStatement.setInt(1, id);
+            preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             return SkillsConverter.toSkill(resultSet);
         } catch (SQLException ex) {
@@ -42,10 +42,9 @@ public class SkillsRepository implements Repository<SkillsDAO> {
     public void create(SkillsDAO skillsDAO) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connectionManager.getConnection().prepareStatement(INSERT)) {
-            preparedStatement.setInt(1, skillsDAO.getRecordId());
-            preparedStatement.setInt(2, skillsDAO.getDeveloperId());
-            preparedStatement.setString(3, skillsDAO.getSatck());
-            preparedStatement.setString(4, skillsDAO.getLevel());
+            preparedStatement.setLong(1, skillsDAO.getDeveloperId());
+            preparedStatement.setString(2, skillsDAO.getSatck().toString());
+            preparedStatement.setString(3, skillsDAO.getLevel().toString());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -55,20 +54,20 @@ public class SkillsRepository implements Repository<SkillsDAO> {
     public void update(SkillsDAO skillsDAO) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connectionManager.getConnection().prepareStatement(UPDATE)) {
-            preparedStatement.setInt(1, skillsDAO.getRecordId());
-            preparedStatement.setInt(2, skillsDAO.getDeveloperId());
-            preparedStatement.setString(3, skillsDAO.getSatck());
-            preparedStatement.setString(4, skillsDAO.getLevel());
+            preparedStatement.setLong(1, skillsDAO.getDeveloperId());
+            preparedStatement.setString(2, skillsDAO.getSatck().toString());
+            preparedStatement.setString(3, skillsDAO.getLevel().toString());
+            preparedStatement.setLong(4, skillsDAO.getRecordId());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connectionManager.getConnection().prepareStatement(DELETE)) {
-            preparedStatement.setInt(1, id);
+            preparedStatement.setLong(1, id);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

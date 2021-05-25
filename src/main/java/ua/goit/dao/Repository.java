@@ -1,11 +1,11 @@
 package ua.goit.dao;
 
 public interface Repository<T> {
-    T findById(Integer id);
+    T findById(long id);
 
     void create(T entity);
 
     void update(T entity);
 
-    void delete(int id);
+    void delete(long id);
 }

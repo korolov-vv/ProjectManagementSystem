@@ -1,23 +1,50 @@
 package ua.goit.dao.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class SkillsDAO {
-    int recordId;
-    int developerId;
-    String satck;
-    String level;
+    long recordId;
+    long developerId;
+    Stack satck;
+    Levels level;
 
     public SkillsDAO() {
     }
 
-    public SkillsDAO(int recordId, int developerId, String satck, String level) {
+    public SkillsDAO(long recordId, long developerId, Stack satck, Levels level) {
         this.recordId = recordId;
         this.developerId = developerId;
         this.satck = satck;
+        this.level = level;
+    }
+
+    public long getRecordId() {
+        return recordId;
+    }
+
+    public void setRecordId(long recordId) {
+        this.recordId = recordId;
+    }
+
+    public long getDeveloperId() {
+        return developerId;
+    }
+
+    public void setDeveloperId(long developerId) {
+        this.developerId = developerId;
+    }
+
+    public Stack getSatck() {
+        return satck;
+    }
+
+    public void setSatck(Stack satck) {
+        this.satck = satck;
+    }
+
+    public Levels getLevel() {
+        return level;
+    }
+
+    public void setLevel(Levels level) {
         this.level = level;
     }
 

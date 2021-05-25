@@ -12,9 +12,9 @@ import java.sql.SQLException;
 public class DevelopersRepository implements Repository<DevelopersDAO> {
     private final DatabaseConnectionManager connectionManager;
 
-    private static final String INSERT = "INSERT INTO developers (first_name, last_name, " +
+    private static final String INSERT = "INSERT INTO developers (developer_id, first_name, last_name, " +
             "gender, age, experience_in_years, company_id, project_id, salary)" +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+            "VALUES (default, ?, ?, ?, ?, ?, ?, ?, ?);";
     private static final String SELECT_DEVELOPERS_BY_ID = "SELECT developer_id, first_name, last_name, " +
             "gender, age, experience_in_years, company_id, project_id, salary" +
             "FROM developers WHERE developer_id = ?;";
@@ -28,10 +28,10 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     }
 
     @Override
-    public DevelopersDAO findById(Integer id) {
+    public DevelopersDAO findById(long id) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEVELOPERS_BY_ID)) {
-            preparedStatement.setInt(1, id);
+            preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             return DevelopersConverter.toDeveloper(resultSet);
         } catch (SQLException ex) {
@@ -44,16 +44,16 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     @Override
     public void create(DevelopersDAO developersDAO) {
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT)) {
-            statement.setString(1, developersDAO.getFirstName());
-            statement.setString(2, developersDAO.getLastName());
-            statement.setString(3, developersDAO.getGender());
-            statement.setInt(4, developersDAO.getAge());
-            statement.setInt(5, developersDAO.getExperienceInYears());
-            statement.setInt(6, developersDAO.getCompanyId());
-            statement.setInt(5, developersDAO.getProjectId());
-            statement.setInt(5, developersDAO.getSalary());
-            statement.execute();
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {
+            preparedStatement.setString(1, developersDAO.getFirstName());
+            preparedStatement.setString(2, developersDAO.getLastName());
+            preparedStatement.setString(3, developersDAO.getGender());
+            preparedStatement.setInt(4, developersDAO.getAge());
+            preparedStatement.setInt(5, developersDAO.getExperienceInYears());
+            preparedStatement.setInt(6, developersDAO.getCompanyId());
+            preparedStatement.setInt(7, developersDAO.getProjectId());
+            preparedStatement.setInt(8, developersDAO.getSalary());
+            preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -71,7 +71,7 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
             preparedStatement.setInt(6, developersDAO.getCompanyId());
             preparedStatement.setInt(7, developersDAO.getProjectId());
             preparedStatement.setInt(8, developersDAO.getSalary());
-            preparedStatement.setInt(9, developersDAO.getDeveloperId());
+            preparedStatement.setLong(9, developersDAO.getDeveloperId());
             preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -79,10 +79,10 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
-            preparedStatement.setInt(1, id);
+            preparedStatement.setLong(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

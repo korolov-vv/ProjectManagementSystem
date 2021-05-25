@@ -14,8 +14,8 @@ public class DevelopersService {
     public DevelopersDTO create(DevelopersDTO developersDTO) {
         DevelopersDAO developersDAO = DevelopersConverter.toDeveloper(developersDTO);
         repository.create(developersDAO);
-        DevelopersDAO savedLocationDAO = repository.findById(developersDAO.getDeveloperId());
-        return DevelopersConverter.fromDeveloper(savedLocationDAO);
+        DevelopersDAO savedDevelopersDAO = repository.findById(developersDAO.getDeveloperId());
+        return DevelopersConverter.fromDeveloper(savedDevelopersDAO);
     }
 
     public DevelopersDTO update(DevelopersDTO developersDTO) {
@@ -25,7 +25,7 @@ public class DevelopersService {
         return DevelopersConverter.fromDeveloper(updatedDevelopersDAO);
     }
 
-    public void delete(int id) {
+    public void delete(long id) {
         repository.delete(id);
     }
 }

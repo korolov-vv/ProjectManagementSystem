@@ -1,6 +1,8 @@
 package ua.goit.service.skills;
 
+import ua.goit.dao.model.Levels;
 import ua.goit.dao.model.SkillsDAO;
+import ua.goit.dao.model.Stack;
 import ua.goit.dto.SkillsDTO;
 
 import java.sql.ResultSet;
@@ -22,8 +24,8 @@ public class SkillsConverter {
         while (resultSet.next()) {
             skillsDAO.setRecordId(resultSet.getInt("record_id"));
             skillsDAO.setDeveloperId(resultSet.getInt("developer_id"));
-            skillsDAO.setSatck(resultSet.getString("stack"));
-            skillsDAO.setLevel(resultSet.getString("level"));
+            skillsDAO.setSatck(Stack.valueOf(resultSet.getString("stack")));
+            skillsDAO.setLevel(Levels.valueOf(resultSet.getString("level")));
         }
         return skillsDAO;
     }
