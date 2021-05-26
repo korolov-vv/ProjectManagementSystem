@@ -13,11 +13,11 @@ public class CustomersRepository implements Repository<CustomersDAO> {
 
     private final DatabaseConnectionManager connectionManager;
 
-    private static final String INSERT = "INSERT INTO customers (customer_id, customer_name, project_id" +
-            "VALUES (default, ?, ?);";
-    private static final String SELECT_CUSTOMERS_BY_ID = "SELECT customer_id, customer_name, project_id" +
+    private static final String INSERT = "INSERT INTO customers (customer_id, customer_name" +
+            "VALUES (default, ?);";
+    private static final String SELECT_CUSTOMERS_BY_ID = "SELECT customer_id, customer_name" +
             "FROM customers WHERE customer_id = ?;";
-    private static final String UPDATE = "UPDATE customers SET customer_name=?, project_id=?" +
+    private static final String UPDATE = "UPDATE customers SET customer_name=?" +
             "WHERE customer_id=?;";
     private static final String DELETE = "DELETE FROM customers WHERE customer_id=?;";
 
@@ -44,7 +44,6 @@ public class CustomersRepository implements Repository<CustomersDAO> {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {
             preparedStatement.setString(1, customersDAO.getCustomerName());
-            preparedStatement.setLong(2, customersDAO.getProjectId());
             preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -56,7 +55,6 @@ public class CustomersRepository implements Repository<CustomersDAO> {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {
             preparedStatement.setString(1, customersDAO.getCustomerName());
-            preparedStatement.setLong(2, customersDAO.getProjectId());
             preparedStatement.setLong(3, customersDAO.getCustomerId());
             preparedStatement.execute();
         } catch (SQLException ex) {

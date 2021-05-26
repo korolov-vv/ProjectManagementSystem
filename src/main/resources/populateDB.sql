@@ -39,15 +39,15 @@ insert into skills values (DEFAULT, 5, 'JS', 'Junior');
 insert into skills values (DEFAULT, 5, 'Java', 'Junior');
 insert into skills values (DEFAULT, 1, 'Java', 'Junior');
 
-insert into customers values (1, 'Customer', 1);
-insert into customers values (2, 'Customer9', 1);
-insert into customers values (3, 'Customer2', 2);
-insert into customers values (4, 'Customer3', 4);
-insert into customers values (5, 'Customer4', 1);
-insert into customers values (6, 'Customer5', 3);
-insert into customers values (7, 'Customer6', 7);
-insert into customers values (8, 'Customer7', 6);
-insert into customers values (9, 'Customer8', 8);
+insert into customers values (1, 'Customer');
+insert into customers values (2, 'Customer9');
+insert into customers values (3, 'Customer2');
+insert into customers values (4, 'Customer3');
+insert into customers values (5, 'Customer4');
+insert into customers values (6, 'Customer5');
+insert into customers values (7, 'Customer6');
+insert into customers values (8, 'Customer7');
+insert into customers values (9, 'Customer8');
 
 insert into developers_on_projects values (1, 1);
 insert into developers_on_projects values (1, 5);

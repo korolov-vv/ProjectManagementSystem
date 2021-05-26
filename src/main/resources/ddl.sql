@@ -18,8 +18,7 @@ CREATE TABLE companies
 CREATE TABLE customers
 (
     customer_id SERIAL,
-    customer_name character varying(255),
-    project_id integer,
+    customer_name character varying(255)
     PRIMARY KEY (customer_id)
 );
 
@@ -61,12 +60,6 @@ CREATE TABLE skills
     level level,
 	FOREIGN KEY (developer_id) REFERENCES developers(developer_id)
 );
-
-ALTER TABLE customers
-    ADD FOREIGN KEY (project_id)
-    REFERENCES projects (project_id)
-    NOT VALID;
-
 
 ALTER TABLE developers
     ADD FOREIGN KEY (company_id)

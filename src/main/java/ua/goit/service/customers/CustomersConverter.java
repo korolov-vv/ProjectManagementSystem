@@ -8,13 +8,11 @@ import java.sql.SQLException;
 
 public class CustomersConverter {
     public static CustomersDAO toCustomer(CustomersDTO customersDTO){
-        return new CustomersDAO(customersDTO.getCustomerId(), customersDTO.getCustomerName(),
-                customersDTO.getProjectId());
+        return new CustomersDAO(customersDTO.getCustomerId(), customersDTO.getCustomerName());
     }
 
     public static CustomersDTO fromCustomer(CustomersDAO customersDAO) {
-        return new CustomersDTO(customersDAO.getCustomerId(), customersDAO.getCustomerName(),
-                customersDAO.getProjectId());
+        return new CustomersDTO(customersDAO.getCustomerId(), customersDAO.getCustomerName());
     }
 
     public static CustomersDAO toCustomer(ResultSet resultSet) throws SQLException {
@@ -22,7 +20,6 @@ public class CustomersConverter {
         while (resultSet.next()){
             customersDAO.setCustomerId(resultSet.getLong("customer_id"));
             customersDAO.setCustomerName(resultSet.getString("customer_name"));
-            customersDAO.setProjectId(resultSet.getLong("project_id"));
         }
         return customersDAO;
     }

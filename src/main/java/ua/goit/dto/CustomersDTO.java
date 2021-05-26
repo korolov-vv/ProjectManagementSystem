@@ -3,15 +3,13 @@ package ua.goit.dto;
 public class CustomersDTO {
     private long customerId;
     private String customerName;
-    private long projectId;
 
     public CustomersDTO() {
     }
 
-    public CustomersDTO(long customerId, String customerName, long projectId) {
+    public CustomersDTO(long customerId, String customerName) {
         this.customerId = customerId;
         this.customerName = customerName;
-        this.projectId = projectId;
     }
 
     public long getCustomerId() {
@@ -30,20 +28,11 @@ public class CustomersDTO {
         this.customerName = customerName;
     }
 
-    public long getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(long projectId) {
-        this.projectId = projectId;
-    }
-
     @Override
     public String toString() {
         return "Customers{" +
                 "customerId=" + customerId +
                 ", customerName='" + customerName + '\'' +
-                ", numberOfDevelopers=" + projectId +
                 '}';
     }
 }
