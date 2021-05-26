@@ -1,15 +1,15 @@
 package ua.goit.dto;
 
 public class DevelopersDTO {
-    long developerId;
-    String firstName;
-    String lastName;
-    String gender;
-    int age;
-    int experienceInYears;
-    int companyId;
-    int projectId;
-    int salary;
+    private long developerId;
+    private String firstName;
+    private String lastName;
+    private String gender;
+    private int age;
+    private int experienceInYears;
+    private int companyId;
+    private int projectId;
+    private int salary;
 
     public DevelopersDTO() {
     }

@@ -1,10 +1,10 @@
 package ua.goit.dao.model;
 
 public class SkillsDAO {
-    long recordId;
-    long developerId;
-    Stack satck;
-    Levels level;
+    private long recordId;
+    private long developerId;
+    private Stack satck;
+    private Levels level;
 
     public SkillsDAO() {
     }
@@ -50,7 +50,7 @@ public class SkillsDAO {
 
     @Override
     public String toString() {
-        return "SkillsDAO{" +
+        return "Skills{" +
                 "recordId=" + recordId +
                 ", developerId=" + developerId +
                 ", satck='" + satck + '\'' +

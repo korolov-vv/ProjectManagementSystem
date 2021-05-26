@@ -8,10 +8,10 @@ import ua.goit.dao.model.Stack;
 @Getter
 @Setter
 public class SkillsDTO {
-    long recordId;
-    long developerId;
-    Stack satck;
-    Levels level;
+    private long recordId;
+    private long developerId;
+    private Stack satck;
+    private Levels level;
 
     public SkillsDTO() {
     }
@@ -57,7 +57,7 @@ public class SkillsDTO {
 
     @Override
     public String toString() {
-        return "SkillsDAO{" +
+        return "Skills{" +
                 "recordId=" + recordId +
                 ", developerId=" + developerId +
                 ", satck='" + satck + '\'' +

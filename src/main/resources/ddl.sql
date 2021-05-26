@@ -12,9 +12,6 @@ CREATE TABLE companies
     company_id SERIAL,
     company_name character varying(255),
     number_of_developers integer,
-    customer_id integer,
-    project_id integer,
-    salary integer,
     PRIMARY KEY (company_id)
 );
 
@@ -36,6 +33,7 @@ CREATE TABLE developers
     experience_in_years integer NOT NULL,
     company_id integer NOT NULL,
     project_id integer NOT NULL,
+    salary integer,
     PRIMARY KEY (developer_id)
 );
 
@@ -64,18 +62,6 @@ CREATE TABLE skills
 	FOREIGN KEY (developer_id) REFERENCES developers(developer_id)
 );
 
-ALTER TABLE companies
-    ADD FOREIGN KEY (customer_id)
-    REFERENCES customers (customer_id)
-    NOT VALID;
-
-
-ALTER TABLE companies
-    ADD FOREIGN KEY (project_id)
-    REFERENCES projects (project_id)
-    NOT VALID;
-
-
 ALTER TABLE customers
     ADD FOREIGN KEY (project_id)
     REFERENCES projects (project_id)
@@ -101,18 +87,6 @@ ALTER TABLE projects
 
 
 ALTER TABLE projects
-    ADD FOREIGN KEY (developer_id)
-    REFERENCES developers (developer_id)
-    NOT VALID;
-
-
-ALTER TABLE projects
-    ADD FOREIGN KEY (developer_id)
-    REFERENCES developers (developer_id)
-    NOT VALID;
-
-
-ALTER TABLE skills
     ADD FOREIGN KEY (developer_id)
     REFERENCES developers (developer_id)
     NOT VALID;

@@ -1,14 +1,14 @@
-package ua.goit.dao.model;
+package ua.goit.dto;
 
-public class CompaniesDAO {
+public class CompaniesDTO {
     private long companyId;
     private String companyName;
     private int numberOfDevelopers;
 
-    public CompaniesDAO() {
+    public CompaniesDTO() {
     }
 
-    public CompaniesDAO(long companyId, String companyName, int numberOfDevelopers) {
+    public CompaniesDTO(long companyId, String companyName, int numberOfDevelopers) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.numberOfDevelopers = numberOfDevelopers;
