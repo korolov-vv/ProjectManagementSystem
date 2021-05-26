@@ -13,13 +13,13 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     private final DatabaseConnectionManager connectionManager;
 
     private static final String INSERT = "INSERT INTO developers (developer_id, first_name, last_name, " +
-            "gender, age, experience_in_years, company_id, project_id, salary)" +
-            "VALUES (default, ?, ?, ?, ?, ?, ?, ?, ?);";
+            "gender, age, experience_in_years, company_id, salary)" +
+            "VALUES (default, ?, ?, ?, ?, ?, ?, ?);";
     private static final String SELECT_DEVELOPERS_BY_ID = "SELECT developer_id, first_name, last_name, " +
-            "gender, age, experience_in_years, company_id, project_id, salary" +
+            "gender, age, experience_in_years, company_id, salary" +
             "FROM developers WHERE developer_id = ?;";
     private static final String UPDATE = "UPDATE developers SET first_name=?, last_name=?, " +
-            "gender=?, age=?, experience_in_years=?, company_id=?, project_id=?, salary=?" +
+            "gender=?, age=?, experience_in_years=?, company_id=?, salary=?" +
             "WHERE developer_id=?;";
     private static final String DELETE = "DELETE FROM developers WHERE developer_id=?;";
 
@@ -51,8 +51,7 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
             preparedStatement.setInt(4, developersDAO.getAge());
             preparedStatement.setInt(5, developersDAO.getExperienceInYears());
             preparedStatement.setInt(6, developersDAO.getCompanyId());
-            preparedStatement.setInt(7, developersDAO.getProjectId());
-            preparedStatement.setInt(8, developersDAO.getSalary());
+            preparedStatement.setInt(7, developersDAO.getSalary());
             preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -69,9 +68,8 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
             preparedStatement.setInt(4, developersDAO.getAge());
             preparedStatement.setInt(5, developersDAO.getExperienceInYears());
             preparedStatement.setInt(6, developersDAO.getCompanyId());
-            preparedStatement.setInt(7, developersDAO.getProjectId());
-            preparedStatement.setInt(8, developersDAO.getSalary());
-            preparedStatement.setLong(9, developersDAO.getDeveloperId());
+            preparedStatement.setInt(7, developersDAO.getSalary());
+            preparedStatement.setLong(8, developersDAO.getDeveloperId());
             preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();

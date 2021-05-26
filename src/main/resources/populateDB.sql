@@ -19,16 +19,16 @@ insert into projects values (7, null, 5, null, 'Proj name 6', 'new', 5, 7000000)
 insert into projects values (8, null, 5, null, 'Proj name 7', 'new', 5, 80000);
 insert into projects values (9, null, 5, null, 'Proj name 8', 'new', 5, 1000);
 
-insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, project_id)
-values (1, 'Ivan', 'Petrov', 'male', 30, 10, 5, 1);
-insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, project_id)
-values (2, 'Petro', 'Ivanov', 'male', 30, 10, 4, 3);
-insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, project_id)
-values (3, 'Olexandr', 'Puszkin', 'male', 30, 10, 5, 2);
-insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, project_id)
-values (4, 'Anton', 'Gogol', 'male', 30, 10, 2, 4);
-insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, project_id)
-values (5, 'Serhii', 'Bulba', 'male', 30, 10, 1, 5);
+insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, salary)
+values (1, 'Ivan', 'Petrov', 'male', 30, 10, 5, 1000);
+insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, salary)
+values (2, 'Petro', 'Ivanov', 'male', 30, 10, 4, 3000);
+insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, salary)
+values (3, 'Olexandr', 'Puszkin', 'male', 30, 10, 5, 2500);
+insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, salary)
+values (4, 'Anton', 'Gogol', 'male', 30, 10, 2, 4000);
+insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, salary)
+values (5, 'Serhii', 'Bulba', 'male', 30, 10, 1, 5000);
 
 insert into skills values (DEFAULT, 1, 'Java', 'Junior');
 insert into skills values (DEFAULT, 2, 'C++', 'Junior');

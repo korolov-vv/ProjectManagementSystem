@@ -8,14 +8,13 @@ public class DevelopersDAO {
     private int age;
     private int experienceInYears;
     private int companyId;
-    private int projectId;
     private int salary;
 
     public DevelopersDAO() {
     }
 
     public DevelopersDAO(long developerId, String firstName, String lastName, String gender, int age,
-                         int experienceInYears, int companyId, int projectId, int salary) {
+                         int experienceInYears, int companyId, int salary) {
         this.developerId = developerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,7 +22,6 @@ public class DevelopersDAO {
         this.age = age;
         this.experienceInYears = experienceInYears;
         this.companyId = companyId;
-        this.projectId = projectId;
         this.salary = salary;
     }
 
@@ -83,14 +81,6 @@ public class DevelopersDAO {
         this.companyId = companyId;
     }
 
-    public int getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
-    }
-
     public int getSalary() {
         return salary;
     }
@@ -109,7 +99,6 @@ public class DevelopersDAO {
                 ", age=" + age +
                 ", experienceInYears=" + experienceInYears +
                 ", companyId=" + companyId +
-                ", projectId=" + projectId +
                 ", salary=" + salary +
                 '}';
     }

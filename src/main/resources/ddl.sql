@@ -31,7 +31,6 @@ CREATE TABLE developers
     age integer,
     experience_in_years integer NOT NULL,
     company_id integer NOT NULL,
-    project_id integer NOT NULL,
     salary integer,
     PRIMARY KEY (developer_id)
 );
@@ -64,12 +63,6 @@ CREATE TABLE skills
 ALTER TABLE developers
     ADD FOREIGN KEY (company_id)
     REFERENCES companies (company_id)
-    NOT VALID;
-
-
-ALTER TABLE developers
-    ADD FOREIGN KEY (project_id)
-    REFERENCES projects (project_id)
     NOT VALID;
 
 
