@@ -38,7 +38,6 @@ CREATE TABLE developers
 CREATE TABLE projects
 (
     project_id SERIAL,
-    developer_id integer,
     company_id integer,
     customer_id integer,
     project_name character varying(255),
@@ -69,12 +68,6 @@ ALTER TABLE developers
 ALTER TABLE projects
     ADD FOREIGN KEY (company_id)
     REFERENCES companies (company_id)
-    NOT VALID;
-
-
-ALTER TABLE projects
-    ADD FOREIGN KEY (developer_id)
-    REFERENCES developers (developer_id)
     NOT VALID;
 
 CREATE TABLE customers_and_companies

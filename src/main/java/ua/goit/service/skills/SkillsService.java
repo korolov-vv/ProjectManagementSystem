@@ -21,8 +21,8 @@ public class SkillsService {
     public SkillsDTO update(SkillsDTO skillsDTO) {
         SkillsDAO skillsDAO = SkillsConverter.toSkill(skillsDTO);
         repository.update(skillsDAO);
-        SkillsDAO supdatedSkillsDAO = repository.findById(skillsDTO.getDeveloperId());
-        return SkillsConverter.fromSkill(supdatedSkillsDAO);
+        SkillsDAO updatedSkillsDAO = repository.findById(skillsDTO.getDeveloperId());
+        return SkillsConverter.fromSkill(updatedSkillsDAO);
     }
 
     public void delete(int id) {
