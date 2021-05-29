@@ -21,7 +21,7 @@ public class CompaniesService {
     public CompaniesDTO update(CompaniesDTO companiesDTO) {
         CompaniesDAO companiesDAO = CompaniesConverter.toCompany(companiesDTO);
         repository.update(companiesDAO);
-        CompaniesDAO updatedCompaniessDAO = repository.findById(companiesDTO.getCompanyId());
+        CompaniesDAO updatedCompaniessDAO = repository.findByUniqueValue(companiesDTO.getCompanyName());
         return CompaniesConverter.fromCompany(updatedCompaniessDAO);
     }
 

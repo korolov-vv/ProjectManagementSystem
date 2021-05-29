@@ -3,7 +3,7 @@ package ua.goit.dao;
 public interface Repository<T> {
     T findById(long id);
 
-    T findByEmail(String value);
+    T findByUniqueValue(String value);
 
     void create(T entity);
 

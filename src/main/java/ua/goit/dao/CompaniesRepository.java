@@ -20,6 +20,9 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
             "WHERE company_id=?;";
     private static final String DELETE = "DELETE FROM companies WHERE company_id=?;";
 
+    private static final String SELECT_COMPANIY_BY_NAME = "SELECT company_id, company_name, number_of_developers" +
+            "FROM companies WHERE company_name = ?;";
+
     public CompaniesRepository(DatabaseConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
@@ -39,7 +42,16 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
     }
 
     @Override
-    public CompaniesDAO findByEmail(String value) {
+    public CompaniesDAO findByUniqueValue(String companyName) {
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_COMPANIY_BY_NAME)) {
+            preparedStatement.setString(1, companyName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return CompaniesConverter.toCompany(resultSet);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
         return null;
     }
 

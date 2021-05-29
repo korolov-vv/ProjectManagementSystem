@@ -21,6 +21,9 @@ public class CustomersRepository implements Repository<CustomersDAO> {
             "WHERE customer_id=?;";
     private static final String DELETE = "DELETE FROM customers WHERE customer_id=?;";
 
+    private static final String SELECT_CUSTOMERS_BY_NAME = "SELECT customer_id, customer_name" +
+            "FROM customers WHERE customer_name = ?;";
+
     public CustomersRepository(DatabaseConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
@@ -40,7 +43,16 @@ public class CustomersRepository implements Repository<CustomersDAO> {
     }
 
     @Override
-    public CustomersDAO findByEmail(String value) {
+    public CustomersDAO findByUniqueValue(String customerName) {
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CUSTOMERS_BY_NAME)) {
+            preparedStatement.setString(1, customerName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return CustomersConverter.toCustomer(resultSet);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
         return null;
     }
 
@@ -58,7 +70,7 @@ public class CustomersRepository implements Repository<CustomersDAO> {
     @Override
     public void update(CustomersDAO customersDAO) {
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE)) {
             preparedStatement.setString(1, customersDAO.getCustomerName());
             preparedStatement.setLong(3, customersDAO.getCustomerId());
             preparedStatement.execute();
@@ -70,7 +82,7 @@ public class CustomersRepository implements Repository<CustomersDAO> {
     @Override
     public void delete(long id) {
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CUSTOMERS_BY_ID)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
         } catch (SQLException ex) {

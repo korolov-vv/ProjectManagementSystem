@@ -38,7 +38,7 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
     }
 
     @Override
-    public ProjectsDAO findByEmail(String firstName) {
+    public ProjectsDAO findByUniqueValue(String firstName) {
         return null;
     }
 

@@ -116,7 +116,8 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
         }
     }
 
-    public DevelopersDAO findByEmail(String email) {
+    @Override
+    public DevelopersDAO findByUniqueValue(String email) {
         ResultSet resultSet;
         DevelopersDAO developersDAO = new DevelopersDAO();
         try (Connection connection = connectionManager.getConnection();

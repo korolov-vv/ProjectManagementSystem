@@ -21,7 +21,7 @@ public class CustomersService {
     public CustomersDTO update(CustomersDTO customersDTO) {
         CustomersDAO customersDAO = CustomersConverter.toCustomer(customersDTO);
         repository.update(customersDAO);
-        CustomersDAO updatedCustomersDAO = repository.findById(customersDTO.getCustomerId());
+        CustomersDAO updatedCustomersDAO = repository.findByUniqueValue(customersDTO.getCustomerName());
         return CustomersConverter.fromCustomer(updatedCustomersDAO);
     }
 }

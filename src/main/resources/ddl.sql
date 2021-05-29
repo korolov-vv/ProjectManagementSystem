@@ -114,3 +114,11 @@ ALTER COLUMN developer_email SET NOT NULL;
 ALTER TABLE developers
 ADD CONSTRAINT unique_email
 UNIQUE (developer_email);
+
+ALTER TABLE companies
+ADD CONSTRAINT unique_name
+UNIQUE (company_name);
+
+ALTER TABLE customers
+ADD CONSTRAINT unique_cust_name
+UNIQUE (customer_name);

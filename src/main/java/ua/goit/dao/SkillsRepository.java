@@ -39,7 +39,15 @@ public class SkillsRepository implements Repository<SkillsDAO> {
     }
 
     @Override
-    public SkillsDAO findByEmail(String value) {
+    public SkillsDAO findByUniqueValue(String recrdId) {
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement preparedStatement = connectionManager.getConnection().prepareStatement(SELECT_SKILLS_BY_DEVELOPER_ID)) {
+            preparedStatement.setLong(1, Long.getLong(recrdId));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return SkillsConverter.toSkill(resultSet);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         return null;
     }
 

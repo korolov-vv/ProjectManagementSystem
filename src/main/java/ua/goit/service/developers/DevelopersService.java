@@ -16,14 +16,14 @@ public class DevelopersService {
     public DevelopersDTO create(DevelopersDTO developersDTO) {
         DevelopersDAO developersDAO = DevelopersConverter.toDeveloper(developersDTO);
         repository.create(developersDAO);
-        DevelopersDAO savedDevelopersDAO = repository.findByEmail(developersDTO.getDeveloperEmail());
+        DevelopersDAO savedDevelopersDAO = repository.findByUniqueValue(developersDTO.getDeveloperEmail());
         return DevelopersConverter.fromDeveloper(savedDevelopersDAO);
     }
 
     public DevelopersDTO update(DevelopersDTO developersDTO) {
         DevelopersDAO developersDAO = DevelopersConverter.toDeveloper(developersDTO);
         repository.update(developersDAO);
-        DevelopersDAO updatedDevelopersDAO = repository.findByEmail(developersDTO.getDeveloperEmail());
+        DevelopersDAO updatedDevelopersDAO = repository.findByUniqueValue(developersDTO.getDeveloperEmail());
         return DevelopersConverter.fromDeveloper(updatedDevelopersDAO);
     }
 
