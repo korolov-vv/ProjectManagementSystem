@@ -1,21 +1,28 @@
 package ua.goit.dao.model;
 
+import java.util.Date;
+
 public class ProjectsDAO {
     private long projectId;
     private String projectName;
     private String stage;
     private int timePeriod;
     private int coast;
+    private int numberOfDevelopers;
+    private Date dateOfBeginning;
 
     public ProjectsDAO() {
     }
 
-    public ProjectsDAO(long projectId, String projectName, String stage, int timePeriod, int coast) {
+    public ProjectsDAO(long projectId, String projectName, String stage, int timePeriod, int coast,
+                       int numberOfDevelopers, Date dateOfBeginning) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.stage = stage;
         this.timePeriod = timePeriod;
         this.coast = coast;
+        this.numberOfDevelopers = numberOfDevelopers;
+        this.dateOfBeginning = dateOfBeginning;
     }
 
     public long getProjectId() {
@@ -58,14 +65,32 @@ public class ProjectsDAO {
         this.coast = coast;
     }
 
+    public int getNumberOfDevelopers() {
+        return numberOfDevelopers;
+    }
+
+    public void setNumberOfDevelopers(int numberOfDevelopers) {
+        this.numberOfDevelopers = numberOfDevelopers;
+    }
+
+    public Date getDateOfBeginning() {
+        return dateOfBeginning;
+    }
+
+    public void setDateOfBeginning(Date dateOfBeginning) {
+        this.dateOfBeginning = dateOfBeginning;
+    }
+
     @Override
     public String toString() {
-        return "ProjectsDAO{" +
+        return "Projects{" +
                 "projectId=" + projectId +
                 ", projectName='" + projectName + '\'' +
                 ", stage='" + stage + '\'' +
                 ", timePeriod=" + timePeriod +
                 ", coast=" + coast +
+                ", numberOfDevelopers=" + numberOfDevelopers +
+                ", dateOfBegining=" + dateOfBeginning +
                 '}';
     }
 }

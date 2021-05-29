@@ -1,6 +1,6 @@
 package ua.goit.dto;
 
-import java.util.List;
+import java.util.Date;
 
 public class ProjectsDTO {
     private long projectId;
@@ -8,26 +8,21 @@ public class ProjectsDTO {
     private String stage;
     private int timePeriod;
     private int coast;
-    private List<DevelopersDTO> developers;
+    private int numberOfDevelopers;
+    private Date dateOfBeginning;
 
     public ProjectsDTO() {
     }
 
-    public ProjectsDTO(long projectId, String projectName, String stage, int timePeriod, int coast) {
+    public ProjectsDTO(long projectId, String projectName, String stage, int timePeriod, int coast,
+                       int numberOfDevelopers, Date dateOfBeginning) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.stage = stage;
         this.timePeriod = timePeriod;
         this.coast = coast;
-    }
-
-    public ProjectsDTO(long projectId, String projectName, String stage, int timePeriod, int coast, List<DevelopersDTO> developers) {
-        this.projectId = projectId;
-        this.projectName = projectName;
-        this.stage = stage;
-        this.timePeriod = timePeriod;
-        this.coast = coast;
-        this.developers = developers;
+        this.numberOfDevelopers = numberOfDevelopers;
+        this.dateOfBeginning = dateOfBeginning;
     }
 
     public long getProjectId() {
@@ -70,23 +65,32 @@ public class ProjectsDTO {
         this.coast = coast;
     }
 
-    public List<DevelopersDTO> getDevelopers() {
-        return developers;
+    public int getNumberOfDevelopers() {
+        return numberOfDevelopers;
     }
 
-    public void setDevelopers(List<DevelopersDTO> developers) {
-        this.developers = developers;
+    public void setNumberOfDevelopers(int numberOfDevelopers) {
+        this.numberOfDevelopers = numberOfDevelopers;
+    }
+
+    public Date getDateOfBeginning() {
+        return dateOfBeginning;
+    }
+
+    public void setDateOfBeginning(Date dateOfBeginning) {
+        this.dateOfBeginning = dateOfBeginning;
     }
 
     @Override
     public String toString() {
-        return "ProjectsDTO{" +
+        return "Projects{" +
                 "projectId=" + projectId +
                 ", projectName='" + projectName + '\'' +
                 ", stage='" + stage + '\'' +
                 ", timePeriod=" + timePeriod +
                 ", coast=" + coast +
-                ", developers=" + developers +
+                ", numberOfDevelopers=" + numberOfDevelopers +
+                ", dateOfBegining=" + dateOfBeginning +
                 '}';
     }
 }

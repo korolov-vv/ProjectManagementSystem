@@ -131,7 +131,7 @@ ALTER TABLE projects
 ADD COLUMN number_of_developers int;
 
 ALTER TABLE projects
-ADD COLUMN date_of_begining date;
+ADD COLUMN date_of_beginning date;
 
 UPDATE projects
 SET number_of_developers=10
@@ -170,37 +170,37 @@ SET number_of_developers=1
 WHERE project_id=9;
 
 UPDATE projects
-SET date_of_begining='2021-01-01'
+SET date_of_beginning='2021-01-01'
 WHERE project_id=1;
 
 UPDATE projects
-SET date_of_begining='2020-01-01'
+SET date_of_beginning='2020-01-01'
 WHERE project_id=2;
 
 UPDATE projects
-SET date_of_begining='2021-02-01'
+SET date_of_beginning='2021-02-01'
 WHERE project_id=3;
 
 UPDATE projects
-SET date_of_begining='2021-03-01'
+SET date_of_beginning='2021-03-01'
 WHERE project_id=4;
 
 UPDATE projects
-SET date_of_begining='2021-01-07'
+SET date_of_beginning='2021-01-07'
 WHERE project_id=5;
 
 UPDATE projects
-SET date_of_begining='2021-01-09'
+SET date_of_beginning='2021-01-09'
 WHERE project_id=6;
 
 UPDATE projects
-SET date_of_begining='2021-01-10'
+SET date_of_beginning='2021-01-10'
 WHERE project_id=7;
 
 UPDATE projects
-SET date_of_begining='2020-10-01'
+SET date_of_beginning='2020-10-01'
 WHERE project_id=8;
 
 UPDATE projects
-SET date_of_begining='2021-01-20'
+SET date_of_beginning='2021-01-20'
 WHERE project_id=9;
