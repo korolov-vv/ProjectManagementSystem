@@ -5,6 +5,8 @@ import ua.goit.dto.ProjectsDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProjectsConverter {
     public static ProjectsDAO toProject(ProjectsDTO projectsDTO) {
@@ -31,5 +33,21 @@ public class ProjectsConverter {
             projectsDAO.setDateOfBeginning(resultSet.getDate("date_of_begining"));
         }
         return projectsDAO;
+    }
+
+    public static List<ProjectsDAO> toProjectsList(ResultSet resultSet) throws SQLException {
+        List<ProjectsDAO> projectsDAOList = new ArrayList<>();
+        while (resultSet.next()) {
+            ProjectsDAO projectsDAO = new ProjectsDAO();
+            projectsDAO.setProjectId(resultSet.getLong("project_id"));
+            projectsDAO.setProjectName(resultSet.getString("project_name"));
+            projectsDAO.setStage(resultSet.getString("stage"));
+            projectsDAO.setTimePeriod(resultSet.getInt("time_period"));
+            projectsDAO.setCoast(resultSet.getInt("coast"));
+            projectsDAO.setNumberOfDevelopers(resultSet.getInt("number_of_developers"));
+            projectsDAO.setDateOfBeginning(resultSet.getDate("date_of_beginning"));
+            projectsDAOList.add(projectsDAO);
+        }
+        return projectsDAOList;
     }
 }

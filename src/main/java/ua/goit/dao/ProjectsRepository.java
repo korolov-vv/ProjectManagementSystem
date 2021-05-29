@@ -5,6 +5,8 @@ import ua.goit.dao.model.ProjectsDAO;
 import ua.goit.service.projects.ProjectsConverter;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProjectsRepository implements Repository<ProjectsDAO> {
     private final DatabaseConnectionManager connectionManager;
@@ -16,9 +18,15 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
             "number_of_developers, date_of_beginning) " +
             "FROM projects WHERE project_id = ?;";
     private static final String UPDATE = "UPDATE projects SET project_name=?, stage=?, time_period=?, coast=? " +
-            "number_of_developers=?, date_of_beginning=?) " +
+            "number_of_developers=?, date_of_beginning=? " +
             "WHERE project_id=?;";
     private static final String DELETE = "DELETE FROM projects WHERE project_id=?;";
+    private static final String SELECT_PROJECT_BY_NAME = "SELECT project_id, project_name, stage, time_period, coast " +
+            "number_of_developers, date_of_beginning " +
+            "FROM projects WHERE project_name = ?;";
+    private static final String SELECT_ALL_PROJECTS = "SELECT project_id, project_name, stage, time_period, coast, " +
+            "number_of_developers, date_of_beginning " +
+            "FROM projects";
 
     public ProjectsRepository(DatabaseConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
@@ -38,7 +46,15 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
     }
 
     @Override
-    public ProjectsDAO findByUniqueValue(String firstName) {
+    public ProjectsDAO findByUniqueValue(String projectName) {
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PROJECT_BY_NAME)) {
+            preparedStatement.setString(1, projectName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return ProjectsConverter.toProject(resultSet);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         return null;
     }
 
@@ -61,7 +77,7 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
     @Override
     public void update(ProjectsDAO projectsDAO) {
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE)) {
             preparedStatement.setString(1, projectsDAO.getProjectName());
             preparedStatement.setString(2, projectsDAO.getStage());
             preparedStatement.setInt(3, projectsDAO.getTimePeriod());
@@ -78,11 +94,23 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
     @Override
     public void delete(long id) {
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PROJECTS_BY_ID)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public List<ProjectsDAO> findAllProjects() {
+        List<ProjectsDAO> projectsDAOList = new ArrayList<>();
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_PROJECTS)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            projectsDAOList = ProjectsConverter.toProjectsList(resultSet);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return projectsDAOList;
     }
 }

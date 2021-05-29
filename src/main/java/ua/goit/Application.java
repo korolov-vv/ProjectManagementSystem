@@ -2,8 +2,14 @@ package ua.goit;
 
 import ua.goit.config.DatabaseConnectionManager;
 import ua.goit.dao.DevelopersRepository;
+import ua.goit.dao.ProjectsRepository;
+import ua.goit.dto.ProjectsDTO;
 import ua.goit.service.developers.DevelopersService;
+import ua.goit.service.projects.ProjectsConverter;
 import ua.goit.util.PropertiesLoader;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Application {
     public static void main(String[] args) {
@@ -18,10 +24,11 @@ public class Application {
 
         DevelopersRepository devRepo = new DevelopersRepository(databaseConnectionManager);
         DevelopersService ds = new DevelopersService(devRepo);
+        ProjectsRepository projRepo = new ProjectsRepository(databaseConnectionManager);
 
         System.out.println("Вывеcти на конcоль:");
 
-/*        System.out.println("1. ");
+        System.out.println("1. ");
         System.out.println(devRepo.countSumSalary(2));
 
         System.out.println("2. ");
@@ -31,8 +38,15 @@ public class Application {
         devRepo.selectDevelopersByStack("Java").forEach(System.out::println);
 
         System.out.println("4. ");
-        devRepo.selectDevelopersByLevel("Middle").forEach(System.out::println);*/
+        devRepo.selectDevelopersByLevel("Middle").forEach(System.out::println);
+
         System.out.println("5. ");
+        List<ProjectsDTO> projectsDTOList;
+        projRepo.findAllProjects().stream()
+        .map(ProjectsConverter::fromProject)
+        .collect(Collectors.toList()).forEach(projectsDTO -> System.out.println(
+                projectsDTO.getDateOfBeginning() + " - " + projectsDTO.getProjectName() +
+                " - " + projectsDTO.getNumberOfDevelopers()));
 
 
 /*        ds.create(new DevelopersDTO(0, "Petro", "Chursin", "m", 23,
