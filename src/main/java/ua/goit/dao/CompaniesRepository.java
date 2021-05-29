@@ -39,6 +39,11 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
     }
 
     @Override
+    public CompaniesDAO findByEmail(String value) {
+        return null;
+    }
+
+    @Override
     public void create(CompaniesDAO companiesDAO) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {

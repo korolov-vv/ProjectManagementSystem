@@ -25,8 +25,8 @@ CREATE TABLE customers
 CREATE TABLE developers
 (
     developer_id SERIAL,
-    first_name character varying(20),
-    last_name character varying(25) NOT NULL,
+    first_name character varying(255),
+    last_name character varying(255) NOT NULL,
     gender character varying(25) NOT NULL,
     age integer,
     experience_in_years integer NOT NULL,
@@ -38,9 +38,7 @@ CREATE TABLE developers
 CREATE TABLE projects
 (
     project_id SERIAL,
-    company_id integer,
-    customer_id integer,
-    project_name character varying(255),
+    project_name character varying(255) UNIQUE,
     stage character varying(50),
     time_period integer,
     coast integer,
@@ -58,17 +56,6 @@ CREATE TABLE skills
     level level,
 	FOREIGN KEY (developer_id) REFERENCES developers(developer_id)
 );
-
-ALTER TABLE developers
-    ADD FOREIGN KEY (company_id)
-    REFERENCES companies (company_id)
-    NOT VALID;
-
-
-ALTER TABLE projects
-    ADD FOREIGN KEY (company_id)
-    REFERENCES companies (company_id)
-    NOT VALID;
 
 CREATE TABLE customers_and_companies
 (
@@ -89,3 +76,41 @@ CREATE TABLE developers_on_projects
    FOREIGN KEY (developer_id) REFERENCES developers(developer_id),
    UNIQUE (project_id, developer_id)
 );
+
+ALTER TABLE developers
+ADD COLUMN developer_email character varying(255) UNIQUE;
+
+UPDATE developers
+SET developer_email='a@gmail.com'
+WHERE developer_id=1;
+
+UPDATE developers
+SET developer_email='b@gmail.com'
+WHERE developer_id=2;
+
+UPDATE developers
+SET developer_email='c@gmail.com'
+WHERE developer_id=3;
+
+UPDATE developers
+SET developer_email='d@gmail.com'
+WHERE developer_id=4;
+
+UPDATE developers
+SET developer_email='e@gmail.com'
+WHERE developer_id=5;
+
+UPDATE developers
+SET developer_email='f@gmail.com'
+WHERE developer_id=6;
+
+UPDATE developers
+SET developer_email='v@gmail.com'
+WHERE developer_id=27;
+
+ALTER TABLE developers
+ALTER COLUMN developer_email SET NOT NULL;
+
+ALTER TABLE developers
+ADD CONSTRAINT unique_email
+UNIQUE (developer_email);

@@ -1,26 +1,33 @@
 package ua.goit.dto;
 
+import java.util.List;
+
 public class ProjectsDTO {
     private long projectId;
-    private long companyId;
-    private long customerId;
     private String projectName;
     private String stage;
     private int timePeriod;
     private int coast;
+    private List<DevelopersDTO> developers;
 
     public ProjectsDTO() {
     }
 
-    public ProjectsDTO(long projectId, long companyId, long customerId, String projectName, String stage,
-                       int timePeriod, int coast) {
+    public ProjectsDTO(long projectId, String projectName, String stage, int timePeriod, int coast) {
         this.projectId = projectId;
-        this.companyId = companyId;
-        this.customerId = customerId;
         this.projectName = projectName;
         this.stage = stage;
         this.timePeriod = timePeriod;
         this.coast = coast;
+    }
+
+    public ProjectsDTO(long projectId, String projectName, String stage, int timePeriod, int coast, List<DevelopersDTO> developers) {
+        this.projectId = projectId;
+        this.projectName = projectName;
+        this.stage = stage;
+        this.timePeriod = timePeriod;
+        this.coast = coast;
+        this.developers = developers;
     }
 
     public long getProjectId() {
@@ -29,22 +36,6 @@ public class ProjectsDTO {
 
     public void setProjectId(long projectId) {
         this.projectId = projectId;
-    }
-
-    public long getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(long companyId) {
-        this.companyId = companyId;
-    }
-
-    public long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(long customerId) {
-        this.customerId = customerId;
     }
 
     public String getProjectName() {
@@ -79,16 +70,23 @@ public class ProjectsDTO {
         this.coast = coast;
     }
 
+    public List<DevelopersDTO> getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(List<DevelopersDTO> developers) {
+        this.developers = developers;
+    }
+
     @Override
     public String toString() {
-        return "ProjectsDAO{" +
+        return "ProjectsDTO{" +
                 "projectId=" + projectId +
-                ", companyId=" + companyId +
-                ", customerId=" + customerId +
                 ", projectName='" + projectName + '\'' +
                 ", stage='" + stage + '\'' +
                 ", timePeriod=" + timePeriod +
                 ", coast=" + coast +
+                ", developers=" + developers +
                 '}';
     }
 }

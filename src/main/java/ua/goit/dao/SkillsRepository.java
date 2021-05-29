@@ -39,6 +39,11 @@ public class SkillsRepository implements Repository<SkillsDAO> {
     }
 
     @Override
+    public SkillsDAO findByEmail(String value) {
+        return null;
+    }
+
+    @Override
     public void create(SkillsDAO skillsDAO) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connectionManager.getConnection().prepareStatement(INSERT)) {
@@ -71,6 +76,7 @@ public class SkillsRepository implements Repository<SkillsDAO> {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
     }
+
+
 }

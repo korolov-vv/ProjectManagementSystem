@@ -40,6 +40,11 @@ public class CustomersRepository implements Repository<CustomersDAO> {
     }
 
     @Override
+    public CustomersDAO findByEmail(String value) {
+        return null;
+    }
+
+    @Override
     public void create(CustomersDAO customersDAO) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {

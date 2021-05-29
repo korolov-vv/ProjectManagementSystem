@@ -2,8 +2,6 @@ package ua.goit.dao.model;
 
 public class ProjectsDAO {
     private long projectId;
-    private long companyId;
-    private long customerId;
     private String projectName;
     private String stage;
     private int timePeriod;
@@ -12,11 +10,8 @@ public class ProjectsDAO {
     public ProjectsDAO() {
     }
 
-    public ProjectsDAO(long projectId, long companyId, long customerId, String projectName, String stage,
-                       int timePeriod, int coast) {
+    public ProjectsDAO(long projectId, String projectName, String stage, int timePeriod, int coast) {
         this.projectId = projectId;
-        this.companyId = companyId;
-        this.customerId = customerId;
         this.projectName = projectName;
         this.stage = stage;
         this.timePeriod = timePeriod;
@@ -29,22 +24,6 @@ public class ProjectsDAO {
 
     public void setProjectId(long projectId) {
         this.projectId = projectId;
-    }
-
-    public long getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(long companyId) {
-        this.companyId = companyId;
-    }
-
-    public long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(long customerId) {
-        this.customerId = customerId;
     }
 
     public String getProjectName() {
@@ -83,8 +62,6 @@ public class ProjectsDAO {
     public String toString() {
         return "ProjectsDAO{" +
                 "projectId=" + projectId +
-                ", companyId=" + companyId +
-                ", customerId=" + customerId +
                 ", projectName='" + projectName + '\'' +
                 ", stage='" + stage + '\'' +
                 ", timePeriod=" + timePeriod +

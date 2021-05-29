@@ -9,15 +9,15 @@ values (4, 'Apple', null);
 insert into companies (company_id, company_name, number_of_developers)
 values (5, 'CD Project', null);
 
-insert into projects values (1, null, null, 'Best project', 'new', 5, 1000000);
-insert into projects values (2, null, null, 'Proj name 2', 'new', 5, 1000000);
-insert into projects values (3, null, null, 'Proj name 2', 'pending', 5, 10000);
-insert into projects values (4, null, null, 'Proj name 3', 'new', 5, 100000);
-insert into projects values (5, null, null, 'Proj name 4', 'new', 5, 5000000);
-insert into projects values (6, null, null, 'Proj name 5', 'new', 5, 6000000);
-insert into projects values (7, null, null, 'Proj name 6', 'new', 5, 7000000);
-insert into projects values (8, null, null, 'Proj name 7', 'new', 5, 80000);
-insert into projects values (9, null, null, 'Proj name 8', 'new', 5, 1000);
+insert into projects values (1, 'Best project', 'new', 5, 1000000);
+insert into projects values (2, 'Proj name 2', 'new', 5, 1000000);
+insert into projects values (3, 'Proj name 2', 'pending', 5, 10000);
+insert into projects values (4, 'Proj name 3', 'new', 5, 100000);
+insert into projects values (5, 'Proj name 4', 'new', 5, 5000000);
+insert into projects values (6, 'Proj name 5', 'new', 5, 6000000);
+insert into projects values (7, 'Proj name 6', 'new', 5, 7000000);
+insert into projects values (8, 'Proj name 7', 'new', 5, 80000);
+insert into projects values (9, 'Proj name 8', 'new', 5, 1000);
 
 insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, salary)
 values (1, 'Ivan', 'Petrov', 'male', 30, 10, 5, 1000);

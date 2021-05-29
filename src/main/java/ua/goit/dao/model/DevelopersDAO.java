@@ -9,12 +9,13 @@ public class DevelopersDAO {
     private int experienceInYears;
     private int companyId;
     private int salary;
+    private String developerEmail;
 
     public DevelopersDAO() {
     }
 
     public DevelopersDAO(long developerId, String firstName, String lastName, String gender, int age,
-                         int experienceInYears, int companyId, int salary) {
+                         int experienceInYears, int companyId, int salary, String developerEmail) {
         this.developerId = developerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,6 +24,7 @@ public class DevelopersDAO {
         this.experienceInYears = experienceInYears;
         this.companyId = companyId;
         this.salary = salary;
+        this.developerEmail = developerEmail;
     }
 
     public long getDeveloperId() {
@@ -89,6 +91,14 @@ public class DevelopersDAO {
         this.salary = salary;
     }
 
+    public String getDeveloperEmail() {
+        return developerEmail;
+    }
+
+    public void setDeveloperEmail(String developerEmail) {
+        this.developerEmail = developerEmail;
+    }
+
     @Override
     public String toString() {
         return "Developers{" +
@@ -100,6 +110,7 @@ public class DevelopersDAO {
                 ", experienceInYears=" + experienceInYears +
                 ", companyId=" + companyId +
                 ", salary=" + salary +
+                ", developerEmail='" + developerEmail + '\'' +
                 '}';
     }
 }
