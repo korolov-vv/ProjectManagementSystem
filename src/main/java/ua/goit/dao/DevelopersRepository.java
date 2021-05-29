@@ -2,12 +2,16 @@ package ua.goit.dao;
 
 import ua.goit.config.DatabaseConnectionManager;
 import ua.goit.dao.model.DevelopersDAO;
+import ua.goit.dto.DevelopersDTO;
 import ua.goit.service.developers.DevelopersConverter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DevelopersRepository implements Repository<DevelopersDAO> {
     private final DatabaseConnectionManager connectionManager;
@@ -30,6 +34,21 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     private static final String SELECT_SUM_SALARY_ON_PROJECT = "SELECT SUM(salary) FROM developers d " +
             "INNER JOIN developers_on_projects as dp on d.developer_id=dp.developer_id " +
             "WHERE project_id=?;";
+
+    private static final String SELECT_DEVELOPERS_ON_PROJECT = "SELECT d.developer_id, first_name, last_name, gender, " +
+            "age, experience_in_years, company_id, salary, developer_email FROM developers as d " +
+            "INNER JOIN developers_on_projects as dp on d.developer_id=dp.developer_id " +
+            "WHERE project_id=?;";
+
+    private static final String SELECT_DEVELOPERS_BY_STACK = "SELECT d.developer_id, first_name, last_name, gender, " +
+            "age, experience_in_years, company_id, salary, developer_email " +
+            "FROM developers d INNER JOIN skills as s on d.developer_id=s.developer_id " +
+            "WHERE stack::text ILIKE ?;";
+
+    private static final String SELECT_DEVELOPERS_BY_LEVEL = "SELECT d.developer_id, first_name, last_name, gender, " +
+            "age, experience_in_years, company_id, salary, developer_email " +
+            "FROM developers d INNER JOIN skills as s on d.developer_id=s.developer_id " +
+            "WHERE level::text ILIKE ?;";
 
     public DevelopersRepository(DatabaseConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
@@ -111,12 +130,12 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
         return developersDAO;
     }
 
-    public int countSumSalary(long id) {
+    public int countSumSalary(long projectId) {
         ResultSet resultSet;
         int sum = 0;
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SUM_SALARY_ON_PROJECT)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setLong(1, projectId);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 sum = resultSet.getInt(1);
@@ -125,5 +144,59 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
             ex.printStackTrace();
         }
         return sum;
+    }
+
+    public List<DevelopersDTO> selectDevelopersOnProject(long projectId) {
+        ResultSet resultSet;
+        List<DevelopersDAO> listDAO;
+        List<DevelopersDTO> listOfDevelopers = new ArrayList<>();
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEVELOPERS_ON_PROJECT)) {
+            preparedStatement.setLong(1, projectId);
+            resultSet = preparedStatement.executeQuery();
+            listDAO = DevelopersConverter.toDevelopersList(resultSet);
+            listOfDevelopers = listDAO.stream()
+                    .map(DevelopersConverter::fromDeveloper)
+                    .collect(Collectors.toList());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return listOfDevelopers;
+    }
+
+    public List<DevelopersDTO> selectDevelopersByStack(String stack) {
+        ResultSet resultSet;
+        List<DevelopersDAO> listDAO;
+        List<DevelopersDTO> listOfDevelopers = new ArrayList<>();
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEVELOPERS_BY_STACK)) {
+            preparedStatement.setString(1, stack);
+            resultSet = preparedStatement.executeQuery();
+            listDAO = DevelopersConverter.toDevelopersList(resultSet);
+            listOfDevelopers = listDAO.stream()
+                    .map(DevelopersConverter::fromDeveloper)
+                    .collect(Collectors.toList());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return listOfDevelopers;
+    }
+
+    public List<DevelopersDTO> selectDevelopersByLevel(String level) {
+        ResultSet resultSet;
+        List<DevelopersDAO> listDAO;
+        List<DevelopersDTO> listOfDevelopers = new ArrayList<>();
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEVELOPERS_BY_LEVEL)) {
+            preparedStatement.setString(1, level);
+            resultSet = preparedStatement.executeQuery();
+            listDAO = DevelopersConverter.toDevelopersList(resultSet);
+            listOfDevelopers = listDAO.stream()
+                    .map(DevelopersConverter::fromDeveloper)
+                    .collect(Collectors.toList());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return listOfDevelopers;
     }
 }

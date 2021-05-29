@@ -5,6 +5,8 @@ import ua.goit.dao.model.DevelopersDAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DevelopersConverter {
     public static DevelopersDAO toDeveloper(DevelopersDTO developersDTO) {
@@ -35,5 +37,24 @@ public class DevelopersConverter {
             developersDAO.setDeveloperEmail(resultSet.getString("developer_email"));
         }
         return developersDAO;
+    }
+
+    public static List<DevelopersDAO> toDevelopersList(ResultSet resultSet) throws SQLException {
+
+        List<DevelopersDAO> developersList = new ArrayList<>();
+        while (resultSet.next()) {
+            DevelopersDAO developersDAO = new DevelopersDAO();
+            developersDAO.setDeveloperId(resultSet.getLong("developer_id"));
+            developersDAO.setFirstName(resultSet.getString("first_name"));
+            developersDAO.setLastName(resultSet.getString("last_name"));
+            developersDAO.setGender(resultSet.getString("gender"));
+            developersDAO.setAge(resultSet.getInt("age"));
+            developersDAO.setExperienceInYears(resultSet.getInt("experience_in_years"));
+            developersDAO.setCompanyId(resultSet.getInt("company_id"));
+            developersDAO.setSalary(resultSet.getInt("salary"));
+            developersDAO.setDeveloperEmail(resultSet.getString("developer_email"));
+            developersList.add(developersDAO);
+        }
+        return developersList;
     }
 }

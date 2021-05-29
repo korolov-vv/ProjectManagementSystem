@@ -19,18 +19,21 @@ public class Application {
         DevelopersRepository devRepo = new DevelopersRepository(databaseConnectionManager);
         DevelopersService ds = new DevelopersService(devRepo);
 
-        System.out.println("Вывести на консоль:");
+        System.out.println("Вывеcти на конcоль:");
 
-        System.out.println("1. зарплату(сумму) всех разработчиков отдельного проекта");
+/*        System.out.println("1. ");
         System.out.println(devRepo.countSumSalary(2));
 
-        System.out.println("2. список разработчиков отдельного проекта");
+        System.out.println("2. ");
+        devRepo.selectDevelopersOnProject(1).forEach(System.out::println);
 
-        System.out.println("3. список всех Java разработчиков");
+        System.out.println("3. ");
+        devRepo.selectDevelopersByStack("Java").forEach(System.out::println);
 
-        System.out.println("4. список всех middle разработчиков");
+        System.out.println("4. ");
+        devRepo.selectDevelopersByLevel("Middle").forEach(System.out::println);*/
+        System.out.println("5. ");
 
-        System.out.println("5. список проектов в следующем формате: дата создания - название проекта - количество разработчиков на этом проекте");
 
 /*        ds.create(new DevelopersDTO(0, "Petro", "Chursin", "m", 23,
                 5, 1, 2500, "h@gmail.com", List.of(), List.of()));
