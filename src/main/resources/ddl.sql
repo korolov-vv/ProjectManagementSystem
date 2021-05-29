@@ -122,3 +122,85 @@ UNIQUE (company_name);
 ALTER TABLE customers
 ADD CONSTRAINT unique_cust_name
 UNIQUE (customer_name);
+
+ALTER TABLE projects
+ADD CONSTRAINT unique_proj_name
+UNIQUE (project_name);
+
+ALTER TABLE projects
+ADD COLUMN number_of_developers int;
+
+ALTER TABLE projects
+ADD COLUMN date_of_begining date;
+
+UPDATE projects
+SET number_of_developers=10
+WHERE project_id=1;
+
+UPDATE projects
+SET number_of_developers=90
+WHERE project_id=2;
+
+UPDATE projects
+SET number_of_developers=16
+WHERE project_id=3;
+
+UPDATE projects
+SET number_of_developers=40
+WHERE project_id=4;
+
+UPDATE projects
+SET number_of_developers=7
+WHERE project_id=5;
+
+UPDATE projects
+SET number_of_developers=19
+WHERE project_id=6;
+
+UPDATE projects
+SET number_of_developers=20
+WHERE project_id=7;
+
+UPDATE projects
+SET number_of_developers=2
+WHERE project_id=8;
+
+UPDATE projects
+SET number_of_developers=1
+WHERE project_id=9;
+
+UPDATE projects
+SET date_of_begining='2021-01-01'
+WHERE project_id=1;
+
+UPDATE projects
+SET date_of_begining='2020-01-01'
+WHERE project_id=2;
+
+UPDATE projects
+SET date_of_begining='2021-02-01'
+WHERE project_id=3;
+
+UPDATE projects
+SET date_of_begining='2021-03-01'
+WHERE project_id=4;
+
+UPDATE projects
+SET date_of_begining='2021-01-07'
+WHERE project_id=5;
+
+UPDATE projects
+SET date_of_begining='2021-01-09'
+WHERE project_id=6;
+
+UPDATE projects
+SET date_of_begining='2021-01-10'
+WHERE project_id=7;
+
+UPDATE projects
+SET date_of_begining='2020-10-01'
+WHERE project_id=8;
+
+UPDATE projects
+SET date_of_begining='2021-01-20'
+WHERE project_id=9;
