@@ -1,8 +1,11 @@
 package ua.goit.dto;
 
+import java.util.List;
+
 public class CustomersDTO {
     private long customerId;
     private String customerName;
+    List<Long> projectIds;
 
     public CustomersDTO() {
     }
@@ -10,6 +13,12 @@ public class CustomersDTO {
     public CustomersDTO(long customerId, String customerName) {
         this.customerId = customerId;
         this.customerName = customerName;
+    }
+
+    public CustomersDTO(long customerId, String customerName, List<Long> projectIds) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.projectIds = projectIds;
     }
 
     public long getCustomerId() {
@@ -28,11 +37,20 @@ public class CustomersDTO {
         this.customerName = customerName;
     }
 
+    public List<Long> getProjectIds() {
+        return projectIds;
+    }
+
+    public void setProjectIds(List<Long> projectIds) {
+        this.projectIds = projectIds;
+    }
+
     @Override
     public String toString() {
-        return "Customers{" +
+        return "CustomersDTO{" +
                 "customerId=" + customerId +
                 ", customerName='" + customerName + '\'' +
+                ", projectId=" + projectIds +
                 '}';
     }
 }

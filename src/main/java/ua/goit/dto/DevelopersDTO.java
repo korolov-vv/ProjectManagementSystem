@@ -1,5 +1,9 @@
 package ua.goit.dto;
 
+import ua.goit.dao.model.Levels;
+import ua.goit.dao.model.Stack;
+
+import java.util.HashMap;
 import java.util.List;
 
 public class DevelopersDTO {
@@ -12,8 +16,8 @@ public class DevelopersDTO {
     private int companyId;
     private int salary;
     private String developerEmail;
-    private List<SkillsDTO> skills;
-    private List<ProjectsDTO> projects;
+    private HashMap<Stack, Levels> skills;
+    private List<Long> projectIds;
 
     public DevelopersDTO() {
     }
@@ -33,7 +37,7 @@ public class DevelopersDTO {
 
     public DevelopersDTO(long developerId, String firstName, String lastName, String gender, int age,
                          int experienceInYears, int companyId, int salary, String developerEmail,
-                         List<SkillsDTO> skills, List<ProjectsDTO> projects) {
+                         HashMap<Stack, Levels> skills, List<Long> projectIds) {
         this.developerId = developerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -44,7 +48,7 @@ public class DevelopersDTO {
         this.salary = salary;
         this.developerEmail = developerEmail;
         this.skills = skills;
-        this.projects = projects;
+        this.projectIds = projectIds;
     }
 
     public long getDeveloperId() {
@@ -119,6 +123,22 @@ public class DevelopersDTO {
         this.developerEmail = developerEmail;
     }
 
+    public HashMap<Stack, Levels> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(HashMap<Stack, Levels> skills) {
+        this.skills = skills;
+    }
+
+    public List<Long> getProjectIds() {
+        return projectIds;
+    }
+
+    public void setProjectIds(List<Long> projectIds) {
+        this.projectIds = projectIds;
+    }
+
     @Override
     public String toString() {
         return "Developers{" +
@@ -131,6 +151,8 @@ public class DevelopersDTO {
                 ", companyId=" + companyId +
                 ", salary=" + salary +
                 ", developerEmail='" + developerEmail + '\'' +
+                ", skills=" + skills.toString() + '\'' +
+                ", projectIds=" + projectIds +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package ua.goit.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class ProjectsDTO {
     private long projectId;
@@ -10,6 +11,10 @@ public class ProjectsDTO {
     private int coast;
     private int numberOfDevelopers;
     private Date dateOfBeginning;
+    private List<Long> developerIds;
+    private List<Long> companyIds;
+    private List<Long> customerIds;
+
 
     public ProjectsDTO() {
     }
@@ -23,6 +28,21 @@ public class ProjectsDTO {
         this.coast = coast;
         this.numberOfDevelopers = numberOfDevelopers;
         this.dateOfBeginning = dateOfBeginning;
+    }
+
+    public ProjectsDTO(long projectId, String projectName, String stage, int timePeriod, int coast,
+                       int numberOfDevelopers, Date dateOfBeginning, List<Long> developerIds, List<Long> companyIds,
+                       List<Long> customerIds) {
+        this.projectId = projectId;
+        this.projectName = projectName;
+        this.stage = stage;
+        this.timePeriod = timePeriod;
+        this.coast = coast;
+        this.numberOfDevelopers = numberOfDevelopers;
+        this.dateOfBeginning = dateOfBeginning;
+        this.developerIds = developerIds;
+        this.companyIds = companyIds;
+        this.customerIds = customerIds;
     }
 
     public long getProjectId() {
@@ -81,16 +101,43 @@ public class ProjectsDTO {
         this.dateOfBeginning = dateOfBeginning;
     }
 
+    public List<Long> getDeveloperIds() {
+        return developerIds;
+    }
+
+    public void setDeveloperIds(List<Long> developerIds) {
+        this.developerIds = developerIds;
+    }
+
+    public List<Long> getCompanyIds() {
+        return companyIds;
+    }
+
+    public void setCompanyIds(List<Long> companyIds) {
+        this.companyIds = companyIds;
+    }
+
+    public List<Long> getCustomerIds() {
+        return customerIds;
+    }
+
+    public void setCustomerIds(List<Long> customerIds) {
+        this.customerIds = customerIds;
+    }
+
     @Override
     public String toString() {
-        return "Projects{" +
+        return "ProjectsDTO{" +
                 "projectId=" + projectId +
                 ", projectName='" + projectName + '\'' +
                 ", stage='" + stage + '\'' +
                 ", timePeriod=" + timePeriod +
                 ", coast=" + coast +
                 ", numberOfDevelopers=" + numberOfDevelopers +
-                ", dateOfBegining=" + dateOfBeginning +
+                ", dateOfBeginning=" + dateOfBeginning +
+                ", developerId=" + developerIds +
+                ", companyId=" + companyIds +
+                ", customerId=" + customerIds +
                 '}';
     }
 }
