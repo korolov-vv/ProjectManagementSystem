@@ -1,26 +1,22 @@
 package ua.goit.dto;
 
-import lombok.Getter;
-import lombok.Setter;
 import ua.goit.dao.model.Levels;
 import ua.goit.dao.model.Stack;
 
-@Getter
-@Setter
 public class SkillsDTO {
     private long recordId;
-    private long developerId;
     private Stack satck;
     private Levels level;
+    private String developerEmail;
 
     public SkillsDTO() {
     }
 
-    public SkillsDTO(long recordId, long developerId, Stack satck, Levels level) {
+    public SkillsDTO(long recordId, Stack satck, Levels level, String developerEmail) {
         this.recordId = recordId;
-        this.developerId = developerId;
         this.satck = satck;
         this.level = level;
+        this.developerEmail = developerEmail;
     }
 
     public long getRecordId() {
@@ -29,14 +25,6 @@ public class SkillsDTO {
 
     public void setRecordId(long recordId) {
         this.recordId = recordId;
-    }
-
-    public long getDeveloperId() {
-        return developerId;
-    }
-
-    public void setDeveloperId(long developerId) {
-        this.developerId = developerId;
     }
 
     public Stack getSatck() {
@@ -55,13 +43,21 @@ public class SkillsDTO {
         this.level = level;
     }
 
+    public String getDeveloperEmail() {
+        return developerEmail;
+    }
+
+    public void setDeveloperEmail(String developerEmail) {
+        this.developerEmail = developerEmail;
+    }
+
     @Override
     public String toString() {
         return "Skills{" +
                 "recordId=" + recordId +
-                ", developerId=" + developerId +
-                ", satck='" + satck + '\'' +
-                ", level='" + level + '\'' +
+                ", satck=" + satck +
+                ", level=" + level +
+                ", developer_id='" + developerEmail + '\'' +
                 '}';
     }
 }

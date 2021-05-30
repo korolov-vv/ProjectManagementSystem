@@ -204,3 +204,64 @@ WHERE project_id=8;
 UPDATE projects
 SET date_of_beginning='2021-01-20'
 WHERE project_id=9;
+
+ALTER TABLE skills
+ADD COLUMN developer_email varchar(255),
+ADD FOREIGN KEY (developer_email) REFERENCES developers(developer_email);
+
+UPDATE skills
+SET developer_email=
+(SELECT developer_email
+FROM developers WHERE developer_id=1)
+WHERE developer_id=1;
+
+UPDATE skills
+SET developer_email=
+(SELECT developer_email
+FROM developers WHERE developer_id=2)
+WHERE developer_id=2;
+
+UPDATE skills
+SET developer_email=
+(SELECT developer_email
+FROM developers WHERE developer_id=3)
+WHERE developer_id=3;
+
+UPDATE skills
+SET developer_email=
+(SELECT developer_email
+FROM developers WHERE developer_id=4)
+WHERE developer_id=4;
+
+UPDATE skills
+SET developer_email=
+(SELECT developer_email
+FROM developers WHERE developer_id=5)
+WHERE developer_id=5;
+
+UPDATE skills
+SET developer_email=
+(SELECT developer_email
+FROM developers WHERE developer_id=6)
+WHERE developer_id=6;
+
+UPDATE skills
+SET developer_email=
+(SELECT developer_email
+FROM developers WHERE developer_id=7)
+WHERE developer_id=7;
+
+UPDATE skills
+SET developer_email=
+(SELECT developer_email
+FROM developers WHERE developer_id=8)
+WHERE developer_id=8;
+
+UPDATE skills
+SET developer_email=
+(SELECT developer_email
+FROM developers WHERE developer_id=9)
+WHERE developer_id=9;
+
+ALTER TABLE skills
+DROP COLUMN developer_id;

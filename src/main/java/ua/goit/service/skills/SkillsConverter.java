@@ -10,22 +10,22 @@ import java.sql.SQLException;
 
 public class SkillsConverter {
     public static SkillsDAO toSkill(SkillsDTO skillsDTO) {
-        return new SkillsDAO(skillsDTO.getRecordId(), skillsDTO.getDeveloperId(),
-                skillsDTO.getSatck(), skillsDTO.getLevel());
+        return new SkillsDAO(skillsDTO.getRecordId(), skillsDTO.getSatck(),
+                skillsDTO.getLevel(), skillsDTO.getDeveloperEmail());
     }
 
     public static SkillsDTO fromSkill(SkillsDAO skillsDAO) {
-        return new SkillsDTO(skillsDAO.getRecordId(), skillsDAO.getDeveloperId(),
-                skillsDAO.getSatck(), skillsDAO.getLevel());
+        return new SkillsDTO(skillsDAO.getRecordId(), skillsDAO.getSatck(),
+                skillsDAO.getLevel(), skillsDAO.getDeveloperEmail());
     }
 
     public static SkillsDAO toSkill(ResultSet resultSet) throws SQLException {
         SkillsDAO skillsDAO = new SkillsDAO();
         while (resultSet.next()) {
             skillsDAO.setRecordId(resultSet.getInt("record_id"));
-            skillsDAO.setDeveloperId(resultSet.getInt("developer_id"));
             skillsDAO.setSatck(Stack.valueOf(resultSet.getString("stack")));
             skillsDAO.setLevel(Levels.valueOf(resultSet.getString("level")));
+            skillsDAO.setDeveloperEmail(resultSet.getString("developer_email"));
         }
         return skillsDAO;
     }
