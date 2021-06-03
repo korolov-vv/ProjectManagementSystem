@@ -141,7 +141,7 @@ public class DevelopersDTO {
 
     @Override
     public String toString() {
-        return "Developers{" +
+        return "DevelopersDTO{" +
                 "developerId=" + developerId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -151,7 +151,7 @@ public class DevelopersDTO {
                 ", companyId=" + companyId +
                 ", salary=" + salary +
                 ", developerEmail='" + developerEmail + '\'' +
-                ", skills=" + skills.toString() + '\'' +
+                ", skills=" + skills +
                 ", projectIds=" + projectIds +
                 '}';
     }

@@ -40,14 +40,14 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
             "INNER JOIN developers_on_projects as dp on d.developer_id=dp.developer_id " +
             "WHERE project_id=?;";
 
-    private static final String SELECT_DEVELOPERS_BY_STACK = "SELECT d.developer_id, first_name, last_name, gender, " +
-            "age, experience_in_years, company_id, salary, developer_email " +
-            "FROM developers d INNER JOIN skills as s on d.developer_id=s.developer_id " +
+    private static final String SELECT_DEVELOPERS_BY_STACK = "SELECT developer_id, first_name, last_name, gender, " +
+            "age, experience_in_years, company_id, salary, d.developer_email " +
+            "FROM developers d INNER JOIN skills as s on d.developer_email=s.developer_email " +
             "WHERE stack::text ILIKE ?;";
 
-    private static final String SELECT_DEVELOPERS_BY_LEVEL = "SELECT d.developer_id, first_name, last_name, gender, " +
-            "age, experience_in_years, company_id, salary, developer_email " +
-            "FROM developers d INNER JOIN skills as s on d.developer_id=s.developer_id " +
+    private static final String SELECT_DEVELOPERS_BY_LEVEL = "SELECT developer_id, first_name, last_name, gender, " +
+            "age, experience_in_years, company_id, salary, d.developer_email " +
+            "FROM developers d INNER JOIN skills as s on d.developer_email=s.developer_email " +
             "WHERE level::text ILIKE ?;";
 
     public DevelopersRepository(DatabaseConnectionManager connectionManager) {
@@ -70,16 +70,8 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
 
     @Override
     public void create(DevelopersDAO developersDAO) {
-        try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {
-            preparedStatement.setString(1, developersDAO.getFirstName());
-            preparedStatement.setString(2, developersDAO.getLastName());
-            preparedStatement.setString(3, developersDAO.getGender());
-            preparedStatement.setInt(4, developersDAO.getAge());
-            preparedStatement.setInt(5, developersDAO.getExperienceInYears());
-            preparedStatement.setInt(6, developersDAO.getCompanyId());
-            preparedStatement.setInt(7, developersDAO.getSalary());
-            preparedStatement.setString(8, developersDAO.getDeveloperEmail());
+        try {
+            PreparedStatement preparedStatement = prepareStatment(developersDAO);
             preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -88,17 +80,9 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
 
     @Override
     public void update(DevelopersDAO developersDAO) {
-        try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE)) {
-            preparedStatement.setString(1, developersDAO.getFirstName());
-            preparedStatement.setString(2, developersDAO.getLastName());
-            preparedStatement.setString(3, developersDAO.getGender());
-            preparedStatement.setInt(4, developersDAO.getAge());
-            preparedStatement.setInt(5, developersDAO.getExperienceInYears());
-            preparedStatement.setInt(6, developersDAO.getCompanyId());
-            preparedStatement.setInt(7, developersDAO.getSalary());
-            preparedStatement.setString(8, developersDAO.getDeveloperEmail());
-            preparedStatement.setString(9, developersDAO.getDeveloperEmail());
+        try {
+            PreparedStatement preparedStatement = prepareStatment(developersDAO);
+            preparedStatement.setString(1, developersDAO.getDeveloperEmail());
             preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -166,30 +150,34 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     }
 
     public List<DevelopersDTO> selectDevelopersByStack(String stack) {
-        ResultSet resultSet;
-        List<DevelopersDAO> listDAO;
-        List<DevelopersDTO> listOfDevelopers = new ArrayList<>();
-        try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEVELOPERS_BY_STACK)) {
-            preparedStatement.setString(1, stack);
-            resultSet = preparedStatement.executeQuery();
-            listDAO = DevelopersConverter.toDevelopersList(resultSet);
-            listOfDevelopers = listDAO.stream()
-                    .map(DevelopersConverter::fromDeveloper)
-                    .collect(Collectors.toList());
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return listOfDevelopers;
+        return selectDevelopersByParametr(SELECT_DEVELOPERS_BY_STACK, stack);
     }
 
     public List<DevelopersDTO> selectDevelopersByLevel(String level) {
+        return selectDevelopersByParametr(SELECT_DEVELOPERS_BY_LEVEL, level);
+    }
+
+    public PreparedStatement prepareStatment(DevelopersDAO developersDAO) throws SQLException {
+        Connection connection = connectionManager.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(INSERT);
+        preparedStatement.setString(1, developersDAO.getFirstName());
+        preparedStatement.setString(2, developersDAO.getLastName());
+        preparedStatement.setString(3, developersDAO.getGender());
+        preparedStatement.setInt(4, developersDAO.getAge());
+        preparedStatement.setInt(5, developersDAO.getExperienceInYears());
+        preparedStatement.setInt(6, developersDAO.getCompanyId());
+        preparedStatement.setInt(7, developersDAO.getSalary());
+        preparedStatement.setString(8, developersDAO.getDeveloperEmail());
+        return preparedStatement;
+    }
+
+    public List<DevelopersDTO> selectDevelopersByParametr(String query, String value) {
         ResultSet resultSet;
         List<DevelopersDAO> listDAO;
         List<DevelopersDTO> listOfDevelopers = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEVELOPERS_BY_LEVEL)) {
-            preparedStatement.setString(1, level);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, value);
             resultSet = preparedStatement.executeQuery();
             listDAO = DevelopersConverter.toDevelopersList(resultSet);
             listOfDevelopers = listDAO.stream()

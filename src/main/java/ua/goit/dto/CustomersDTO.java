@@ -5,7 +5,7 @@ import java.util.List;
 public class CustomersDTO {
     private long customerId;
     private String customerName;
-    List<Long> projectIds;
+    private List<Long> projectIds;
 
     public CustomersDTO() {
     }
