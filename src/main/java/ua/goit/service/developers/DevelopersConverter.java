@@ -43,16 +43,7 @@ public class DevelopersConverter {
 
         List<DevelopersDAO> developersList = new ArrayList<>();
         while (resultSet.next()) {
-            DevelopersDAO developersDAO = new DevelopersDAO();
-            developersDAO.setDeveloperId(resultSet.getLong("developer_id"));
-            developersDAO.setFirstName(resultSet.getString("first_name"));
-            developersDAO.setLastName(resultSet.getString("last_name"));
-            developersDAO.setGender(resultSet.getString("gender"));
-            developersDAO.setAge(resultSet.getInt("age"));
-            developersDAO.setExperienceInYears(resultSet.getInt("experience_in_years"));
-            developersDAO.setCompanyId(resultSet.getInt("company_id"));
-            developersDAO.setSalary(resultSet.getInt("salary"));
-            developersDAO.setDeveloperEmail(resultSet.getString("developer_email"));
+            DevelopersDAO developersDAO = toDeveloper(resultSet);
             developersList.add(developersDAO);
         }
         return developersList;
