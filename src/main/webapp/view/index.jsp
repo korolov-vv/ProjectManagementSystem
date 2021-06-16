@@ -8,13 +8,9 @@
     <table>
         <tbody>
             <tr>
-                <td><a href="/developers">Show developers</a></td>
-            </tr>
-            <tr>
-                <td><a href="/developers/add">Add book</a></td>
-            </tr>
-            <tr>
-                <td><a href="/projects">Show journals</a></td>
+                <td><button type="button"><a href="/developers">DEVELOPERS</a></button></td>
+                <td><button type="button"><a href="/projects">PROJECTS</a></button></td>
+                <td><button type="button"><a href="/companies">COMPANIES</a></button></td>
             </tr>
         </tbody>
      </table>

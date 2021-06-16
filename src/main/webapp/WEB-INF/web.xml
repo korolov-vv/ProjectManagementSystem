@@ -7,7 +7,7 @@
 
     <servlet>
         <servlet-name>MainServlet</servlet-name>
-        <servlet-class>ua.goit.MainServlet</servlet-class>
+        <servlet-class>ua.goit.controller.MainServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
