@@ -5,13 +5,8 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <servlet>
-        <servlet-name>MainServlet</servlet-name>
-        <servlet-class>ua.goit.controller.MainServlet</servlet-class>
-    </servlet>
+    <listener>
+        <listener-class>ua.goit.config.AppInit</listener-class>
+    </listener>
 
-    <servlet-mapping>
-        <servlet-name>MainServlet</servlet-name>
-        <url-pattern></url-pattern>
-    </servlet-mapping>
 </web-app>

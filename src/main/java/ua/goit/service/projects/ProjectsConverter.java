@@ -22,21 +22,13 @@ public class ProjectsConverter {
     }
 
     public static ProjectsDAO toProject(ResultSet resultSet) throws SQLException {
-        return getherProjectsDao(resultSet);
+        return toProjectsList(resultSet).get(0);
     }
 
     public static List<ProjectsDAO> toProjectsList(ResultSet resultSet) throws SQLException {
         List<ProjectsDAO> projectsDAOList = new ArrayList<>();
         while (resultSet.next()) {
-            ProjectsDAO projectsDAO = getherProjectsDao(resultSet);
-            projectsDAOList.add(projectsDAO);
-        }
-        return projectsDAOList;
-    }
-
-    private static ProjectsDAO getherProjectsDao(ResultSet resultSet) throws SQLException {
-        ProjectsDAO projectsDAO = new ProjectsDAO();
-        while (resultSet.next()) {
+            ProjectsDAO projectsDAO = new ProjectsDAO();
             projectsDAO.setProjectId(resultSet.getLong("project_id"));
             projectsDAO.setProjectName(resultSet.getString("project_name"));
             projectsDAO.setStage(resultSet.getString("stage"));
@@ -44,7 +36,8 @@ public class ProjectsConverter {
             projectsDAO.setCoast(resultSet.getInt("coast"));
             projectsDAO.setNumberOfDevelopers(resultSet.getInt("number_of_developers"));
             projectsDAO.setDateOfBeginning(resultSet.getDate("date_of_beginning"));
+            projectsDAOList.add(projectsDAO);
         }
-        return projectsDAO;
+        return projectsDAOList;
     }
 }

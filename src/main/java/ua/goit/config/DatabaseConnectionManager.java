@@ -11,6 +11,7 @@ import java.util.Objects;
 public class DatabaseConnectionManager {
     private static HikariDataSource ds;
 
+
     public DatabaseConnectionManager() {
     }
 
@@ -50,9 +51,11 @@ public class DatabaseConnectionManager {
         config.setMaximumPoolSize(10);
         config.setIdleTimeout(10_000);
         config.setConnectionTimeout(10_000);
+        config.setDriverClassName(propertiesLoader.getProperty("jdbc.driver"));
         ds = new HikariDataSource(config);
     }
 
+//Should be delete, after webapp will be implemented
     private void initDataSource(String host, String databaseName, String username, String password) {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(String.format("jdbc:postgresql://%s/%s", host, databaseName));

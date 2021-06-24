@@ -4,7 +4,7 @@
         <title>COMPANIES</title>
     </head>
     <body>
-    <p>Companie'%27's operations</p>
+    <p>Companie's operations</p>
     <table>
         <tbody>
             <tr>

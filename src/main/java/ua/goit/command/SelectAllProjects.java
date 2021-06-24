@@ -1,6 +1,6 @@
 package ua.goit.command;
 
-import ua.goit.config.DatabaseConnectionManager;
+import com.zaxxer.hikari.HikariDataSource;
 import ua.goit.dao.ProjectsRepository;
 import ua.goit.service.projects.ProjectsConverter;
 import ua.goit.view.Console;
@@ -8,11 +8,11 @@ import ua.goit.view.Console;
 import java.util.stream.Collectors;
 
 public class SelectAllProjects implements Command {
-    private DatabaseConnectionManager connectionManager;
+    private HikariDataSource dataSource;
     private Console console;
 
-    public SelectAllProjects(DatabaseConnectionManager connectionManager, Console console) {
-        this.connectionManager = connectionManager;
+    public SelectAllProjects(HikariDataSource dataSource, Console console) {
+        this.dataSource = dataSource;
         this.console = console;
     }
 
@@ -28,7 +28,7 @@ public class SelectAllProjects implements Command {
     }
 
     private void selectAllProjects() {
-        ProjectsRepository projRepo = new ProjectsRepository(connectionManager);
+        ProjectsRepository projRepo = new ProjectsRepository(dataSource);
         System.out.println(("There are all projects: "));
         projRepo.findAllProjects().stream()
                 .map(ProjectsConverter::fromProject)

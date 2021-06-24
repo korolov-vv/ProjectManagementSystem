@@ -4,7 +4,7 @@
         <title>DEVELOPERS</title>
     </head>
     <body>
-    <p>Developer'%27's operations</p>
+    <p>Developer's operations</p>
     <table>
         <tbody>
             <tr>

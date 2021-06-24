@@ -1,5 +1,6 @@
 package ua.goit.controller;
 
+import com.zaxxer.hikari.HikariDataSource;
 import ua.goit.command.*;
 
 import ua.goit.config.DatabaseConnectionManager;
@@ -11,19 +12,21 @@ import java.util.List;
 
 public class MainController {
     DatabaseConnectionManager connectionManager;
+    HikariDataSource dataSource;
     private Console console;
     private List<Command> commands;
 
-    public MainController(DatabaseConnectionManager connectionManager, Console console) {
+    public MainController(DatabaseConnectionManager connectionManager, HikariDataSource dataSource, Console console) {
         this.connectionManager = connectionManager;
         this.console = console;
+        this.dataSource = dataSource;
         this.commands = new ArrayList<>(Arrays.asList(
                 new Help(console),
                 new SelectSumSalary(connectionManager,console),
                 new SelectDevelopersFromProject(connectionManager, console),
                 new SelectDevelopersByStack(connectionManager, console),
                 new SelectdevelopersByLevel(connectionManager, console),
-                new SelectAllProjects(connectionManager, console)));
+                new SelectAllProjects(dataSource, console)));
     }
 
     public void run() {
