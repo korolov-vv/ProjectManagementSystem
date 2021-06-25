@@ -9,8 +9,8 @@
         <tbody>
             <tr>
                 <td><button type="button"><a href="/projects">CREATE PROJECT</a></button></td>
-                <td><button type="button"><a href="/projects">FIND PROJECT BY NAME</a></button></td>
-                <td><button type="button"><a href="/projects">UPDATE PROJECT</a></button></td>
+                <td><a href="/projects/enterName"><button type="button">FIND PROJECT BY NAME</a></button></td>
+                <td><a href="/projects"><button type="button">UPDATE PROJECT</a></button></td>
             </tr>
             <tr>
                 <td><button type="button"><a href="/projects">DELETE PROJECT</a></button></td>

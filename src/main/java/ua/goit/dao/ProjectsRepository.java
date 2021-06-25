@@ -21,7 +21,7 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
             "number_of_developers=?, date_of_beginning=? " +
             "WHERE project_id=?;";
     private static final String DELETE = "DELETE FROM projects WHERE project_id=?;";
-    private static final String SELECT_PROJECT_BY_NAME = "SELECT project_id, project_name, stage, time_period, coast " +
+    private static final String SELECT_PROJECT_BY_NAME = "SELECT project_id, project_name, stage, time_period, coast, " +
             "number_of_developers, date_of_beginning " +
             "FROM projects WHERE project_name = ?;";
     private static final String SELECT_ALL_PROJECTS = "SELECT project_id, project_name, stage, time_period, coast, " +
