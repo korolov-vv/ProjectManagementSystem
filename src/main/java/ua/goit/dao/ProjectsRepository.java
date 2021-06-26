@@ -20,7 +20,7 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
     private static final String UPDATE = "UPDATE projects SET project_name=?, stage=?, time_period=?, coast=? " +
             "number_of_developers=?, date_of_beginning=? " +
             "WHERE project_id=?;";
-    private static final String DELETE = "DELETE FROM projects WHERE project_id=?;";
+    private static final String DELETE = "DELETE FROM projects WHERE project_name=?;";
     private static final String SELECT_PROJECT_BY_NAME = "SELECT project_id, project_name, stage, time_period, coast, " +
             "number_of_developers, date_of_beginning " +
             "FROM projects WHERE project_name = ?;";
@@ -91,11 +91,10 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
         }
     }
 
-    @Override
-    public void delete(long id) {
+    public void delete(String name) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setString(1, name);
             preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();

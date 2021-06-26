@@ -25,7 +25,7 @@ public class SkillsService {
         return SkillsConverter.fromSkill(updatedSkillsDAO);
     }
 
-    public void delete(int id) {
+    public void delete(String id) {
         repository.delete(id);
     }
 }

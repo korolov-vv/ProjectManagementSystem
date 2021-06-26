@@ -79,10 +79,10 @@ public class SkillsRepository implements Repository<SkillsDAO> {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(String id) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connectionManager.getConnection().prepareStatement(DELETE)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setLong(1, Long.getLong(id));
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

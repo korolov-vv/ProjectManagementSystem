@@ -25,7 +25,7 @@ public class ProjectService {
         return ProjectsConverter.fromProject(updatedProjectsDAO);
     }
 
-    public void delete(long id) {
-        repository.delete(id);
+    public void delete(String name) {
+        repository.delete(name);
     }
 }

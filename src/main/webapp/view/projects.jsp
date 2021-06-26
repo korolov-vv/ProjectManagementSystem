@@ -13,7 +13,7 @@
                 <td><a href="/projects"><button type="button">UPDATE PROJECT</a></button></td>
             </tr>
             <tr>
-                <td><button type="button"><a href="/projects">DELETE PROJECT</a></button></td>
+                <td><a href="/projects/enterNameForDelete"><button type="button">DELETE PROJECT</a></button></td>
                 <td><button type="button"><a href="/projects/list">FIND ALL PROJECTS</a></button></td>
             </tr>
             <tr>

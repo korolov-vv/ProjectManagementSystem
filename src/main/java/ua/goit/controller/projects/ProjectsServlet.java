@@ -1,4 +1,4 @@
-package ua.goit.controller;
+package ua.goit.controller.projects;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

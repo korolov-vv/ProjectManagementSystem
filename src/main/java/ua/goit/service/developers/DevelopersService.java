@@ -27,7 +27,7 @@ public class DevelopersService {
         return DevelopersConverter.fromDeveloper(updatedDevelopersDAO);
     }
 
-    public void delete(long id) {
-        repository.delete(id);
+    public void delete(String email) {
+        repository.delete(email);
     }
 }

@@ -9,5 +9,5 @@ public interface Repository<T> {
 
     void update(T entity);
 
-    void delete(long id);
+    void delete(String name);
 }

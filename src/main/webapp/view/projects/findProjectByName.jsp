@@ -22,12 +22,14 @@
                      <td>${project.stage}</td>
                      <td>${project.stage}</td>
                  </tr>
-        </tbody>
-    </table>
-    <table>
-         <thead>
-             <tr>
-                 <td><button type="button"><a href="/">BACK TO THE MAIN</a></button></td>
-             </tr>
-         </thead>
-    </table>
+            </tbody>
+        </table>
+        <table>
+             <thead>
+                 <tr>
+                     <td><button type="button"><a href="/">BACK TO THE MAIN</a></button></td>
+                 </tr>
+             </thead>
+        </table>
+    </body>
+</html>

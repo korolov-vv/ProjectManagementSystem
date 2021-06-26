@@ -80,10 +80,10 @@ public class CustomersRepository implements Repository<CustomersDAO> {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(String name) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setString(1, name);
             preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();

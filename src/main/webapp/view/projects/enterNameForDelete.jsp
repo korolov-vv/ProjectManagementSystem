@@ -5,9 +5,9 @@
         <title>Enter data</title>
     </head>
     <body>
-        <form action="project" accept-charset="utf-8" method="get" >
+        <form action="deleteProject" accept-charset="utf-8" method="delete" >
             name:<input type="text" name="name" placeholder="type name"/>
-            <input type="submit" value="Submit"/>
+            <input type="submit" value="Delete"/>
         </form>
     <table>
          <thead>

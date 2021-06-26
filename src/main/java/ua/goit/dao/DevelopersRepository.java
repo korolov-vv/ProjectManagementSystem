@@ -90,10 +90,10 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(String email) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setString(1, email);
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
