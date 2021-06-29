@@ -71,7 +71,7 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     @Override
     public void create(DevelopersDAO developersDAO) {
         try {
-            PreparedStatement preparedStatement = prepareStatment(developersDAO);
+            PreparedStatement preparedStatement = prepareStatment(developersDAO, INSERT);
             preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -81,7 +81,7 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     @Override
     public void update(DevelopersDAO developersDAO) {
         try {
-            PreparedStatement preparedStatement = prepareStatment(developersDAO);
+            PreparedStatement preparedStatement = prepareStatment(developersDAO, UPDATE);
             preparedStatement.setString(1, developersDAO.getDeveloperEmail());
             preparedStatement.execute();
         } catch (SQLException ex) {
@@ -157,9 +157,9 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
         return selectDevelopersByParametr(SELECT_DEVELOPERS_BY_LEVEL, level);
     }
 
-    public PreparedStatement prepareStatment(DevelopersDAO developersDAO) throws SQLException {
+    public PreparedStatement prepareStatment(DevelopersDAO developersDAO, String statement) throws SQLException {
         Connection connection = connectionManager.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(INSERT);
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
         preparedStatement.setString(1, developersDAO.getFirstName());
         preparedStatement.setString(2, developersDAO.getLastName());
         preparedStatement.setString(3, developersDAO.getGender());

@@ -265,3 +265,9 @@ WHERE developer_id=9;
 
 ALTER TABLE skills
 DROP COLUMN developer_id;
+
+ALTER TABLE developers_on_projects
+ADD PRIMARY KEY (project_id,developer_id);
+
+ALTER TABLE customers_and_companies
+ADD PRIMARY KEY (project_id,customer_id,company_id);
