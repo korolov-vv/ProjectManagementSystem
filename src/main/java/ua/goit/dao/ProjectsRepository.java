@@ -43,7 +43,7 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return null;
+        return new ProjectsDAO();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return null;
+        return new ProjectsDAO();
     }
 
     @Override

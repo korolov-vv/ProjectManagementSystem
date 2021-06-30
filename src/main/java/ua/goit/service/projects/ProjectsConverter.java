@@ -22,7 +22,9 @@ public class ProjectsConverter {
     }
 
     public static ProjectsDAO toProject(ResultSet resultSet) throws SQLException {
-        return toProjectsList(resultSet).get(0);
+        if(!resultSet.next()){
+            return new ProjectsDAO();
+        }else return toProjectsList(resultSet).get(0);
     }
 
     public static List<ProjectsDAO> toProjectsList(ResultSet resultSet) throws SQLException {
