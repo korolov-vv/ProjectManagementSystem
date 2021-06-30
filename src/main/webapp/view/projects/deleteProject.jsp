@@ -6,7 +6,7 @@
     </head>
     <body>
         <c:set var="name" value="${name}" />
-        <H3 style="colour:red">name</H3>
+        <H3 style="colour:red">${name}</H3>
         <table>
              <thead>
                  <tr>

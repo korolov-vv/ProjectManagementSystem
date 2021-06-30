@@ -30,6 +30,7 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
 
     public ProjectsRepository(HikariDataSource dataSource) {
         this.dataSource = dataSource;
+
     }
 
     @Override

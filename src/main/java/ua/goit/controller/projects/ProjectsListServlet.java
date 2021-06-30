@@ -1,6 +1,8 @@
 package ua.goit.controller.projects;
 
 import ua.goit.config.DatabaseConnectionManager;
+import ua.goit.dao.CustomersAndCompaniesRepository;
+import ua.goit.dao.DevelopersOnProjectsRepository;
 import ua.goit.dao.ProjectsRepository;
 import ua.goit.dto.ProjectsDTO;
 import ua.goit.service.projects.ProjectsConverter;
@@ -17,16 +19,20 @@ import java.util.stream.Collectors;
 @WebServlet("/projects/list")
 public class ProjectsListServlet extends HttpServlet {
 
-    private ProjectsRepository repository;
+    private ProjectsRepository projectsRepository;
+    private DevelopersOnProjectsRepository developersOnProjectsRepository;
+    private CustomersAndCompaniesRepository customersAndCompaniesRepository;
 
     @Override
     public void init() {
-        this.repository = new ProjectsRepository(DatabaseConnectionManager.getDataSource());
+        this.projectsRepository = new ProjectsRepository(DatabaseConnectionManager.getDataSource());
+        this.developersOnProjectsRepository = new DevelopersOnProjectsRepository(DatabaseConnectionManager.getDataSource());
+        this.customersAndCompaniesRepository = new CustomersAndCompaniesRepository(DatabaseConnectionManager.getDataSource());
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<ProjectsDTO> projectsDTOList = repository.findAllProjects().stream()
+        List<ProjectsDTO> projectsDTOList = projectsRepository.findAllProjects().stream()
                 .map(ProjectsConverter::fromProject)
                 .collect(Collectors.toList());
         req.setAttribute("projects", projectsDTOList);

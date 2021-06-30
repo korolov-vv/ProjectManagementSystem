@@ -1,7 +1,10 @@
 package ua.goit.controller.projects;
 
 import ua.goit.config.DatabaseConnectionManager;
+import ua.goit.dao.CustomersAndCompaniesRepository;
+import ua.goit.dao.DevelopersOnProjectsRepository;
 import ua.goit.dao.ProjectsRepository;
+import ua.goit.dao.model.ProjectsDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,19 +15,31 @@ import java.io.IOException;
 
 @WebServlet("/projects/deleteProject")
 public class DeleteProjectServlet extends HttpServlet {
-    private ProjectsRepository repository;
+    private ProjectsRepository projectsRepository;
+    private DevelopersOnProjectsRepository developersOnProjectsRepository;
+    private CustomersAndCompaniesRepository customersAndCompaniesRepository;
 
     @Override
     public void init() {
-        this.repository = new ProjectsRepository(DatabaseConnectionManager.getDataSource());
+        this.projectsRepository = new ProjectsRepository(DatabaseConnectionManager.getDataSource());
+        this.developersOnProjectsRepository = new DevelopersOnProjectsRepository(DatabaseConnectionManager.getDataSource());
+        this.customersAndCompaniesRepository = new CustomersAndCompaniesRepository(DatabaseConnectionManager.getDataSource());
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
-        repository.delete(name);
-        req.setAttribute("name", name);
-        req.getRequestDispatcher("projects/deleteProject.jsp").forward(req, resp);
+        ProjectsDAO projectsDAOForDelete = projectsRepository.findByUniqueValue(name);
+        long projectId = projectsDAOForDelete.getProjectId();
+        if((developersOnProjectsRepository.findByProject(projectId)).getProjectId() == projectId); {
+            developersOnProjectsRepository.deleteForProjects(projectId);
+        }
+        if((customersAndCompaniesRepository.findForProject(projectId)).getProjectId() == projectId) {
+            customersAndCompaniesRepository.deleteForProject(projectId);
+        }
+        projectsRepository.delete(name);
+        req.setAttribute("name", projectsDAOForDelete.getProjectName());
+        req.getRequestDispatcher("/view/projects/deleteProject.jsp").forward(req, resp);
     }
 
 }

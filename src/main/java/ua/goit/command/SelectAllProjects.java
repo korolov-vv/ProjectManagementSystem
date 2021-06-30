@@ -1,6 +1,8 @@
 package ua.goit.command;
 
 import com.zaxxer.hikari.HikariDataSource;
+import ua.goit.dao.CustomersAndCompaniesRepository;
+import ua.goit.dao.DevelopersOnProjectsRepository;
 import ua.goit.dao.ProjectsRepository;
 import ua.goit.service.projects.ProjectsConverter;
 import ua.goit.view.Console;
@@ -10,6 +12,8 @@ import java.util.stream.Collectors;
 public class SelectAllProjects implements Command {
     private HikariDataSource dataSource;
     private Console console;
+    private DevelopersOnProjectsRepository developersOnProjectsRepository;
+    private CustomersAndCompaniesRepository customersAndCompaniesRepository;
 
     public SelectAllProjects(HikariDataSource dataSource, Console console) {
         this.dataSource = dataSource;

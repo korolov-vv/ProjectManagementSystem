@@ -1,6 +1,6 @@
 package ua.goit.dao;
 
-import ua.goit.config.DatabaseConnectionManager;
+import com.zaxxer.hikari.HikariDataSource;
 import ua.goit.dao.model.DevelopersOnProjectsDAO;
 import ua.goit.service.developers.DevelopersOnProjectsConverter;
 
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class DevelopersOnProjectsRepository implements MultiEntityRepository<DevelopersOnProjectsDAO> {
 
-    private final DatabaseConnectionManager connectionManager;
+    private final HikariDataSource connectionManager;
 
     private static final String INSERT = "INSERT INTO developers_on_projects (developer_id, project_id)" +
             "VALUES (?, ?);";
@@ -29,7 +29,11 @@ public class DevelopersOnProjectsRepository implements MultiEntityRepository<Dev
             "FROM developers_on_projects " +
             "WHERE developer_id=? and project_id=?;";
 
-    public DevelopersOnProjectsRepository(DatabaseConnectionManager connectionManager) {
+    private static final String SELECT_BY_PROJECT = "SELECT developer_id, project_id " +
+            "FROM developers_on_projects " +
+            "WHERE project_id=?;";
+
+    public DevelopersOnProjectsRepository(HikariDataSource connectionManager) {
         this.connectionManager = connectionManager;
     }
 
@@ -47,8 +51,8 @@ public class DevelopersOnProjectsRepository implements MultiEntityRepository<Dev
     public void update(DevelopersOnProjectsDAO developersOnProjectsDAO) {
         try {
             PreparedStatement preparedStatement = prepareStatement(developersOnProjectsDAO, UPDATE);
-            preparedStatement.setString(1, String.valueOf(developersOnProjectsDAO.getDeveloperId()));
-            preparedStatement.setString(2, String.valueOf(developersOnProjectsDAO.getProjectId()));
+            preparedStatement.setLong(1, developersOnProjectsDAO.getDeveloperId());
+            preparedStatement.setLong(2, developersOnProjectsDAO.getProjectId());
             preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -60,8 +64,22 @@ public class DevelopersOnProjectsRepository implements MultiEntityRepository<Dev
         DevelopersOnProjectsDAO developersOnProjectsDAO = new DevelopersOnProjectsDAO();
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEVELOPER_ON_PROJECT)) {
-            preparedStatement.setString(1, String.valueOf(developerId));
-            preparedStatement.setString(2, String.valueOf(projectId));
+            preparedStatement.setLong(1, developerId);
+            preparedStatement.setLong(2, projectId);
+            resultSet = preparedStatement.executeQuery();
+            developersOnProjectsDAO = DevelopersOnProjectsConverter.toDeveloperOnProject(resultSet);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return developersOnProjectsDAO;
+    }
+
+    public DevelopersOnProjectsDAO findByProject(long projectId) {
+        ResultSet resultSet;
+        DevelopersOnProjectsDAO developersOnProjectsDAO = new DevelopersOnProjectsDAO();
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_PROJECT)) {
+            preparedStatement.setLong(1, projectId);
             resultSet = preparedStatement.executeQuery();
             developersOnProjectsDAO = DevelopersOnProjectsConverter.toDeveloperOnProject(resultSet);
         } catch (SQLException ex) {
@@ -73,28 +91,28 @@ public class DevelopersOnProjectsRepository implements MultiEntityRepository<Dev
     public void deleteUniqueRecord(long developerId, long projectId) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_UNIQUE_VALUE)) {
-            preparedStatement.setString(1, String.valueOf(developerId));
-            preparedStatement.setString(2, String.valueOf(projectId));
+            preparedStatement.setLong(1, developerId);
+            preparedStatement.setLong(2, projectId);
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void deleteForDevelopers(String developerId) {
+    public void deleteForDevelopers(long developerId) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FOR_DEVELOPERS)) {
-            preparedStatement.setString(1, developerId);
+            preparedStatement.setLong(1, developerId);
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void deleteForProjects(String projectId) {
+    public void deleteForProjects(long projectId) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FOR_PROJECTS)) {
-            preparedStatement.setString(1, projectId);
+            preparedStatement.setLong(1, projectId);
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -104,8 +122,8 @@ public class DevelopersOnProjectsRepository implements MultiEntityRepository<Dev
     public PreparedStatement prepareStatement(DevelopersOnProjectsDAO developersOnProjectsDAO, String statement) throws SQLException {
         Connection connection = connectionManager.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.setString(1, String.valueOf(developersOnProjectsDAO.getDeveloperId()));
-        preparedStatement.setString(2, String.valueOf(developersOnProjectsDAO.getProjectId()));
+        preparedStatement.setLong(1, developersOnProjectsDAO.getDeveloperId());
+        preparedStatement.setLong(2, developersOnProjectsDAO.getProjectId());
         return preparedStatement;
     }
 }
