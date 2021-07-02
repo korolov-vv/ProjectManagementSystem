@@ -5,25 +5,26 @@ import ua.goit.dao.model.ProjectsDAO;
 import ua.goit.service.projects.ProjectsConverter;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectsRepository implements Repository<ProjectsDAO> {
     private final HikariDataSource dataSource;
 
-    private static final String INSERT = "INSERT INTO projects (project_id, project_name, stage, time_period, coast " +
+    private static final String INSERT = "INSERT INTO projects (project_id, project_name, stage, time_period, coast, " +
             "number_of_developers, date_of_beginning) " +
             "VALUES (default, ?, ?, ?, ?, ?, ?);";
-    private static final String SELECT_PROJECTS_BY_ID = "SELECT project_id, project_name, stage, time_period, coast " +
+    private static final String SELECT_PROJECTS_BY_ID = "SELECT project_id, project_name, stage, time_period, coast, " +
             "number_of_developers, date_of_beginning) " +
-            "FROM projects WHERE project_id = ?;";
-    private static final String UPDATE = "UPDATE projects SET project_name=?, stage=?, time_period=?, coast=? " +
+            "FROM projects WHERE project_id=?;";
+    private static final String UPDATE = "UPDATE projects SET project_name=?, stage=?, time_period=?, coast=?, " +
             "number_of_developers=?, date_of_beginning=? " +
             "WHERE project_id=?;";
     private static final String DELETE = "DELETE FROM projects WHERE project_name=?;";
     private static final String SELECT_PROJECT_BY_NAME = "SELECT project_id, project_name, stage, time_period, coast, " +
             "number_of_developers, date_of_beginning " +
-            "FROM projects WHERE project_name = ?;";
+            "FROM projects WHERE project_name=?;";
     private static final String SELECT_ALL_PROJECTS = "SELECT project_id, project_name, stage, time_period, coast, " +
             "number_of_developers, date_of_beginning " +
             "FROM projects";
@@ -68,7 +69,7 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
             preparedStatement.setInt(3, projectsDAO.getTimePeriod());
             preparedStatement.setInt(4, projectsDAO.getCoast());
             preparedStatement.setInt(5, projectsDAO.getNumberOfDevelopers());
-            preparedStatement.setDate(6, (Date) projectsDAO.getDateOfBeginning());
+            preparedStatement.setDate(6, Date.valueOf((LocalDate) projectsDAO.getDateOfBeginning()));
             preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -85,7 +86,7 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
             preparedStatement.setInt(4, projectsDAO.getCoast());
             preparedStatement.setLong(5, projectsDAO.getProjectId());
             preparedStatement.setInt(5, projectsDAO.getNumberOfDevelopers());
-            preparedStatement.setDate(6, (Date) projectsDAO.getDateOfBeginning());
+            preparedStatement.setDate(6, Date.valueOf((LocalDate) projectsDAO.getDateOfBeginning()));
             preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();

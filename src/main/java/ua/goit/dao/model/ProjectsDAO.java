@@ -1,6 +1,6 @@
 package ua.goit.dao.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class ProjectsDAO {
     private long projectId;
@@ -9,13 +9,13 @@ public class ProjectsDAO {
     private int timePeriod;
     private int coast;
     private int numberOfDevelopers;
-    private Date dateOfBeginning;
+    private LocalDate dateOfBeginning;
 
     public ProjectsDAO() {
     }
 
     public ProjectsDAO(long projectId, String projectName, String stage, int timePeriod, int coast,
-                       int numberOfDevelopers, Date dateOfBeginning) {
+                       int numberOfDevelopers, LocalDate dateOfBeginning) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.stage = stage;
@@ -73,11 +73,11 @@ public class ProjectsDAO {
         this.numberOfDevelopers = numberOfDevelopers;
     }
 
-    public Date getDateOfBeginning() {
+    public LocalDate getDateOfBeginning() {
         return dateOfBeginning;
     }
 
-    public void setDateOfBeginning(Date dateOfBeginning) {
+    public void setDateOfBeginning(LocalDate dateOfBeginning) {
         this.dateOfBeginning = dateOfBeginning;
     }
 

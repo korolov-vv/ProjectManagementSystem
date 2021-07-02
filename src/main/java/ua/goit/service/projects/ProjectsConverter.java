@@ -5,6 +5,7 @@ import ua.goit.dto.ProjectsDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +23,10 @@ public class ProjectsConverter {
     }
 
     public static ProjectsDAO toProject(ResultSet resultSet) throws SQLException {
-        if(!resultSet.next()){
-            return new ProjectsDAO();
-        }else return toProjectsList(resultSet).get(0);
+        if(resultSet.isBeforeFirst()){
+            return toProjectsList(resultSet).get(0);
+        }
+        return new ProjectsDAO();
     }
 
     public static List<ProjectsDAO> toProjectsList(ResultSet resultSet) throws SQLException {
@@ -37,7 +39,7 @@ public class ProjectsConverter {
             projectsDAO.setTimePeriod(resultSet.getInt("time_period"));
             projectsDAO.setCoast(resultSet.getInt("coast"));
             projectsDAO.setNumberOfDevelopers(resultSet.getInt("number_of_developers"));
-            projectsDAO.setDateOfBeginning(resultSet.getDate("date_of_beginning"));
+            projectsDAO.setDateOfBeginning(LocalDate.parse(resultSet.getString("date_of_beginning")));
             projectsDAOList.add(projectsDAO);
         }
         return projectsDAOList;
