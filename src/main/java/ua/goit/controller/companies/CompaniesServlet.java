@@ -1,4 +1,4 @@
-package ua.goit.controller;
+package ua.goit.controller.companies;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/developers/enterId")
-public class EnterIdServlet extends HttpServlet {
+@WebServlet("/companies")
+public class CompaniesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/view/developers/enterId.jsp").forward(req, resp);
+        req.getRequestDispatcher("/view/companies.jsp").forward(req, resp);
     }
 }

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class SkillsConverter {
     public static SkillsDAO toSkill(SkillsDTO skillsDTO) {
-        return new SkillsDAO(skillsDTO.getRecordId(), skillsDTO.getSatck(),
+        return new SkillsDAO(skillsDTO.getRecordId(), skillsDTO.getStack(),
                 skillsDTO.getLevel(), skillsDTO.getDeveloperEmail());
     }
 

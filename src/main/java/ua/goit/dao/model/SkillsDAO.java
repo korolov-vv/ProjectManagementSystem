@@ -52,9 +52,9 @@ public class SkillsDAO {
     public String toString() {
         return "Skills{" +
                 "recordId=" + recordId +
-                ", satck=" + satck +
+                ", stack=" + satck +
                 ", level=" + level +
-                ", developer_id='" + developerEmail + '\'' +
+                ", developer_email='" + developerEmail + '\'' +
                 '}';
     }
 }

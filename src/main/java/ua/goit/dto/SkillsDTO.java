@@ -5,16 +5,16 @@ import ua.goit.dao.model.Stack;
 
 public class SkillsDTO {
     private long recordId;
-    private Stack satck;
+    private Stack stack;
     private Levels level;
     private String developerEmail;
 
     public SkillsDTO() {
     }
 
-    public SkillsDTO(long recordId, Stack satck, Levels level, String developerEmail) {
+    public SkillsDTO(long recordId, Stack stack, Levels level, String developerEmail) {
         this.recordId = recordId;
-        this.satck = satck;
+        this.stack = stack;
         this.level = level;
         this.developerEmail = developerEmail;
     }
@@ -27,12 +27,12 @@ public class SkillsDTO {
         this.recordId = recordId;
     }
 
-    public Stack getSatck() {
-        return satck;
+    public Stack getStack() {
+        return stack;
     }
 
-    public void setSatck(Stack satck) {
-        this.satck = satck;
+    public void setStack(Stack stack) {
+        this.stack = stack;
     }
 
     public Levels getLevel() {
@@ -55,9 +55,9 @@ public class SkillsDTO {
     public String toString() {
         return "Skills{" +
                 "recordId=" + recordId +
-                ", satck=" + satck +
+                ", stack=" + stack +
                 ", level=" + level +
-                ", developer_id='" + developerEmail + '\'' +
+                ", developer_email='" + developerEmail + '\'' +
                 '}';
     }
 }

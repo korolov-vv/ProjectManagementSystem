@@ -1,8 +1,6 @@
 package ua.goit.dao.model;
 
-import lombok.Getter;
 
-@Getter
 public enum Stack {
     JAVA("Java"),
     CPLUS("C++"),
@@ -13,5 +11,9 @@ public enum Stack {
 
     Stack(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }
