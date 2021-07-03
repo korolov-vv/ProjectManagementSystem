@@ -33,7 +33,7 @@ public class ProjectsServlet extends HttpServlet {
     private CustomersAndCompaniesService customersAndCompaniesService;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         this.projectsRepository = new ProjectsRepository(DatabaseConnectionManager.getDataSource());
         this.developersOnProjectsRepository = new DevelopersOnProjectsRepository(DatabaseConnectionManager.getDataSource());
         this.customersAndCompaniesRepository = new CustomersAndCompaniesRepository(DatabaseConnectionManager.getDataSource());
@@ -49,14 +49,14 @@ public class ProjectsServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProjectsDTO projectsDTO = addProject(req, resp);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        ProjectsDTO projectsDTO = addProject(req);
         addDevelopersOnProject(req, projectsDTO);
         addCustomersAndCompanies(req, projectsDTO);
         resp.sendRedirect(req.getContextPath() + "/projects");
     }
 
-    private ProjectsDTO addProject(HttpServletRequest req, HttpServletResponse resp) {
+    private ProjectsDTO addProject(HttpServletRequest req) {
         ProjectsDTO projectsDTO = new ProjectsDTO();
         projectsDTO.setProjectName(req.getParameter("name"));
         projectsDTO.setStage(req.getParameter("stage"));

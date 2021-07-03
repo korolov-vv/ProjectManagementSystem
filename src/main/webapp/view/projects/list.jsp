@@ -22,6 +22,10 @@
                      <td>${project.dateOfBeginning}</td>
                      <td>${project.stage}</td>
                      <td>${project.stage}</td>
+                     <td> <a href="/projects/update?name=${project.projectName}">
+                             <button>Update</button>
+                          </a>
+                     </td>
                  </tr>
             </c:forEach>
         </tbody>

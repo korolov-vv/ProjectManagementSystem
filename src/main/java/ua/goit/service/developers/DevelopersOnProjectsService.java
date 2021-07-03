@@ -4,6 +4,9 @@ import ua.goit.dao.model.DevelopersOnProjectsDAO;
 import ua.goit.dao.DevelopersOnProjectsRepository;
 import ua.goit.dto.DevelopersOnProjectsDTO;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class DevelopersOnProjectsService {
     private DevelopersOnProjectsRepository repository;
 
@@ -18,6 +21,7 @@ public class DevelopersOnProjectsService {
                 developersOnProjectsDTO.getDeveloperId(),
                 developersOnProjectsDTO.getProjectId()
         );
+
         return DevelopersOnProjectsConverter.fromDevelopersOnProjects(savedDevelopersOnProjectsDAO);
     }
 
@@ -33,5 +37,12 @@ public class DevelopersOnProjectsService {
 
     public void delete(long developerId, long projectId) {
         repository.deleteUniqueRecord(developerId, projectId);
+    }
+
+    public List<DevelopersOnProjectsDTO> findByProjectId(long projectId) {
+        List<DevelopersOnProjectsDAO> DevelopersOnProjectsDAOList = repository.findByProject(projectId);
+        return DevelopersOnProjectsDAOList.stream()
+                .map(DevelopersOnProjectsConverter::fromDevelopersOnProjects)
+                .collect(Collectors.toList());
     }
 }

@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomersAndCompaniesRepository implements MultiEntityRepository<CustomersAndCompaniesDAO> {
     private final HikariDataSource connectionManager;
@@ -119,18 +121,18 @@ public class CustomersAndCompaniesRepository implements MultiEntityRepository<Cu
         return customersAndCompaniesDAO;
     }
 
-    public CustomersAndCompaniesDAO findForProject (long projectId){
+    public List<CustomersAndCompaniesDAO> findForProject (long projectId){
         ResultSet resultSet;
-        CustomersAndCompaniesDAO customersAndCompaniesDAO = new CustomersAndCompaniesDAO();
+        List<CustomersAndCompaniesDAO> customersAndCompaniesDAOList = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FOR_PROJECT)) {
             preparedStatement.setLong(1, projectId);
             resultSet = preparedStatement.executeQuery();
-            customersAndCompaniesDAO = CustomersAndCompaniesConverter.toCustomerAndCompanies(resultSet);
+            customersAndCompaniesDAOList = CustomersAndCompaniesConverter.toCustomerAndCompaniesCollection(resultSet);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return customersAndCompaniesDAO;
+        return customersAndCompaniesDAOList;
     }
 
     public PreparedStatement prepareStatement(CustomersAndCompaniesDAO customersAndCompaniesDAO, String statement) throws SQLException {

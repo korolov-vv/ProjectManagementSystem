@@ -1,6 +1,6 @@
 package ua.goit.dao;
 
-import ua.goit.config.DatabaseConnectionManager;
+import com.zaxxer.hikari.HikariDataSource;
 import ua.goit.dao.model.DevelopersDAO;
 import ua.goit.dto.DevelopersDTO;
 import ua.goit.service.developers.DevelopersConverter;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DevelopersRepository implements Repository<DevelopersDAO> {
-    private final DatabaseConnectionManager connectionManager;
+    private final HikariDataSource dataSource;
 
     private static final String INSERT = "INSERT INTO developers (developer_id, first_name, last_name, " +
             "gender, age, experience_in_years, company_id, salary, developer_email)" +
@@ -22,6 +22,11 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     private static final String SELECT_DEVELOPERS_BY_ID = "SELECT developer_id, first_name, last_name, " +
             "gender, age, experience_in_years, company_id, salary, developer_email" +
             "FROM developers WHERE developer_id = ?;";
+
+    private static final String SELECT_ALL_DEVELOPERS = "SELECT developer_id, first_name, last_name, " +
+            "gender, age, experience_in_years, company_id, salary, developer_email " +
+            "FROM developers;";
+
     private static final String UPDATE = "UPDATE developers SET first_name=?, last_name=?, " +
             "gender=?, age=?, experience_in_years=?, company_id=?, salary=?, developer_email=?" +
             "WHERE developer_email=?;";
@@ -50,13 +55,13 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
             "FROM developers d INNER JOIN skills as s on d.developer_email=s.developer_email " +
             "WHERE level::text ILIKE ?;";
 
-    public DevelopersRepository(DatabaseConnectionManager connectionManager) {
-        this.connectionManager = connectionManager;
+    public DevelopersRepository(HikariDataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     @Override
     public DevelopersDAO findById(long id) {
-        try (Connection connection = connectionManager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEVELOPERS_BY_ID)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -91,7 +96,7 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
 
     @Override
     public void delete(String email) {
-        try (Connection connection = connectionManager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
             preparedStatement.setString(1, email);
             preparedStatement.execute();
@@ -104,7 +109,7 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     public DevelopersDAO findByUniqueValue(String email) {
         ResultSet resultSet;
         DevelopersDAO developersDAO = new DevelopersDAO();
-        try (Connection connection = connectionManager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEVELOPER_BY_EMAIL)) {
             preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
@@ -115,10 +120,22 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
         return developersDAO;
     }
 
+    public List<DevelopersDAO> findAll() {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_DEVELOPERS)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return DevelopersConverter.toDevelopersCollection(resultSet);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
     public int countSumSalary(long projectId) {
         ResultSet resultSet;
         int sum = 0;
-        try (Connection connection = connectionManager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SUM_SALARY_ON_PROJECT)) {
             preparedStatement.setLong(1, projectId);
             resultSet = preparedStatement.executeQuery();
@@ -135,7 +152,7 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
         ResultSet resultSet;
         List<DevelopersDAO> listDAO;
         List<DevelopersDTO> listOfDevelopers = new ArrayList<>();
-        try (Connection connection = connectionManager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEVELOPERS_ON_PROJECT)) {
             preparedStatement.setLong(1, projectId);
             resultSet = preparedStatement.executeQuery();
@@ -158,7 +175,7 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     }
 
     public PreparedStatement prepareStatment(DevelopersDAO developersDAO, String statement) throws SQLException {
-        Connection connection = connectionManager.getConnection();
+        Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
         preparedStatement.setString(1, developersDAO.getFirstName());
         preparedStatement.setString(2, developersDAO.getLastName());
@@ -175,7 +192,7 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
         ResultSet resultSet;
         List<DevelopersDAO> listDAO;
         List<DevelopersDTO> listOfDevelopers = new ArrayList<>();
-        try (Connection connection = connectionManager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, value);
             resultSet = preparedStatement.executeQuery();

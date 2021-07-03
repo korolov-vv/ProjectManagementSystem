@@ -4,6 +4,9 @@ import ua.goit.dao.CustomersAndCompaniesRepository;
 import ua.goit.dao.model.CustomersAndCompaniesDAO;
 import ua.goit.dto.CustomersAndCompaniesDTO;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class CustomersAndCompaniesService {
     private CustomersAndCompaniesRepository repository;
 
@@ -12,7 +15,7 @@ public class CustomersAndCompaniesService {
     }
 
     public CustomersAndCompaniesDTO create(CustomersAndCompaniesDTO customersAndCompaniesDTO) {
-        CustomersAndCompaniesDAO customersAndCompaniesDAO = CustomersAndCompaniesConverter.toCustomerAndCompanies(customersAndCompaniesDTO);
+        CustomersAndCompaniesDAO customersAndCompaniesDAO = CustomersAndCompaniesConverter.toCustomerAndCompaniesCollection(customersAndCompaniesDTO);
         repository.create(customersAndCompaniesDAO);
         CustomersAndCompaniesDAO savedCustomersAndCompaniesDAO = repository.findUniqueRecord(
                 customersAndCompaniesDTO.getCompanyId(),
@@ -23,7 +26,7 @@ public class CustomersAndCompaniesService {
     }
 
     public CustomersAndCompaniesDTO update(CustomersAndCompaniesDTO customersAndCompaniesDTO) {
-        CustomersAndCompaniesDAO customersAndCompaniesDAO = CustomersAndCompaniesConverter.toCustomerAndCompanies(customersAndCompaniesDTO);
+        CustomersAndCompaniesDAO customersAndCompaniesDAO = CustomersAndCompaniesConverter.toCustomerAndCompaniesCollection(customersAndCompaniesDTO);
         repository.update(customersAndCompaniesDAO);
         CustomersAndCompaniesDAO updatedCustomersAndCompaniesDAO = repository.findUniqueRecord(
                 customersAndCompaniesDTO.getCompanyId(),
@@ -47,5 +50,12 @@ public class CustomersAndCompaniesService {
 
     public void deleteForProject(long projectId) {
         repository.deleteForProject(projectId);
+    }
+
+    public List<CustomersAndCompaniesDTO> findByProjectId(long projectId) {
+        List<CustomersAndCompaniesDAO> customersAndCompaniesDAOList = repository.findForProject(projectId);
+        return customersAndCompaniesDAOList.stream()
+                .map(CustomersAndCompaniesConverter::fromCustomerAndCompanies)
+                .collect(Collectors.toList());
     }
 }

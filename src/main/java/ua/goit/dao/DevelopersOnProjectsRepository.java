@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DevelopersOnProjectsRepository implements MultiEntityRepository<DevelopersOnProjectsDAO> {
 
@@ -74,18 +76,18 @@ public class DevelopersOnProjectsRepository implements MultiEntityRepository<Dev
         return developersOnProjectsDAO;
     }
 
-    public DevelopersOnProjectsDAO findByProject(long projectId) {
+    public List<DevelopersOnProjectsDAO> findByProject(long projectId) {
         ResultSet resultSet;
-        DevelopersOnProjectsDAO developersOnProjectsDAO = new DevelopersOnProjectsDAO();
+        List<DevelopersOnProjectsDAO> developersOnProjectsDAOList = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_PROJECT)) {
             preparedStatement.setLong(1, projectId);
             resultSet = preparedStatement.executeQuery();
-            developersOnProjectsDAO = DevelopersOnProjectsConverter.toDeveloperOnProject(resultSet);
+            developersOnProjectsDAOList = DevelopersOnProjectsConverter.toDeveloperOnProjectCollection(resultSet);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return developersOnProjectsDAO;
+        return developersOnProjectsDAOList;
     }
 
     public void deleteUniqueRecord(long developerId, long projectId) {
