@@ -28,4 +28,8 @@ public class SkillsService {
     public void delete(String id) {
         repository.delete(id);
     }
+
+    public SkillsDTO findByDeveloper(String email) {
+        return SkillsConverter.fromSkill(repository.findByUniqueValue(email));
+    }
 }

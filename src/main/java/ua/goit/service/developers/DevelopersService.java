@@ -30,4 +30,8 @@ public class DevelopersService {
     public void delete(String email) {
         repository.delete(email);
     }
+
+    public DevelopersDTO findByEmail(String email) {
+        return DevelopersConverter.fromDeveloper(repository.findByUniqueValue(email));
+    }
 }

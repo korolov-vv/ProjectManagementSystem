@@ -30,7 +30,7 @@
                      <td>${developer.experienceInYears}</td>
                      <td>${developer.salary}</td>
                      <td>${developer.developerEmail}</td>
-                     <td> <a href="/developers/update?name=${developer.developerEmail}">
+                     <td> <a href="/developers/update?email=${developer.developerEmail}">
                              <button>Update</button>
                           </a>
                      </td>

@@ -61,5 +61,6 @@ public class UpdateProjectServlet extends HttpServlet {
         projectsDTO.setNumberOfDevelopers(Integer.parseInt(req.getParameter("number of developers")));
         projectsDTO.setDateOfBeginning(LocalDate.parse(req.getParameter("start date")));
         projectService.update(projectsDTO);
+        resp.sendRedirect(req.getContextPath() + "/projects");
     }
 }
