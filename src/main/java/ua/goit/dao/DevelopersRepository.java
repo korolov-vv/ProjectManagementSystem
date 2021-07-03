@@ -30,7 +30,10 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     private static final String UPDATE = "UPDATE developers SET first_name=?, last_name=?, " +
             "gender=?, age=?, experience_in_years=?, company_id=?, salary=?, developer_email=?" +
             "WHERE developer_email=?;";
-    private static final String DELETE = "DELETE FROM developers WHERE developer_id=?;";
+
+    private static final String DELETE_BY_EMAIL = "DELETE FROM developers WHERE developer_email=?;";
+
+    private static final String DELETE_BY_ID = "DELETE FROM developers WHERE developer_id=?;";
 
     private static final String SELECT_DEVELOPER_BY_EMAIL = "SELECT developer_id, first_name, last_name, " +
             "gender, age, experience_in_years, company_id, salary, developer_email " +
@@ -97,8 +100,18 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     @Override
     public void delete(String email) {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_EMAIL)) {
             preparedStatement.setString(1, email);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteById(long id) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_EMAIL)) {
+            preparedStatement.setLong(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

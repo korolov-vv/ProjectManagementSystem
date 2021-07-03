@@ -35,6 +35,10 @@ public class DevelopersOnProjectsRepository implements MultiEntityRepository<Dev
             "FROM developers_on_projects " +
             "WHERE project_id=?;";
 
+    private static final String SELECT_BY_DEVELOPER = "SELECT developer_id, project_id " +
+            "FROM developers_on_projects " +
+            "WHERE developer_id=?;";
+
     public DevelopersOnProjectsRepository(HikariDataSource connectionManager) {
         this.connectionManager = connectionManager;
     }
@@ -77,17 +81,11 @@ public class DevelopersOnProjectsRepository implements MultiEntityRepository<Dev
     }
 
     public List<DevelopersOnProjectsDAO> findByProject(long projectId) {
-        ResultSet resultSet;
-        List<DevelopersOnProjectsDAO> developersOnProjectsDAOList = new ArrayList<>();
-        try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_PROJECT)) {
-            preparedStatement.setLong(1, projectId);
-            resultSet = preparedStatement.executeQuery();
-            developersOnProjectsDAOList = DevelopersOnProjectsConverter.toDeveloperOnProjectCollection(resultSet);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return developersOnProjectsDAOList;
+        return findByEntity(projectId, SELECT_BY_PROJECT);
+    }
+
+    public List<DevelopersOnProjectsDAO> findByDeveloper(long developerId) {
+        return findByEntity(developerId, SELECT_BY_DEVELOPER);
     }
 
     public void deleteUniqueRecord(long developerId, long projectId) {
@@ -121,11 +119,25 @@ public class DevelopersOnProjectsRepository implements MultiEntityRepository<Dev
         }
     }
 
-    public PreparedStatement prepareStatement(DevelopersOnProjectsDAO developersOnProjectsDAO, String statement) throws SQLException {
+    private PreparedStatement prepareStatement(DevelopersOnProjectsDAO developersOnProjectsDAO, String statement) throws SQLException {
         Connection connection = connectionManager.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
         preparedStatement.setLong(1, developersOnProjectsDAO.getDeveloperId());
         preparedStatement.setLong(2, developersOnProjectsDAO.getProjectId());
         return preparedStatement;
+    }
+
+    private List<DevelopersOnProjectsDAO> findByEntity(long entityId, String statement) {
+        ResultSet resultSet;
+        List<DevelopersOnProjectsDAO> developersOnProjectsDAOList = new ArrayList<>();
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(statement)) {
+            preparedStatement.setLong(1, entityId);
+            resultSet = preparedStatement.executeQuery();
+            developersOnProjectsDAOList = DevelopersOnProjectsConverter.toDeveloperOnProjectCollection(resultSet);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return developersOnProjectsDAOList;
     }
 }

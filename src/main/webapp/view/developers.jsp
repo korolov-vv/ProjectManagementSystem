@@ -13,7 +13,7 @@
                 <td><button type="button"><a href="/developers">UPDATE DEVELOPER</a></button></td>
             </tr>
             <tr>
-                <td><button type="button"><a href="/developers">DELETE DEVELOPER</a></button></td>
+                <td><button type="button"><a href="/developers/enterIdForDelete">DELETE DEVELOPER</a></button></td>
                 <td><button type="button"><a href="/developers/list">FIND ALL DEVELOPERS</a></button></td>
             </tr>
             <tr>

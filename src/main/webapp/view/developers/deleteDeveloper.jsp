@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>THE SELECTED PROJECT IS DELETED</title>
+        <title>THE SELECTED DEVELOPER IS DELETED</title>
     </head>
     <body>
-        <c:set var="name" value="${name}" />
-        <H3 style="colour:red">THE PROJECT ${name} IS DELETED</H3>
+        <c:set var="id" value="${id}" />
+        <H3 style="colour:red"> The developer ${id} is deleted</H3>
         <table>
              <thead>
                  <tr>
