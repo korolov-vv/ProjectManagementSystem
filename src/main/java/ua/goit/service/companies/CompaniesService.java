@@ -12,14 +12,14 @@ public class CompaniesService {
     }
 
     public CompaniesDTO create(CompaniesDTO companiesDTO) {
-        CompaniesDAO companiesDAO = CompaniesConverter.toCompany(companiesDTO);
+        CompaniesDAO companiesDAO = CompaniesConverter.toCompaniesCollection(companiesDTO);
         repository.create(companiesDAO);
         CompaniesDAO savedCompanyDAO = repository.findById(companiesDAO.getCompanyId());
         return CompaniesConverter.fromCompany(savedCompanyDAO);
     }
 
     public CompaniesDTO update(CompaniesDTO companiesDTO) {
-        CompaniesDAO companiesDAO = CompaniesConverter.toCompany(companiesDTO);
+        CompaniesDAO companiesDAO = CompaniesConverter.toCompaniesCollection(companiesDTO);
         repository.update(companiesDAO);
         CompaniesDAO updatedCompaniessDAO = repository.findByUniqueValue(companiesDTO.getCompanyName());
         return CompaniesConverter.fromCompany(updatedCompaniessDAO);

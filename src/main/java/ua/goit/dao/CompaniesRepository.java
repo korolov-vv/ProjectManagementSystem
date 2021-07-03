@@ -1,6 +1,6 @@
 package ua.goit.dao;
 
-import ua.goit.config.DatabaseConnectionManager;
+import com.zaxxer.hikari.HikariDataSource;
 import ua.goit.dao.model.CompaniesDAO;
 import ua.goit.service.companies.CompaniesConverter;
 
@@ -8,43 +8,45 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class CompaniesRepository implements Repository<CompaniesDAO> {
-    private final DatabaseConnectionManager connectionManager;
+    private final HikariDataSource dataSource;
 
     private static final String INSERT = "INSERT INTO companies (company_id, company_name, number_of_developers" +
             "VALUES (default, ?, ?);";
-    private static final String SELECT_COMPANIY_BY_ID = "SELECT company_id, company_name, number_of_developers" +
+    private static final String SELECT_COMPANY_BY_ID = "SELECT company_id, company_name, number_of_developers" +
             "FROM companies WHERE company_id = ?;";
+    private static final String SELECT_ALL_COMPANIES = "SELECT company_id, company_name, number_of_developers " +
+            "FROM companies;";
     private static final String UPDATE = "UPDATE companies SET company_name=?, number_of_developers=?" +
             "WHERE company_id=?;";
     private static final String DELETE = "DELETE FROM companies WHERE company_id=?;";
 
-    private static final String SELECT_COMPANIY_BY_NAME = "SELECT company_id, company_name, number_of_developers" +
+    private static final String SELECT_COMPANY_BY_NAME = "SELECT company_id, company_name, number_of_developers " +
             "FROM companies WHERE company_name = ?;";
 
-    public CompaniesRepository(DatabaseConnectionManager connectionManager) {
-        this.connectionManager = connectionManager;
+    public CompaniesRepository(HikariDataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     @Override
     public CompaniesDAO findById(long id) {
-        try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_COMPANIY_BY_ID)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_COMPANY_BY_ID)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             return CompaniesConverter.toCompany(resultSet);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
         return null;
     }
 
     @Override
     public CompaniesDAO findByUniqueValue(String companyName) {
-        try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_COMPANIY_BY_NAME)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_COMPANY_BY_NAME)) {
             preparedStatement.setString(1, companyName);
             ResultSet resultSet = preparedStatement.executeQuery();
             return CompaniesConverter.toCompany(resultSet);
@@ -52,12 +54,12 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
             ex.printStackTrace();
         }
 
-        return null;
+        return new CompaniesDAO();
     }
 
     @Override
     public void create(CompaniesDAO companiesDAO) {
-        try (Connection connection = connectionManager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {
             preparedStatement.setString(1, companiesDAO.getCompanyName());
             preparedStatement.setInt(2, companiesDAO.getNumberOfDevelopers());
@@ -69,7 +71,7 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
 
     @Override
     public void update(CompaniesDAO companiesDAO) {
-        try (Connection connection = connectionManager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE)) {
             preparedStatement.setString(1, companiesDAO.getCompanyName());
             preparedStatement.setInt(2, companiesDAO.getNumberOfDevelopers());
@@ -83,12 +85,23 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
 
     @Override
     public void delete(String name) {
-        try (Connection connection = connectionManager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
             preparedStatement.setString(1, name);
             preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public List<CompaniesDAO> findAllCompanies() {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_COMPANIES)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return CompaniesConverter.toCompaniesCollection(resultSet);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 }
