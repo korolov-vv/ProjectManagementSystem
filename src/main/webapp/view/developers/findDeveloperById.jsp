@@ -2,14 +2,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Developers</title>
+        <title>YOUR SELECTED DEVELOPER IS</title>
     </head>
     <body>
-        <p>The list of developers</p>
+        <c:set var="developer" value="${developer}" />
         <table border="1" cellpadding="5">
             <thead>
                 <tr>
-                    <td>ID</td>
                     <td>First Name</td>
                     <td>Last Name</td>
                     <td>Gender</td>
@@ -20,9 +19,7 @@
                 </tr>
             </thead>
             <tbody>
-            <c:forEach var="developer" items="${developers}">
                  <tr>
-                     <td>${developer.developerId}</td>
                      <td>${developer.firstName}</td>
                      <td>${developer.lastName}</td>
                      <td>${developer.gender}</td>
@@ -30,20 +27,15 @@
                      <td>${developer.experienceInYears}</td>
                      <td>${developer.salary}</td>
                      <td>${developer.developerEmail}</td>
-                     <td> <a href="/developers/update?name=${developer.developerEmail}">
-                             <button>Update</button>
-                          </a>
-                     </td>
                  </tr>
-            </c:forEach>
-        </tbody>
-     </table>
-         <table>
+            </tbody>
+        </table>
+        <table>
              <thead>
                  <tr>
                      <td><button type="button"><a href="/">BACK TO THE MAIN</a></button></td>
                  </tr>
              </thead>
-         </table>
+        </table>
     </body>
 </html>

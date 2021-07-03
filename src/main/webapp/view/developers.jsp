@@ -9,7 +9,7 @@
         <tbody>
             <tr>
                 <td><button type="button"><a href="/developers">CREATE DEVELOPER</a></button></td>
-                <td><button type="button"><a href="/developers">FIND DEVELOPER BY EMAIL</a></button></td>
+                <td><button type="button"><a href="/developers/enterId">FIND DEVELOPER BY ID</a></button></td>
                 <td><button type="button"><a href="/developers">UPDATE DEVELOPER</a></button></td>
             </tr>
             <tr>

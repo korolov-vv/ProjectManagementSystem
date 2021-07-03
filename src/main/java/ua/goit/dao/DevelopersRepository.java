@@ -20,7 +20,7 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
             "gender, age, experience_in_years, company_id, salary, developer_email)" +
             "VALUES (default, ?, ?, ?, ?, ?, ?, ?, ?);";
     private static final String SELECT_DEVELOPERS_BY_ID = "SELECT developer_id, first_name, last_name, " +
-            "gender, age, experience_in_years, company_id, salary, developer_email" +
+            "gender, age, experience_in_years, company_id, salary, developer_email " +
             "FROM developers WHERE developer_id = ?;";
 
     private static final String SELECT_ALL_DEVELOPERS = "SELECT developer_id, first_name, last_name, " +
@@ -70,7 +70,7 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
             ex.printStackTrace();
         }
 
-        return null;
+        return new DevelopersDAO();
     }
 
     @Override
