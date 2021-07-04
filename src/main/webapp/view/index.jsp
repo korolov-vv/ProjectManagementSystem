@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>PROJECT MANAGEMENT SYSTEM</title>
+        <style><%@include file="/view/css/style.css"%></style>
     </head>
-    <body>
-    <p>Management System</p>
-    <table>
-        <tbody>
-            <tr>
-                <td><button type="button"><a href="/developers">DEVELOPERS</a></button></td>
-                <td><button type="button"><a href="/projects">PROJECTS</a></button></td>
-                <td><button type="button"><a href="/companies">COMPANIES</a></button></td>
-            </tr>
-        </tbody>
-     </table>
-    </body>
-</html>
+<body>
+<div class="title">
+    <title class="title">PROJECT MANAGEMENT SYSTEM</title>
+</div>
+    <nav class="navMenu">
+      <a href="/developers">DEVELOPERS</a>
+      <a href="/projects">PROJECTS</a>
+      <a href="/companies">COMPANIES</a>
+      <div class="dot"></div>
+    </nav>
+</body>
