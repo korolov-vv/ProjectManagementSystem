@@ -28,6 +28,10 @@ public class CustomersAndCompaniesRepository implements MultiEntityRepository<Cu
             "FROM customers_and_companies " +
             "WHERE project_id=?;";
 
+    private static final String SELECT_FOR_COMPANY = "SELECT customer_id, company_id, project_id " +
+            "FROM customers_and_companies " +
+            "WHERE company_id=?;";
+
     private static final String DELETE_FOR_CUSTOMER = "DELETE FROM customers_and_companies WHERE customer_id=?;";
 
     private static final String DELETE_FOR_PROJECT = "DELETE FROM customers_and_companies WHERE project_id=?;";
@@ -122,11 +126,19 @@ public class CustomersAndCompaniesRepository implements MultiEntityRepository<Cu
     }
 
     public List<CustomersAndCompaniesDAO> findForProject (long projectId){
+        return getCustomersAndCompaniesForEntity(projectId, SELECT_FOR_PROJECT);
+    }
+
+    public List<CustomersAndCompaniesDAO> findForCompany (long companyId){
+        return getCustomersAndCompaniesForEntity(companyId, SELECT_FOR_COMPANY);
+    }
+
+    private List<CustomersAndCompaniesDAO> getCustomersAndCompaniesForEntity(long id, String statement) {
         ResultSet resultSet;
         List<CustomersAndCompaniesDAO> customersAndCompaniesDAOList = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FOR_PROJECT)) {
-            preparedStatement.setLong(1, projectId);
+             PreparedStatement preparedStatement = connection.prepareStatement(statement)) {
+            preparedStatement.setLong(1, id);
             resultSet = preparedStatement.executeQuery();
             customersAndCompaniesDAOList = CustomersAndCompaniesConverter.toCustomerAndCompaniesCollection(resultSet);
         } catch (SQLException throwables) {
@@ -135,7 +147,7 @@ public class CustomersAndCompaniesRepository implements MultiEntityRepository<Cu
         return customersAndCompaniesDAOList;
     }
 
-    public PreparedStatement prepareStatement(CustomersAndCompaniesDAO customersAndCompaniesDAO, String statement) throws SQLException {
+    private PreparedStatement prepareStatement(CustomersAndCompaniesDAO customersAndCompaniesDAO, String statement) throws SQLException {
         Connection connection = connectionManager.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
         preparedStatement.setLong(1, customersAndCompaniesDAO.getCompanyId());

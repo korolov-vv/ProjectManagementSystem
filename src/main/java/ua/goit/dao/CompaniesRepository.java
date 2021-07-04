@@ -15,7 +15,7 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
 
     private static final String INSERT = "INSERT INTO companies (company_id, company_name, number_of_developers" +
             "VALUES (default, ?, ?);";
-    private static final String SELECT_COMPANY_BY_ID = "SELECT company_id, company_name, number_of_developers" +
+    private static final String SELECT_COMPANY_BY_ID = "SELECT company_id, company_name, number_of_developers " +
             "FROM companies WHERE company_id = ?;";
     private static final String SELECT_ALL_COMPANIES = "SELECT company_id, company_name, number_of_developers " +
             "FROM companies;";
@@ -40,7 +40,7 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return null;
+        return new CompaniesDAO();
     }
 
     @Override
