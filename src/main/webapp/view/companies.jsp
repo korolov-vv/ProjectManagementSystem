@@ -8,7 +8,7 @@
     <table>
         <tbody>
             <tr>
-                <td><button type="button"><a href="/companies">CREATE COMPANY</a></button></td>
+                <td><button type="button"><a href="/companies/createCompany">CREATE COMPANY</a></button></td>
                 <td><button type="button"><a href="/companies/enterName">FIND COMPANY BY NAME</a></button></td>
             </tr>
             <tr>

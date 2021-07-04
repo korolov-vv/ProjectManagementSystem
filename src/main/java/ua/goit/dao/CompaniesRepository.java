@@ -13,7 +13,7 @@ import java.util.List;
 public class CompaniesRepository implements Repository<CompaniesDAO> {
     private final HikariDataSource dataSource;
 
-    private static final String INSERT = "INSERT INTO companies (company_id, company_name, number_of_developers" +
+    private static final String INSERT = "INSERT INTO companies (company_id, company_name, number_of_developers) " +
             "VALUES (default, ?, ?);";
     private static final String SELECT_COMPANY_BY_ID = "SELECT company_id, company_name, number_of_developers " +
             "FROM companies WHERE company_id = ?;";
