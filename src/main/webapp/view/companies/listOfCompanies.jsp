@@ -20,7 +20,7 @@
                      <td>${company.companyId}</td>
                      <td>${company.companyName}</td>
                      <td>${company.numberOfDevelopers}</td>
-                     <td> <a href="/companies/update?name=${developer.companyName}">
+                     <td><a href="/companies/update?name=${company.companyName}">
                              <button>Update</button>
                           </a>
                      </td>

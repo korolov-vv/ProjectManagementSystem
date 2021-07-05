@@ -17,9 +17,9 @@
                 coast:<br><input type="number" name="coast" value="<c:out value='${project.coast}' />"/></br>
                 number of developers:<br><input type="number" name="number of developers" value="<c:out value='${project.numberOfDevelopers}' />"/></br>
                 start date:<br><input type="date" name="start date" value="<c:out value='${project.dateOfBeginning}' />"/></br>
-                developers:<br><input type="text" name="developers" value="<c:out value ='${developersOnProjectsDTO.developerId}' />" /></br>
-                companies:<br><input type="text" name="companies" value="<c:out value ='${customersAndCompanies.companyId}' />"/></br>
-                customers:<br><input type="text" name="customers" value="<c:out value ='${customersAndCompanies.customerId}' />"/></br>
+                developers:<br><input type="text" name="developers" value="<c:out value ='${developersOnProjectsDTO}' />" /></br>
+                companies:<br><input type="text" name="companies" value="<c:out value ='${customersAndCompanies}' />"/></br>
+                customers:<br><input type="text" name="customers" value="<c:out value ='${customersAndCompanies}' />"/></br>
                 <br><input type="submit" value="Update"/></br>
             </form>
         <table>

@@ -58,4 +58,11 @@ public class CustomersAndCompaniesService {
                 .map(CustomersAndCompaniesConverter::fromCustomerAndCompanies)
                 .collect(Collectors.toList());
     }
+
+    public List<CustomersAndCompaniesDTO> findByCompanyId(long companyId) {
+        List<CustomersAndCompaniesDAO> customersAndCompaniesDAOList = repository.findForCompany(companyId);
+        return customersAndCompaniesDAOList.stream()
+                .map(CustomersAndCompaniesConverter::fromCustomerAndCompanies)
+                .collect(Collectors.toList());
+    }
 }

@@ -10,7 +10,6 @@
         Create developer
     </h2>
         <form action="/companies" accept-charset="utf-8" method="post" ></br>
-
             company name:<br><input type="text" name="company name" placeholder="type company name"/></br>
             number of developers:<br><input type="number" name="number of developers" placeholder="type number of developers"/></br>
             projects:<br><input type="text" name="projects" placeholder="enter projects Ids, separate by comma"/></br>

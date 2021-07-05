@@ -29,4 +29,8 @@ public class CompaniesService {
         repository.delete(name);
     }
 
+    public CompaniesDTO findByName (String name) {
+        return CompaniesConverter.fromCompany(repository.findByUniqueValue(name));
+    }
+
 }
