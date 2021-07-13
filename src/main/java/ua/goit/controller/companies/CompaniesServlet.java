@@ -61,22 +61,24 @@ public class CompaniesServlet extends HttpServlet {
 
     private List<CustomersAndCompaniesDTO> createCustomersAndCompaniesList(HttpServletRequest req, CompaniesDTO companiesDTO) {
         List<CustomersAndCompaniesDTO> customersAndCompaniesDTOList = new ArrayList<>();
-        List<Long> customers = Arrays.stream(req.getParameter("customers").split(","))
-                .map(Long::parseLong)
-                .collect(Collectors.toList());
-        List<Long> projects = Arrays.stream(req.getParameter("projects").split(","))
-                .map(Long::parseLong)
-                .collect(Collectors.toList());
-        for (int i = 0; i < customers.size() || i< projects.size(); i++) {
-            CustomersAndCompaniesDTO customersAndCompaniesDTO = new CustomersAndCompaniesDTO();
-            customersAndCompaniesDTO.setProjectId(companiesDTO.getCompanyId());
-            if(i < customers.size()) {
-                customersAndCompaniesDTO.setCustomerId(customers.get(i));
+        if(!req.getParameter("customers").equals("") && !req.getParameter("projects").equals("")) {
+            List<Long> customers = Arrays.stream(req.getParameter("customers").split(","))
+                    .map(Long::parseLong)
+                    .collect(Collectors.toList());
+            List<Long> projects = Arrays.stream(req.getParameter("projects").split(","))
+                    .map(Long::parseLong)
+                    .collect(Collectors.toList());
+            for (int i = 0; i < customers.size() || i < projects.size(); i++) {
+                CustomersAndCompaniesDTO customersAndCompaniesDTO = new CustomersAndCompaniesDTO();
+                customersAndCompaniesDTO.setProjectId(companiesDTO.getCompanyId());
+                if (i < customers.size()) {
+                    customersAndCompaniesDTO.setCustomerId(customers.get(i));
+                }
+                if (i < projects.size()) {
+                    customersAndCompaniesDTO.setCompanyId(projects.get(i));
+                }
+                customersAndCompaniesDTOList.add(customersAndCompaniesDTO);
             }
-            if(i < projects.size()) {
-                customersAndCompaniesDTO.setCompanyId(projects.get(i));
-            }
-            customersAndCompaniesDTOList.add(customersAndCompaniesDTO);
         }
         return customersAndCompaniesDTOList;
     }

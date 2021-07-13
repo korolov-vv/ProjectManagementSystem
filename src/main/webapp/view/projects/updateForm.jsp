@@ -47,7 +47,7 @@
                           <label for="date" class="placeholder">Start date</label>
                       </div>
                       <div class="input-container ic2">
-                            <input id="developers" class="input" type="text" name="developers" value="<c:out value ='${developersOnProjectsDTO}' />" />
+                            <input id="developers" class="input" type="text" name="developers" value="<c:out value ='${developersList}' />" />
                             <div class="cut cut-short"></div>
                           <label for="developers" class="placeholder">enter developer Ids, separate by comma</label>
                       </div>

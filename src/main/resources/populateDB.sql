@@ -80,6 +80,16 @@ insert into developers (developer_id, first_name, last_name, gender, age, experi
 values (DEFAULT, 'Serhii', 'Bulba', 'male', 30, 10, 1, 5000, 'y@gmail.com');
 insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, salary, developer_email)
 values (DEFAULT, 'Serhii', 'Bulba', 'male', 30, 10, 1, 5000, 'z@gmail.com');
+insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, salary, developer_email)
+values (DEFAULT, 'Serhii', 'Bulba', 'male', 30, 10, 1, 5000, 'xz@gmail.com');
+insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, salary, developer_email)
+values (DEFAULT, 'Serhii', 'Bulba', 'male', 30, 10, 1, 5000, 'cz@gmail.com');
+insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, salary, developer_email)
+values (DEFAULT, 'Serhii', 'Bulba', 'male', 30, 10, 1, 5000, 'az@gmail.com');
+insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, salary, developer_email)
+values (DEFAULT, 'Serhii', 'Bulba', 'male', 30, 10, 1, 5000, 'bz@gmail.com');
+insert into developers (developer_id, first_name, last_name, gender, age, experience_in_years, company_id, salary, developer_email)
+values (DEFAULT, 'Serhii', 'Bulba', 'male', 30, 10, 1, 5000, 'dz@gmail.com');
 
 insert into skills values (DEFAULT, 'Java', 'Junior', 'y@gmail.com');
 insert into skills values (DEFAULT, 'C++', 'Junior', 'y@gmail.com');

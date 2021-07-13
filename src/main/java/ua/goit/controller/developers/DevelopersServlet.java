@@ -71,23 +71,25 @@ public class DevelopersServlet extends HttpServlet {
     }
 
     private void addDevelopersOnProjects(HttpServletRequest req, DevelopersDTO developersDTO) {
-        String[] s = req.getParameter("projects").split(",");
-        List<Long> projectIds = Arrays.stream(s)
-                .map(Long::parseLong)
-                .collect(Collectors.toList());
+        if(!req.getParameter("projects").equals("")) {
+            String[] s = req.getParameter("projects").split(",");
+            List<Long> projectIds = Arrays.stream(s)
+                    .map(Long::parseLong)
+                    .collect(Collectors.toList());
 
-        List<DevelopersOnProjectsDTO> developersOnProjectsDTOListToAdd = projectIds.stream()
-                .map((p) -> {
-                    DevelopersOnProjectsDTO developersOnProjectsDTO = new DevelopersOnProjectsDTO();
-                    developersOnProjectsDTO.setDeveloperId(developersDTO.getDeveloperId());
-                    developersOnProjectsDTO.setProjectId(p);
-                    return developersOnProjectsDTO;
-                })
-                .filter((d) -> developersOnProjectsRepository.findUniqueValue(
-                        d.getProjectId(), d.getDeveloperId()) == null)
-                .collect(Collectors.toList());
+            List<DevelopersOnProjectsDTO> developersOnProjectsDTOListToAdd = projectIds.stream()
+                    .map((p) -> {
+                        DevelopersOnProjectsDTO developersOnProjectsDTO = new DevelopersOnProjectsDTO();
+                        developersOnProjectsDTO.setDeveloperId(developersDTO.getDeveloperId());
+                        developersOnProjectsDTO.setProjectId(p);
+                        return developersOnProjectsDTO;
+                    })
+                    .filter((d) -> developersOnProjectsRepository.findUniqueValue(
+                            d.getProjectId(), d.getDeveloperId()) == null)
+                    .collect(Collectors.toList());
 
-        developersOnProjectsDTOListToAdd.forEach(developersOnProjectsService::create);
+            developersOnProjectsDTOListToAdd.forEach(developersOnProjectsService::create);
+        }
     }
 
     private void addSkill(HttpServletRequest req, DevelopersDTO developersDTO) {

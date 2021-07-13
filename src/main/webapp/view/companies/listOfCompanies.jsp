@@ -18,13 +18,15 @@
                             <td>ID</td>
                             <td>Company Name</td>
                             <td>Number of developers</td>
+                            <td></td>
                         </tr>
                     </thead>
                     </table>
                 </div>
                 <div class="tbl-content">
-                    <table cellpadding="0" cellspacing="0" border="0"><tbody>
-                    <c:forEach var="company" items="${company}">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <tbody>
+                        <c:forEach var="company" items="${companies}">
                          <tr>
                              <td>${company.companyId}</td>
                              <td>${company.companyName}</td>

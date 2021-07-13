@@ -69,45 +69,58 @@ public class ProjectsServlet extends HttpServlet {
     }
 
     private void addDevelopersOnProject(HttpServletRequest req, ProjectsDTO projectsDTO) {
-        List<DevelopersOnProjectsDTO> developersOnProjectsDTOList;
-        String[] s = req.getParameter("developers").split(",");
-        List<Long> developerIds = Arrays.stream(s)
-                .map(Long::parseLong)
-                .collect(Collectors.toList());
-        developersOnProjectsDTOList = developerIds.stream()
-                .map((d) -> {
-                    DevelopersOnProjectsDTO developersOnProjectsDTO = new DevelopersOnProjectsDTO();
-                    developersOnProjectsDTO.setProjectId(projectsDTO.getProjectId());
-                    developersOnProjectsDTO.setDeveloperId(d);
-                    return developersOnProjectsDTO;
-                })
-                .collect(Collectors.toList());
-        developersOnProjectsDTOList.forEach(developersOnProjectsService::create);
+        if(!req.getParameter("developers").equals("")) {
+            String[] s = req.getParameter("developers").split(",");
+            Arrays.stream(s)
+                    .map(Long::parseLong)
+                    .map((d) -> {
+                        DevelopersOnProjectsDTO developersOnProjectsDTO = new DevelopersOnProjectsDTO();
+                        developersOnProjectsDTO.setProjectId(projectsDTO.getProjectId());
+                        developersOnProjectsDTO.setDeveloperId(d);
+                        return developersOnProjectsDTO;
+                    })
+                    .map(d -> developersOnProjectsRepository.findUniqueValue(d.getDeveloperId(), d.getProjectId()))
+                    .forEach(d -> {
+                        if (d.getDeveloperId() == 0 && d.getProjectId() == 0) {
+                            developersOnProjectsRepository.create(d);
+                        } else developersOnProjectsRepository.update(d);
+                    });
+        }
     }
 
     private void addCustomersAndCompanies(HttpServletRequest req, ProjectsDTO projectsDTO) {
         List<CustomersAndCompaniesDTO> customersAndCompaniesDTOList = createCustomersAndCompaniesList(req, projectsDTO);
-        customersAndCompaniesDTOList.forEach(customersAndCompaniesService::create);
+        customersAndCompaniesDTOList.stream()
+                .map((cc) ->
+                    customersAndCompaniesRepository.findUniqueRecord(cc.getCompanyId(), cc.getCustomerId(), cc.getProjectId()))
+                .forEach(c -> {
+                    if(c.getCustomerId() == 0 && c.getProjectId() == 0 && c.getCompanyId() == 0) {
+                        customersAndCompaniesRepository.create(c);
+                    } else customersAndCompaniesRepository.update(c);
+                });
     }
 
     private List<CustomersAndCompaniesDTO> createCustomersAndCompaniesList(HttpServletRequest req, ProjectsDTO projectsDTO) {
-        List<CustomersAndCompaniesDTO> customersAndCompaniesDTOList = new ArrayList<>();
-        List<Long> customers = Arrays.stream(req.getParameter("customers").split(","))
-                .map(Long::parseLong)
-                .collect(Collectors.toList());
-        List<Long> companies = Arrays.stream(req.getParameter("companies").split(","))
-                .map(Long::parseLong)
-                .collect(Collectors.toList());
-        for (int i = 0; i < customers.size() || i< companies.size(); i++) {
-            CustomersAndCompaniesDTO customersAndCompaniesDTO = new CustomersAndCompaniesDTO();
-            customersAndCompaniesDTO.setProjectId(projectsDTO.getProjectId());
-            if(i < customers.size()) {
-                customersAndCompaniesDTO.setCustomerId(customers.get(i));
+
+            List<CustomersAndCompaniesDTO> customersAndCompaniesDTOList = new ArrayList<>();
+        if (!req.getParameter("customers").equals("") && !req.getParameter("companies").equals("")) {
+            List<Long> customers = Arrays.stream(req.getParameter("customers").split(","))
+                    .map(Long::parseLong)
+                    .collect(Collectors.toList());
+            List<Long> companies = Arrays.stream(req.getParameter("companies").split(","))
+                    .map(Long::parseLong)
+                    .collect(Collectors.toList());
+            for (int i = 0; i < customers.size() || i < companies.size(); i++) {
+                CustomersAndCompaniesDTO customersAndCompaniesDTO = new CustomersAndCompaniesDTO();
+                customersAndCompaniesDTO.setProjectId(projectsDTO.getProjectId());
+                if (i < customers.size()) {
+                    customersAndCompaniesDTO.setCustomerId(customers.get(i));
+                }
+                if (i < companies.size()) {
+                    customersAndCompaniesDTO.setCompanyId(companies.get(i));
+                }
+                customersAndCompaniesDTOList.add(customersAndCompaniesDTO);
             }
-            if(i < companies.size()) {
-                customersAndCompaniesDTO.setCompanyId(companies.get(i));
-            }
-            customersAndCompaniesDTOList.add(customersAndCompaniesDTO);
         }
         return customersAndCompaniesDTOList;
     }
