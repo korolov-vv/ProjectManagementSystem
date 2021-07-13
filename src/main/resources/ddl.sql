@@ -10,7 +10,7 @@ CREATE DATABASE data_base_for_hw3
 CREATE TABLE companies
 (
     company_id SERIAL,
-    company_name character varying(255),
+    company_name character varying(255) UNIQUE,
     number_of_developers integer,
     PRIMARY KEY (company_id)
 );
@@ -18,7 +18,7 @@ CREATE TABLE companies
 CREATE TABLE customers
 (
     customer_id SERIAL,
-    customer_name character varying(255)
+    customer_name character varying(255) UNIQUE,
     PRIMARY KEY (customer_id)
 );
 
@@ -32,6 +32,7 @@ CREATE TABLE developers
     experience_in_years integer NOT NULL,
     company_id integer NOT NULL,
     salary integer,
+    developer_email character varying(255) UNIQUE NOT NULL,
     PRIMARY KEY (developer_id)
 );
 
@@ -42,6 +43,8 @@ CREATE TABLE projects
     stage character varying(50),
     time_period integer,
     coast integer,
+    number_of_developers integer,
+    date_of_beginning date,
     PRIMARY KEY (project_id)
 );
 
@@ -51,10 +54,10 @@ CREATE TYPE level AS ENUM('Junior', 'Middle', 'Senior');
 CREATE TABLE skills
 (
     record_id SERIAL PRIMARY KEY,
-	developer_id integer NOT NULL,
     stack stack,
     level level,
-	FOREIGN KEY (developer_id) REFERENCES developers(developer_id)
+    developer_email varchar(255),
+	FOREIGN KEY (developer_email) REFERENCES developers(developer_email)
 );
 
 CREATE TABLE customers_and_companies
@@ -65,7 +68,7 @@ CREATE TABLE customers_and_companies
    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
    FOREIGN KEY (company_id) REFERENCES companies(company_id),
    FOREIGN KEY (project_id) REFERENCES projects(project_id),
-   UNIQUE (customer_id, company_id, project_id)
+   PRIMARY KEY (customer_id, company_id, project_id)
 );
 
 CREATE TABLE developers_on_projects
@@ -74,200 +77,5 @@ CREATE TABLE developers_on_projects
    developer_id int NOT NULL,
    FOREIGN KEY (project_id) REFERENCES projects(project_id),
    FOREIGN KEY (developer_id) REFERENCES developers(developer_id),
-   UNIQUE (project_id, developer_id)
+   PRIMARY KEY (project_id, developer_id)
 );
-
-ALTER TABLE developers
-ADD COLUMN developer_email character varying(255) UNIQUE;
-
-UPDATE developers
-SET developer_email='a@gmail.com'
-WHERE developer_id=1;
-
-UPDATE developers
-SET developer_email='b@gmail.com'
-WHERE developer_id=2;
-
-UPDATE developers
-SET developer_email='c@gmail.com'
-WHERE developer_id=3;
-
-UPDATE developers
-SET developer_email='d@gmail.com'
-WHERE developer_id=4;
-
-UPDATE developers
-SET developer_email='e@gmail.com'
-WHERE developer_id=5;
-
-UPDATE developers
-SET developer_email='f@gmail.com'
-WHERE developer_id=6;
-
-UPDATE developers
-SET developer_email='v@gmail.com'
-WHERE developer_id=27;
-
-ALTER TABLE developers
-ALTER COLUMN developer_email SET NOT NULL;
-
-ALTER TABLE developers
-ADD CONSTRAINT unique_email
-UNIQUE (developer_email);
-
-ALTER TABLE companies
-ADD CONSTRAINT unique_name
-UNIQUE (company_name);
-
-ALTER TABLE customers
-ADD CONSTRAINT unique_cust_name
-UNIQUE (customer_name);
-
-ALTER TABLE projects
-ADD CONSTRAINT unique_proj_name
-UNIQUE (project_name);
-
-ALTER TABLE projects
-ADD COLUMN number_of_developers int;
-
-ALTER TABLE projects
-ADD COLUMN date_of_beginning date;
-
-UPDATE projects
-SET number_of_developers=10
-WHERE project_id=1;
-
-UPDATE projects
-SET number_of_developers=90
-WHERE project_id=2;
-
-UPDATE projects
-SET number_of_developers=16
-WHERE project_id=3;
-
-UPDATE projects
-SET number_of_developers=40
-WHERE project_id=4;
-
-UPDATE projects
-SET number_of_developers=7
-WHERE project_id=5;
-
-UPDATE projects
-SET number_of_developers=19
-WHERE project_id=6;
-
-UPDATE projects
-SET number_of_developers=20
-WHERE project_id=7;
-
-UPDATE projects
-SET number_of_developers=2
-WHERE project_id=8;
-
-UPDATE projects
-SET number_of_developers=1
-WHERE project_id=9;
-
-UPDATE projects
-SET date_of_beginning='2021-01-01'
-WHERE project_id=1;
-
-UPDATE projects
-SET date_of_beginning='2020-01-01'
-WHERE project_id=2;
-
-UPDATE projects
-SET date_of_beginning='2021-02-01'
-WHERE project_id=3;
-
-UPDATE projects
-SET date_of_beginning='2021-03-01'
-WHERE project_id=4;
-
-UPDATE projects
-SET date_of_beginning='2021-01-07'
-WHERE project_id=5;
-
-UPDATE projects
-SET date_of_beginning='2021-01-09'
-WHERE project_id=6;
-
-UPDATE projects
-SET date_of_beginning='2021-01-10'
-WHERE project_id=7;
-
-UPDATE projects
-SET date_of_beginning='2020-10-01'
-WHERE project_id=8;
-
-UPDATE projects
-SET date_of_beginning='2021-01-20'
-WHERE project_id=9;
-
-ALTER TABLE skills
-ADD COLUMN developer_email varchar(255),
-ADD FOREIGN KEY (developer_email) REFERENCES developers(developer_email);
-
-UPDATE skills
-SET developer_email=
-(SELECT developer_email
-FROM developers WHERE developer_id=1)
-WHERE developer_id=1;
-
-UPDATE skills
-SET developer_email=
-(SELECT developer_email
-FROM developers WHERE developer_id=2)
-WHERE developer_id=2;
-
-UPDATE skills
-SET developer_email=
-(SELECT developer_email
-FROM developers WHERE developer_id=3)
-WHERE developer_id=3;
-
-UPDATE skills
-SET developer_email=
-(SELECT developer_email
-FROM developers WHERE developer_id=4)
-WHERE developer_id=4;
-
-UPDATE skills
-SET developer_email=
-(SELECT developer_email
-FROM developers WHERE developer_id=5)
-WHERE developer_id=5;
-
-UPDATE skills
-SET developer_email=
-(SELECT developer_email
-FROM developers WHERE developer_id=6)
-WHERE developer_id=6;
-
-UPDATE skills
-SET developer_email=
-(SELECT developer_email
-FROM developers WHERE developer_id=7)
-WHERE developer_id=7;
-
-UPDATE skills
-SET developer_email=
-(SELECT developer_email
-FROM developers WHERE developer_id=8)
-WHERE developer_id=8;
-
-UPDATE skills
-SET developer_email=
-(SELECT developer_email
-FROM developers WHERE developer_id=9)
-WHERE developer_id=9;
-
-ALTER TABLE skills
-DROP COLUMN developer_id;
-
-ALTER TABLE developers_on_projects
-ADD PRIMARY KEY (project_id,developer_id);
-
-ALTER TABLE customers_and_companies
-ADD PRIMARY KEY (project_id,customer_id,company_id);
