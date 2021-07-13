@@ -2,42 +2,85 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style><%@include file="/view/css/style.css"%></style>
         <title>Create developer</title>
     </head>
     <body>
-
-    <h2 align="center" class="formCapture">
-        Create developer
-    </h2>
-        <form action="/developers" accept-charset="utf-8" method="post" ></br>
-            email:<br><input type="text" name="email" placeholder="enter email"/></br>
-            first name:<br><input type="text" name="first name" placeholder="type first name"/></br>
-            last name:<br><input type="text" name="last name" placeholder="type last name"/></br>
-            gender:<br><input type="text" name="gender" placeholder="type gender"/></br>
-            age:<br><input type="number" name="age" placeholder="type age"/></br>
-            experience:<br><input type="number" name="experience" placeholder="enter experience"/></br>
-            salary:<br><input type="number" name="salary" placeholder="enter salary"/></br>
-            projects:<br><input type="text" name="projects" placeholder="enter projects Ids, separate by comma"/></br>
-            company:<br><input type="text" name="company" placeholder="enter company Id"/></br>
-            stack: <select id="stack" name="stack">
-                       <option value="JAVA">Java</option>
-                       <option value="CPLUS">C++</option>
-                       <option value="CSHARP">C#</option>
-                       <option value="JS">JS</option>
-                     </select>
-            level: <select id="level" name="level">
-                       <option value="JUNIOR">Junior</option>
-                       <option value="MIDDLE">Middle</option>
-                       <option value="SENIOR">Senior</option>
-                     </select>
-            <br><input type="submit" value="Submit"/></br>
-        </form>
-    <table>
-         <thead>
-             <tr>
-                 <td><button type="button"><a href="/">BACK TO THE MAIN</a></button></td>
-             </tr>
-         </thead>
-    </table>
+    <div class="mainDiv">
+        <div>
+            <c:import url="/view/header.jsp" />
+        </div>
+        <div>
+            <div class="form">
+                <form action="/developers" accept-charset="utf-8" method="post" ></br>
+                    <div class="title">Create developer</div>
+                    <div class="subtitle">Let's create the developer!</div>
+                    <div class="input-container ic1">
+                        <input id="email" class="input" type="text" name="email" placeholder=" " />
+                        <div class="cut"></div>
+                        <label for="email" class="placeholder">Developer's email</label>
+                    </div>
+                    <div class="input-container ic2">
+                        <input id="first name" class="input" type="text" name="first name" placeholder=" " />
+                        <div class="cut"></div>
+                        <label for="first name" class="placeholder">First name</label>
+                    </div>
+                    <div class="input-container ic2">
+                        <input id="last name" class="input" type="text" name="last name" placeholder=" " />
+                        <div class="cut"></div>
+                        <label for="last name" class="placeholder">Last name</label>
+                    </div>
+                    <div class="input-container ic2">
+                        <input id="gender" class="input" type="text" name="gender" placeholder=" " />
+                        <div class="cut"></div>
+                        <label for="gender" class="placeholder">Gender</label>
+                    </div>
+                    <div class="input-container ic2">
+                        <input id="age" class="input" type="number" name="age" placeholder=" " />
+                        <div class="cut"></div>
+                        <label for="age" class="placeholder">Age</label>
+                    </div>
+                    <div class="input-container ic2">
+                        <input id="experience" class="input" type="number" name="experience" placeholder=" " />
+                        <div class="cut"></div>
+                        <label for="experience" class="placeholder">Experience</label>
+                    </div>
+                    <div class="input-container ic2">
+                        <input id="salary" class="input" type="number" name="salary" placeholder=" " />
+                        <div class="cut"></div>
+                        <label for="salary" class="placeholder">Salary</label>
+                    </div>
+                    <div class="input-container ic2">
+                        <input id="projects" class="input" type="text" name="projects" placeholder=" " />
+                        <div class="cut"></div>
+                        <label for="projects" class="placeholder">Enter project Ids, separate by comma</label>
+                    </div>
+                    <div class="input-container ic2">
+                        <input id="company" class="input" type="text" name="company" placeholder=" " />
+                        <div class="cut"></div>
+                        <label for="company" class="placeholder">Enter company Id</label>
+                    </div>
+                    <div class="input-container ic2">
+                        <select id="stack" class="input" name="stack">
+                            <option value="JAVA">Java</option>
+                            <option value="CPLUS">C++</option>
+                            <option value="CSHARP">C#</option>
+                            <option value="JS">JS</option>
+                        </select>
+                        <div class="cut"></div>
+                    </div>
+                    <div class="input-container ic2">
+                        <select id="level" class="input" name="level">
+                            <option value="JUNIOR">Junior</option>
+                            <option value="MIDDLE">Middle</option>
+                            <option value="SENIOR">Senior</option>
+                        </select>
+                        <div class="cut"></div>
+                    </div>
+                    <button type="submit" class="submit">SUBMIT</button>
+                </form>
+            </div>
+        </div>
+    </div>
     </body>
 </html>

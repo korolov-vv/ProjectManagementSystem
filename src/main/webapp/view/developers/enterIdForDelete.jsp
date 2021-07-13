@@ -2,19 +2,26 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style><%@include file="/view/css/style.css"%></style>
         <title>Enter data</title>
     </head>
     <body>
-        <form action="deleteDeveloper" accept-charset="utf-8" method="delete" >
-            name:<input type="text" name="id" placeholder="type Id"/>
-            <input type="submit" value="Submit"/>
-        </form>
-    <table>
-         <thead>
-             <tr>
-                 <td><button type="button"><a href="/">BACK TO THE MAIN</a></button></td>
-             </tr>
-         </thead>
-    </table>
+    <div class="mainDiv">
+        <div>
+            <c:import url="/view/header.jsp" />
+        </div>
+        <div class="shortForm">
+            <form action="deleteDeveloper" accept-charset="utf-8" method="delete" >
+                <div class="title">Enter ID</div>
+                <div class="subtitle">Enter the ID for delete</div>
+                <div class="oneInput-container ic1">
+                    <input id="id" class="oneInput" type="text" name="id" placeholder=" " />
+                    <div class="oneCut"></div>
+                    <label for="id" class="onePlaceholder">type ID</label>
+                </div>
+                <button type="submit" class="submit">SUBMIT</button>
+            </form>
+        </div>
+    </div>
     </body>
 </html>

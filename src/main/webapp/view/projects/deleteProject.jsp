@@ -2,17 +2,18 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style><%@include file="/view/css/style.css"%></style>
         <title>THE SELECTED PROJECT IS DELETED</title>
     </head>
     <body>
-        <c:set var="name" value="${name}" />
-        <H3 style="colour:red">THE PROJECT ${name} IS DELETED</H3>
-        <table>
-             <thead>
-                 <tr>
-                     <td><button type="button"><a href="/">BACK TO THE MAIN</a></button></td>
-                 </tr>
-             </thead>
-        </table>
+    <div class="mainDiv">
+        <div>
+            <c:import url="/view/header.jsp" />
+        </div>
+        <div class="textDiv">
+            <c:set var="name" value="${name}" />
+            <a>THE PROJECT ${name} IS DELETED</a>
+        </div>
+    </div>
     </body>
 </html>

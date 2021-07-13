@@ -2,34 +2,41 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style><%@include file="/view/css/style.css"%></style>
         <title>YOUR SELECTED PROJECT IS</title>
     </head>
     <body>
         <c:set var="project" value="${project}" />
-        <table border="1" cellpadding="5">
-            <thead>
-                <tr>
-                    <td>Project Name</td>
-                    <td>Date Of Beginning</td>
-                    <td>Stage</td>
-                    <td>Coast</td>
-                </tr>
-            </thead>
-            <tbody>
-                 <tr>
-                     <td>${project.projectName}</td>
-                     <td>${project.dateOfBeginning}</td>
-                     <td>${project.stage}</td>
-                     <td>${project.stage}</td>
-                 </tr>
-            </tbody>
-        </table>
-        <table>
-             <thead>
-                 <tr>
-                     <td><button type="button"><a href="/">BACK TO THE MAIN</a></button></td>
-                 </tr>
-             </thead>
-        </table>
+        <div class="mainDiv">
+            <div>
+                <c:import url="/view/header.jsp" />
+            </div>
+            <div class="tableDiv">
+                <div class="tbl-header">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <thead>
+                            <tr>
+                                <th>Project Name</th>
+                                <th>Date Of Beginning</th>
+                                <th>Stage</th>
+                                <th>Coast</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="tbl-content">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <tbody>
+                             <tr>
+                                 <td>${project.projectName}</td>
+                                 <td>${project.dateOfBeginning}</td>
+                                 <td>${project.stage}</td>
+                                 <td>${project.stage}</td>
+                             </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

@@ -2,30 +2,69 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>PROJECTS</title>
+        <style><%@include file="/view/css/style.css"%></style>
+        <title>Update project</title>
     </head>
     <body>
-
-    <h2 align="center" class="formCapture">
-            Update project
-        </h2>
-            <form action="/projects/update" accept-charset="utf-8" method="post" ></br>
-            <input type="hidden" name="id" value='${project.projectId}' />
-                name:<br><input type="text" name="name" value="<c:out value='${project.projectName}' />"/></br>
-                stage:<br><input type="text" name="stage" value="<c:out value='${project.stage}' />"/></br>
-                period:<br><input type="number" name="period" value="<c:out value='${project.timePeriod}' />"/></br>
-                coast:<br><input type="number" name="coast" value="<c:out value='${project.coast}' />"/></br>
-                number of developers:<br><input type="number" name="number of developers" value="<c:out value='${project.numberOfDevelopers}' />"/></br>
-                start date:<br><input type="date" name="start date" value="<c:out value='${project.dateOfBeginning}' />"/></br>
-                developers:<br><input type="text" name="developers" value="<c:out value ='${developersOnProjectsDTO}' />" /></br>
-                companies:<br><input type="text" name="companies" value="<c:out value ='${customersAndCompanies}' />"/></br>
-                customers:<br><input type="text" name="customers" value="<c:out value ='${customersAndCompanies}' />"/></br>
-                <br><input type="submit" value="Update"/></br>
-            </form>
-        <table>
-             <thead>
-                 <tr>
-                     <td><button type="button"><a href="/">BACK TO THE MAIN</a></button></td>
-                 </tr>
-             </thead>
-        </table>
+        <div class="mainDiv">
+            <div>
+                <c:import url="/view/header.jsp" />
+            </div>
+            <div>
+                <div class="form">
+                    <form action="/projects" accept-charset="utf-8" method="post" >
+                    <input type="hidden" name="id" value='${project.projectId}' />
+                      <div class="title">Update project</div>
+                      <div class="subtitle">Let's update your project!</div>
+                      <div class="input-container ic1">
+                        <input id="name" class="input" type="text" name="name" value="<c:out value='${project.projectName}' />" />
+                        <div class="cut"></div>
+                        <label for="name" class="placeholder">Project name</label>
+                      </div>
+                      <div class="input-container ic2">
+                        <input id="stage" class="input" type="text" name="stage" value="<c:out value='${project.stage}' />" />
+                        <div class="cut"></div>
+                        <label for="stage" class="placeholder">Stage</label>
+                      </div>
+                      <div class="input-container ic2">
+                        <input id="period" class="input" type="number" name="period" value="<c:out value='${project.timePeriod}' />" />
+                        <div class="cut cut-short"></div>
+                          <label for="period" class="placeholder">Period</label>
+                      </div>
+                      <div class="input-container ic2">
+                          <input id="coast" class="input" type="number" name="coast" value="<c:out value='${project.coast}' />" />
+                          <div class="cut cut-short"></div>
+                          <label for="coast" class="placeholder">Coast</label>
+                      </div>
+                      <div class="input-container ic2">
+                            <input id="number of developers" class="input" type="number" name="number of developers" value="<c:out value='${project.numberOfDevelopers}' />" />
+                            <div class="cut cut-short"></div>
+                          <label for="number of developers" class="placeholder">Number of developers</label>
+                      </div>
+                      <div class="input-container ic2">
+                            <input id="date" class="input" type="date" name="start date" value="<c:out value='${project.dateOfBeginning}' />" />
+                            <div class="cut cut-short"></div>
+                          <label for="date" class="placeholder">Start date</label>
+                      </div>
+                      <div class="input-container ic2">
+                            <input id="developers" class="input" type="text" name="developers" value="<c:out value ='${developersOnProjectsDTO}' />" />
+                            <div class="cut cut-short"></div>
+                          <label for="developers" class="placeholder">enter developer Ids, separate by comma</label>
+                      </div>
+                      <div class="input-container ic2">
+                            <input id="companies" class="input" type="text" name="companies" value="<c:out value ='${customersAndCompanies}' />" />
+                            <div class="cut cut-short"></div>
+                          <label for="companies" class="placeholder">enter company Ids, separate by comma</label>
+                      </div>
+                      <div class="input-container ic2">
+                            <input id="customers" class="input" type="text" name="customers" value="<c:out value ='${customersAndCompanies}' />" />
+                            <div class="cut cut-short"></div>
+                          <label for="customers" class="placeholder">enter customer Ids, separate by comma</label>
+                      </div>
+                      <button type="submit" class="submit">UPDATE</button>
+                     </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

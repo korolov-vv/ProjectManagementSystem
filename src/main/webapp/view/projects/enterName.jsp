@@ -2,19 +2,26 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Enter data</title>
+        <style><%@include file="/view/css/style.css"%></style>
+        <title>Enter name</title>
     </head>
     <body>
-        <form action="project" accept-charset="utf-8" method="get" >
-            name:<input type="text" name="name" placeholder="type name"/>
-            <input type="submit" value="Submit"/>
-        </form>
-    <table>
-         <thead>
-             <tr>
-                 <td><button type="button"><a href="/">BACK TO THE MAIN</a></button></td>
-             </tr>
-         </thead>
-    </table>
+        <div class="mainDiv">
+            <div>
+                <c:import url="/view/header.jsp" />
+            </div>
+            <div class="shortForm">
+                <form action="project" accept-charset="utf-8" method="get" >
+                  <div class="title">Enter name</div>
+                  <div class="subtitle">Enter the name of the searched project</div>
+                  <div class="oneInput-container ic1">
+                    <input id="name" class="oneInput" type="text" name="name" placeholder=" " />
+                    <div class="oneCut"></div>
+                    <label for="name" class="onePlaceholder">type name</label>
+                  </div>
+                  <button type="submit" class="submit">SUBMIT</button>
+                </form>
+            </div>
+        </div>
     </body>
 </html>

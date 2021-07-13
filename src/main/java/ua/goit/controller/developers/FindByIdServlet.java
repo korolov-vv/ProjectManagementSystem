@@ -30,9 +30,10 @@ public class FindByIdServlet extends HttpServlet {
             ServletException ex = new ServletException("The developer does not exist");
             req.setAttribute("message", ex.getMessage());
             req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
+        }else {
+            DevelopersDTO developersDTO = DevelopersConverter.fromDeveloper(developersDAO);
+            req.setAttribute("developer", developersDTO);
+            req.getRequestDispatcher("/view/developers/findDeveloperById.jsp").forward(req, resp);
         }
-        DevelopersDTO developersDTO = DevelopersConverter.fromDeveloper(developersDAO);
-        req.setAttribute("developer", developersDTO);
-        req.getRequestDispatcher("/view/developers/findDeveloperById.jsp").forward(req, resp);
     }
 }

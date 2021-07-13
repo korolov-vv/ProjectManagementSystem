@@ -1,16 +1,9 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
         <style><%@include file="/view/css/style.css"%></style>
     </head>
 <body>
-<div class="title">
-    <title class="title">PROJECT MANAGEMENT SYSTEM</title>
-</div>
-    <nav class="navMenu">
-      <a href="/developers">DEVELOPERS</a>
-      <a href="/projects">PROJECTS</a>
-      <a href="/companies">COMPANIES</a>
-      <div class="dot"></div>
-    </nav>
+    <c:import url = "/view/header.jsp"/>
 </body>

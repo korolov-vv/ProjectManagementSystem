@@ -25,7 +25,6 @@ public class UpdateCompanyServlet extends HttpServlet {
     private CustomersAndCompaniesRepository customersAndCompaniesRepository;
     private CompaniesService companiesService;
     private CustomersAndCompaniesService customersAndCompaniesService;
-
     @Override
     public void init() throws ServletException {
         this.companiesRepository = new CompaniesRepository(DatabaseConnectionManager.getDataSource());
