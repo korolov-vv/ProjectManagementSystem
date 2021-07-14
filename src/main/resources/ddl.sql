@@ -1,4 +1,4 @@
-CREATE DATABASE data_base_for_hw3
+CREATE DATABASE project_management
     WITH
     OWNER = postgres
     ENCODING = 'UTF8'
