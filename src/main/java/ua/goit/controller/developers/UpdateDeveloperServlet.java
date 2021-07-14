@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet("/developers/update")
 public class UpdateDeveloperServlet extends HttpServlet {
@@ -47,14 +48,22 @@ public class UpdateDeveloperServlet extends HttpServlet {
         DevelopersDTO developersDTO = developersService.findByEmail(email);
         SkillsDTO skillsDTO = skillsService.findByDeveloper(email);
         List<DevelopersOnProjectsDTO> developersOnProjectsDTOList = developersOnProjectsService.findByProjectId(developersDTO.getDeveloperId());
+        String s = "";
+        String projects ="";
+        if(developersOnProjectsDTOList.size() != 0) {
+            projects = developersOnProjectsDTOList.stream()
+                    .map(DevelopersOnProjectsDTO::getProjectId)
+                    .map(d -> s.concat(String.valueOf(d)).concat(","))
+            .collect(Collectors.joining());
+        }
         req.setAttribute("developer", developersDTO);
         req.setAttribute("skillsDTO", skillsDTO);
-        req.setAttribute("developersList", developersOnProjectsDTOList);
+        req.setAttribute("projectsList", projects);
         req.getRequestDispatcher("/view/developers/updateDeveloperForm.jsp").forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         DevelopersDTO developersDTO = updateDeveloper(req);
         updateSkills(req, developersDTO);
         resp.sendRedirect(req.getContextPath() + "/developers");

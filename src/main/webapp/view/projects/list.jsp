@@ -3,7 +3,7 @@
 <html>
     <head>
         <style><%@include file="/view/css/style.css"%></style>
-        <title>YOUR SELECTED PROJECT IS</title>
+        <title>PROJECTS</title>
     </head>
     <body>
         <div class="mainDiv">

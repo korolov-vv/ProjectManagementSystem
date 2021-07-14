@@ -47,17 +47,17 @@
                     <label for="experience" class="placeholder">Experience</label>
                 </div>
                 <div class="input-container ic2">
-                    <input id="salary" class="input" type="number" name="salary"  value="<c:out value='${developer.salary}' />" />
+                    <input id="salary" class="input" type="number" name="salary"  value='${developer.salary}' />
                     <div class="cut"></div>
                     <label for="salary" class="placeholder">Salary</label>
                 </div>
                 <div class="input-container ic2">
-                    <input id="projects" class="input" type="text" name="projects" value="<c:out value ='${developersOnProjectsDTO.projectIdId}' />" />
+                    <input id="projects" class="input" type="text" name="projects" value='${projectsList}' />
                     <div class="cut"></div>
                     <label for="projects" class="placeholder">Enter project Ids, separate by comma</label>
                 </div>
                 <div class="input-container ic2">
-                    <input id="company" class="input" type="text" name="company" value="<c:out value='${developer.companyId}' />" />
+                    <input id="company" class="input" type="text" name="company" value='${developer.companyId}' />
                     <div class="cut"></div>
                     <label for="company" class="placeholder">Enter company Id</label>
                 </div>

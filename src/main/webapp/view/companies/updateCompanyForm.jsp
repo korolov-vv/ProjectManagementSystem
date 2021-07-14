@@ -27,12 +27,12 @@
                     <label for="number of developers" class="placeholder">Number of developers</label>
                 </div>
                 <div class="input-container ic2">
-                    <input id="projects" class="input" type="text" name="projects" value="<c:forEach var="custAndComp" items="${customersAndCompanies}"><c:out value ='${custAndComp.projectId},' />" /></c:forEach>
+                    <input id="projects" class="input" type="text" name="projects" value='${projects}' />
                     <div class="cut"></div>
                     <label for="projects" class="placeholder">Enter project Ids, separate by comma</label>
                 </div>
                 <div class="input-container ic2">
-                    <input id="customers" class="input" type="text" name="customers" value="<c:forEach var="custAndComp" items="${customersAndCompanies}"><c:out value ='${custAndComp.customerId},' />" /></c:forEach>
+                    <input id="customers" class="input" type="text" name="customers" value='${customers}' />
                     <div class="cut"></div>
                     <label for="customers" class="placeholder">Enter customers Ids, separate by comma</label>
                 </div>

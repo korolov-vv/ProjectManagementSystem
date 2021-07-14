@@ -39,13 +39,27 @@ public class UpdateCompanyServlet extends HttpServlet {
         String name = req.getParameter("name");
         CompaniesDTO companiesDTO = companiesService.findByName(name);
         List<CustomersAndCompaniesDTO> customersAndCompaniesDTOList = customersAndCompaniesService.findByCompanyId(companiesDTO.getCompanyId());
+        String s = "";
+        String projects = "";
+        String customers = "";
+        if(customersAndCompaniesDTOList.size() != 0) {
+            projects = customersAndCompaniesDTOList.stream()
+                    .map(CustomersAndCompaniesDTO::getProjectId)
+                    .map(comp -> s.concat(String.valueOf(comp)).concat(","))
+            .collect(Collectors.joining());
+            customers = customersAndCompaniesDTOList.stream()
+                    .map(CustomersAndCompaniesDTO::getCustomerId)
+                    .map(cust -> s.concat(String.valueOf(cust)).concat(","))
+            .collect(Collectors.joining());
+        }
         req.setAttribute("company", companiesDTO);
-        req.setAttribute("customersAndCompanies", customersAndCompaniesDTOList);
+        req.setAttribute("projects", projects);
+        req.setAttribute("customers", customers);
         req.getRequestDispatcher("/view/companies/updateCompanyForm.jsp").forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         CompaniesDTO companiesDTO = updateCompany(req);
         updateCustomersAndCompanies(req, companiesDTO);
         resp.sendRedirect(req.getContextPath() + "/companies");
