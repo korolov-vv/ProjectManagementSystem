@@ -1,107 +1,99 @@
 package ua.goit.dao;
 
-import com.zaxxer.hikari.HikariDataSource;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import ua.goit.dao.model.CompaniesDAO;
-import ua.goit.service.companies.CompaniesConverter;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CompaniesRepository implements Repository<CompaniesDAO> {
-    private final HikariDataSource dataSource;
+    private final SessionFactory sessionFactory;
 
-    private static final String INSERT = "INSERT INTO companies (company_id, company_name, number_of_developers) " +
-            "VALUES (default, ?, ?);";
-    private static final String SELECT_COMPANY_BY_ID = "SELECT company_id, company_name, number_of_developers " +
-            "FROM companies WHERE company_id = ?;";
-    private static final String SELECT_ALL_COMPANIES = "SELECT company_id, company_name, number_of_developers " +
-            "FROM companies;";
-    private static final String UPDATE = "UPDATE companies SET company_name=?, number_of_developers=?" +
-            "WHERE company_id=?;";
-    private static final String DELETE = "DELETE FROM companies WHERE company_id=?;";
+    private static final String SELECT_ALL_COMPANIES = "FROM CompaniesDAO";
 
-    private static final String SELECT_COMPANY_BY_NAME = "SELECT company_id, company_name, number_of_developers " +
-            "FROM companies WHERE company_name = ?;";
-
-    public CompaniesRepository(HikariDataSource dataSource) {
-        this.dataSource = dataSource;
+    public CompaniesRepository(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
     public CompaniesDAO findById(long id) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_COMPANY_BY_ID)) {
-            preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return CompaniesConverter.toCompany(resultSet);
-        } catch (SQLException ex) {
+        CompaniesDAO companiesDAO = new CompaniesDAO();
+        try (Session session = sessionFactory.openSession()) {
+            companiesDAO = session.get(CompaniesDAO.class, id);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return new CompaniesDAO();
+        return companiesDAO;
     }
 
     @Override
     public CompaniesDAO findByUniqueValue(String companyName) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_COMPANY_BY_NAME)) {
-            preparedStatement.setString(1, companyName);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return CompaniesConverter.toCompany(resultSet);
-        } catch (SQLException ex) {
+        CompaniesDAO companiesDAO = new CompaniesDAO();
+        try (Session session = sessionFactory.openSession()) {
+            companiesDAO = session.get(CompaniesDAO.class, companyName);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-        return new CompaniesDAO();
+        return companiesDAO;
     }
 
     @Override
     public void create(CompaniesDAO companiesDAO) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {
-            preparedStatement.setString(1, companiesDAO.getCompanyName());
-            preparedStatement.setInt(2, companiesDAO.getNumberOfDevelopers());
-            preparedStatement.execute();
-        } catch (SQLException ex) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            session.save(companiesDAO);
+            transaction.commit();
+        } catch (Exception ex) {
             ex.printStackTrace();
+            if (Objects.nonNull(transaction)) {
+                transaction.rollback();
+            }
         }
     }
 
     @Override
     public void update(CompaniesDAO companiesDAO) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE)) {
-            preparedStatement.setString(1, companiesDAO.getCompanyName());
-            preparedStatement.setInt(2, companiesDAO.getNumberOfDevelopers());
-            preparedStatement.setLong(3, companiesDAO.getCompanyId());
-            preparedStatement.execute();
-        } catch (SQLException ex) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            session.saveOrUpdate(companiesDAO);
+            transaction.commit();
+        } catch (Exception ex) {
             ex.printStackTrace();
+            if (Objects.nonNull(transaction)) {
+                transaction.rollback();
+            }
         }
-
     }
 
     @Override
     public void delete(String name) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
-            preparedStatement.setString(1, name);
-            preparedStatement.execute();
-        } catch (SQLException ex) {
+        Transaction transaction;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            CompaniesDAO companiesDAO = session.get(CompaniesDAO.class, name);
+            if (companiesDAO != null) {
+                session.delete(companiesDAO);
+            }
+            transaction.commit();
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     public List<CompaniesDAO> findAllCompanies() {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_COMPANIES)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return CompaniesConverter.toCompaniesCollection(resultSet);
-        } catch (SQLException ex) {
+        List<CompaniesDAO> companiesDAOList = new ArrayList<>();
+        try (Session session = sessionFactory.openSession()) {
+            Query<CompaniesDAO> query = session.createQuery(SELECT_ALL_COMPANIES, CompaniesDAO.class);
+            companiesDAOList = query.list();
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return null;
+        return companiesDAOList;
     }
 }

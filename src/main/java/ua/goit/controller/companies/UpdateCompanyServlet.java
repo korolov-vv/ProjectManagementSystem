@@ -1,6 +1,7 @@
 package ua.goit.controller.companies;
 
 import ua.goit.config.DatabaseConnectionManager;
+import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.CompaniesRepository;
 import ua.goit.dao.CustomersAndCompaniesRepository;
 import ua.goit.dto.CompaniesDTO;
@@ -28,7 +29,7 @@ public class UpdateCompanyServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        this.companiesRepository = new CompaniesRepository(DatabaseConnectionManager.getDataSource());
+        this.companiesRepository = new CompaniesRepository(HibernateDatabaseConnector.getSessionFactory());
         this.customersAndCompaniesRepository = new CustomersAndCompaniesRepository(DatabaseConnectionManager.getDataSource());
         this.companiesService = new CompaniesService(companiesRepository);
         this.customersAndCompaniesService = new CustomersAndCompaniesService(customersAndCompaniesRepository);

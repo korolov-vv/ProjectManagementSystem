@@ -1,6 +1,6 @@
 package ua.goit.controller.companies;
 
-import ua.goit.config.DatabaseConnectionManager;
+import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.CompaniesRepository;
 import ua.goit.dao.model.CompaniesDAO;
 import ua.goit.dto.CompaniesDTO;
@@ -19,7 +19,7 @@ public class FindByNameServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        this.companiesRepository = new CompaniesRepository(DatabaseConnectionManager.getDataSource());
+        this.companiesRepository = new CompaniesRepository(HibernateDatabaseConnector.getSessionFactory());
     }
 
     @Override

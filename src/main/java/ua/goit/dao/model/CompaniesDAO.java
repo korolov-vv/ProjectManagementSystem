@@ -1,8 +1,18 @@
 package ua.goit.dao.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "companies")
 public class CompaniesDAO {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "company_id")
     private long companyId;
+    @Column(name = "company_name")
     private String companyName;
+    @Column(name = "number_of_developers")
     private int numberOfDevelopers;
 
     public CompaniesDAO() {
