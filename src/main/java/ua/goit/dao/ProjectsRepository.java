@@ -35,7 +35,7 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
     }
 
     @Override
-    public ProjectsDAO findById(long id) {
+    public ProjectsDAO findById(int id) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PROJECTS_BY_ID)) {
             preparedStatement.setLong(1, id);

@@ -26,8 +26,8 @@ public class DevelopersOnProjectsConverter {
     public static DevelopersOnProjectsDAO toDeveloperOnProject(ResultSet resultSet) throws SQLException {
         DevelopersOnProjectsDAO developersOnProjectsDAO = new DevelopersOnProjectsDAO();
         while (resultSet.next()) {
-            developersOnProjectsDAO.setDeveloperId(resultSet.getLong("developer_id"));
-            developersOnProjectsDAO.setProjectId(resultSet.getLong("project_id"));
+            developersOnProjectsDAO.setDeveloperId(resultSet.getInt("developer_id"));
+            developersOnProjectsDAO.setProjectId(resultSet.getInt("project_id"));
         }
         return developersOnProjectsDAO;
     }
@@ -36,8 +36,8 @@ public class DevelopersOnProjectsConverter {
         List<DevelopersOnProjectsDAO> developersOnProjectsDAOList = new ArrayList<>();
         while (resultSet.next()) {
             DevelopersOnProjectsDAO developersOnProjectsDAO = new DevelopersOnProjectsDAO();
-            developersOnProjectsDAO.setDeveloperId(resultSet.getLong("developer_id"));
-            developersOnProjectsDAO.setProjectId(resultSet.getLong("project_id"));
+            developersOnProjectsDAO.setDeveloperId(resultSet.getInt("developer_id"));
+            developersOnProjectsDAO.setProjectId(resultSet.getInt("project_id"));
             developersOnProjectsDAOList.add(developersOnProjectsDAO);
         }
         return developersOnProjectsDAOList;

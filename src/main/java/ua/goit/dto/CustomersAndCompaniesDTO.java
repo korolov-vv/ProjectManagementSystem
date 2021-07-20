@@ -1,40 +1,40 @@
 package ua.goit.dto;
 
 public class CustomersAndCompaniesDTO {
-    private long companyId;
-    private long customerId;
-    private long projectId;
+    private int companyId;
+    private int customerId;
+    private int projectId;
 
     public CustomersAndCompaniesDTO() {
     }
 
-    public CustomersAndCompaniesDTO(long companyId, long customerId, long projectId) {
+    public CustomersAndCompaniesDTO(int companyId, int customerId, int projectId) {
         this.companyId = companyId;
         this.customerId = customerId;
         this.projectId = projectId;
     }
 
-    public long getCompanyId() {
+    public int getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(long companyId) {
+    public void setCompanyId(int companyId) {
         this.companyId = companyId;
     }
 
-    public long getCustomerId() {
+    public int getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(long customerId) {
+    public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
 
-    public long getProjectId() {
+    public int getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(long projectId) {
+    public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
 

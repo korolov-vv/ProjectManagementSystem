@@ -29,7 +29,7 @@ public class ProjectService {
         repository.delete(name);
     }
 
-    public ProjectsDTO findById(long id) {
+    public ProjectsDTO findById(int id) {
         return ProjectsConverter.fromProject(repository.findById(id));
     }
 

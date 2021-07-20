@@ -29,7 +29,7 @@ public class CustomersRepository implements Repository<CustomersDAO> {
     }
 
     @Override
-    public CustomersDAO findById(long id) {
+    public CustomersDAO findById(int id) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CUSTOMERS_BY_ID)) {
             preparedStatement.setLong(1, id);

@@ -1,30 +1,30 @@
 package ua.goit.dto;
 
 public class DevelopersOnProjectsDTO {
-    private long developerId;
-    private long projectId;
+    private int developerId;
+    private int projectId;
 
     public DevelopersOnProjectsDTO() {
     }
 
-    public DevelopersOnProjectsDTO(long developerId, long projectId) {
+    public DevelopersOnProjectsDTO(int developerId, int projectId) {
         this.developerId = developerId;
         this.projectId = projectId;
     }
 
-    public long getDeveloperId() {
+    public int getDeveloperId() {
         return developerId;
     }
 
-    public void setDeveloperId(long developerId) {
+    public void setDeveloperId(int developerId) {
         this.developerId = developerId;
     }
 
-    public long getProjectId() {
+    public int getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(long projectId) {
+    public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
 

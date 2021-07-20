@@ -25,7 +25,7 @@ public class FindByIdServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        DevelopersDAO developersDAO = developersRepository.findById(Long.parseLong(id));
+        DevelopersDAO developersDAO = developersRepository.findById(Integer.parseInt(id));
         if(developersDAO.getDeveloperId() == 0){
             ServletException ex = new ServletException("The developer does not exist");
             req.setAttribute("message", ex.getMessage());

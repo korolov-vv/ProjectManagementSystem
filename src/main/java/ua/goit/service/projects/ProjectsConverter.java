@@ -33,7 +33,7 @@ public class ProjectsConverter {
         List<ProjectsDAO> projectsDAOList = new ArrayList<>();
         while (resultSet.next()) {
             ProjectsDAO projectsDAO = new ProjectsDAO();
-            projectsDAO.setProjectId(resultSet.getLong("project_id"));
+            projectsDAO.setProjectId(resultSet.getInt("project_id"));
             projectsDAO.setProjectName(resultSet.getString("project_name"));
             projectsDAO.setStage(resultSet.getString("stage"));
             projectsDAO.setTimePeriod(resultSet.getInt("time_period"));

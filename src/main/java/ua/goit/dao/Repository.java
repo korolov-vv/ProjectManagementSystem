@@ -1,7 +1,7 @@
 package ua.goit.dao;
 
 public interface Repository<T> {
-    T findById(long id);
+    T findById(int id);
 
     T findByUniqueValue(String value);
 

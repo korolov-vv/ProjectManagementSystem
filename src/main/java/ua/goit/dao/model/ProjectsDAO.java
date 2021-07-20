@@ -1,20 +1,33 @@
 package ua.goit.dao.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "projects")
 public class ProjectsDAO {
-    private long projectId;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="project_id")
+    private int projectId;
+    @Column(name ="project_name")
     private String projectName;
+    @Column(name ="stage")
     private String stage;
+    @Column(name ="time_period")
     private int timePeriod;
+    @Column(name ="coast")
     private int coast;
+    @Column(name ="number_of_developers")
     private int numberOfDevelopers;
+    @Column(name ="date_of_beginning")
     private LocalDate dateOfBeginning;
 
     public ProjectsDAO() {
     }
 
-    public ProjectsDAO(long projectId, String projectName, String stage, int timePeriod, int coast,
+    public ProjectsDAO(int projectId, String projectName, String stage, int timePeriod, int coast,
                        int numberOfDevelopers, LocalDate dateOfBeginning) {
         this.projectId = projectId;
         this.projectName = projectName;
@@ -25,11 +38,11 @@ public class ProjectsDAO {
         this.dateOfBeginning = dateOfBeginning;
     }
 
-    public long getProjectId() {
+    public int getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(long projectId) {
+    public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
 

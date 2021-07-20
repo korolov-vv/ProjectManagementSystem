@@ -72,7 +72,7 @@ public class ProjectsServlet extends HttpServlet {
         if(!req.getParameter("developers").equals("")) {
             String[] s = req.getParameter("developers").split(",");
             Arrays.stream(s)
-                    .map(Long::parseLong)
+                    .map(Integer::parseInt)
                     .map((d) -> {
                         DevelopersOnProjectsDTO developersOnProjectsDTO = new DevelopersOnProjectsDTO();
                         developersOnProjectsDTO.setProjectId(projectsDTO.getProjectId());
@@ -104,11 +104,11 @@ public class ProjectsServlet extends HttpServlet {
 
             List<CustomersAndCompaniesDTO> customersAndCompaniesDTOList = new ArrayList<>();
         if (!req.getParameter("customers").equals("") && !req.getParameter("companies").equals("")) {
-            List<Long> customers = Arrays.stream(req.getParameter("customers").split(","))
-                    .map(Long::parseLong)
+            List<Integer> customers = Arrays.stream(req.getParameter("customers").split(","))
+                    .map(Integer::parseInt)
                     .collect(Collectors.toList());
-            List<Long> companies = Arrays.stream(req.getParameter("companies").split(","))
-                    .map(Long::parseLong)
+            List<Integer> companies = Arrays.stream(req.getParameter("companies").split(","))
+                    .map(Integer::parseInt)
                     .collect(Collectors.toList());
             for (int i = 0; i < customers.size() || i < companies.size(); i++) {
                 CustomersAndCompaniesDTO customersAndCompaniesDTO = new CustomersAndCompaniesDTO();

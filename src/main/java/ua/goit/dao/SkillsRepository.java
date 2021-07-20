@@ -33,7 +33,7 @@ public class SkillsRepository implements Repository<SkillsDAO> {
 
 
     @Override
-    public SkillsDAO findById(long id) {
+    public SkillsDAO findById(int id) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(SELECT_SKILLS_BY_RECORD_ID)) {
             preparedStatement.setLong(1, id);

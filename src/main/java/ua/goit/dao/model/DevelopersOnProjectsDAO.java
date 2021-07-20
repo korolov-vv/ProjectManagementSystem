@@ -1,30 +1,38 @@
 package ua.goit.dao.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "developers_on_projects")
 public class DevelopersOnProjectsDAO {
-    private long developerId;
-    private long projectId;
+    @Id
+    private int developerId;
+    @Id
+    private int projectId;
 
     public DevelopersOnProjectsDAO() {
     }
 
-    public DevelopersOnProjectsDAO(long developerId, long projectId) {
+    public DevelopersOnProjectsDAO(int developerId, int projectId) {
         this.developerId = developerId;
         this.projectId = projectId;
     }
 
-    public long getDeveloperId() {
+    public int getDeveloperId() {
         return developerId;
     }
 
-    public void setDeveloperId(long developerId) {
+    public void setDeveloperId(int developerId) {
         this.developerId = developerId;
     }
 
-    public Long getProjectId() {
+    public int getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(long projectId) {
+    public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
 

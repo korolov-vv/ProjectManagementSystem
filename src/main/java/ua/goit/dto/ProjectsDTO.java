@@ -1,11 +1,10 @@
 package ua.goit.dto;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 public class ProjectsDTO {
-    private long projectId;
+    private int projectId;
     private String projectName;
     private String stage;
     private int timePeriod;
@@ -20,7 +19,7 @@ public class ProjectsDTO {
     public ProjectsDTO() {
     }
 
-    public ProjectsDTO(long projectId, String projectName, String stage, int timePeriod, int coast,
+    public ProjectsDTO(int projectId, String projectName, String stage, int timePeriod, int coast,
                        int numberOfDevelopers, LocalDate dateOfBeginning) {
         this.projectId = projectId;
         this.projectName = projectName;
@@ -31,7 +30,7 @@ public class ProjectsDTO {
         this.dateOfBeginning = dateOfBeginning;
     }
 
-    public ProjectsDTO(long projectId, String projectName, String stage, int timePeriod, int coast,
+    public ProjectsDTO(int projectId, String projectName, String stage, int timePeriod, int coast,
                        int numberOfDevelopers, LocalDate dateOfBeginning, List<Long> developerIds, List<Long> companyIds,
                        List<Long> customerIds) {
         this.projectId = projectId;
@@ -46,11 +45,11 @@ public class ProjectsDTO {
         this.customerIds = customerIds;
     }
 
-    public long getProjectId() {
+    public int getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(long projectId) {
+    public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
 

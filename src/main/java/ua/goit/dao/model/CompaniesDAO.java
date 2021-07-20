@@ -1,15 +1,17 @@
 package ua.goit.dao.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
+
 
 @Entity
 @Table(name = "companies")
-public class CompaniesDAO {
+public class CompaniesDAO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "company_id")
-    private long companyId;
+    private int companyId;
     @Column(name = "company_name")
     private String companyName;
     @Column(name = "number_of_developers")
@@ -18,17 +20,17 @@ public class CompaniesDAO {
     public CompaniesDAO() {
     }
 
-    public CompaniesDAO(long companyId, String companyName, int numberOfDevelopers) {
+    public CompaniesDAO(int companyId, String companyName, int numberOfDevelopers) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.numberOfDevelopers = numberOfDevelopers;
     }
 
-    public long getCompanyId() {
+    public int getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(long companyId) {
+    public void setCompanyId(int companyId) {
         this.companyId = companyId;
     }
 
@@ -51,9 +53,9 @@ public class CompaniesDAO {
     @Override
     public String toString() {
         return "Companies{" +
-                "company_id=" + companyId +
-                ", company_name='" + companyName + '\'' +
-                ", number_of_developers=" + numberOfDevelopers +
+                "companyId=" + companyId +
+                ", companyName='" + companyName + '\'' +
+                ", numberOfDevelopers=" + numberOfDevelopers +
                 '}';
     }
 }

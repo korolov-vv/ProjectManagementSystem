@@ -1,20 +1,36 @@
 package ua.goit.dao.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "developers")
 public class DevelopersDAO {
-    private long developerId;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "developer_id")
+    private int developerId;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "gender")
     private String gender;
+    @Column(name = "age")
     private int age;
+    @Column(name = "experience_in_years")
     private int experienceInYears;
+    @Column(name = "company_id")
     private int companyId;
+    @Column(name = "salary")
     private int salary;
+    @Column(name = "developer_email")
     private String developerEmail;
 
     public DevelopersDAO() {
     }
 
-    public DevelopersDAO(long developerId, String firstName, String lastName, String gender, int age,
+    public DevelopersDAO(int developerId, String firstName, String lastName, String gender, int age,
                          int experienceInYears, int companyId, int salary, String developerEmail) {
         this.developerId = developerId;
         this.firstName = firstName;
@@ -27,11 +43,11 @@ public class DevelopersDAO {
         this.developerEmail = developerEmail;
     }
 
-    public long getDeveloperId() {
+    public int getDeveloperId() {
         return developerId;
     }
 
-    public void setDeveloperId(long developerId) {
+    public void setDeveloperId(int developerId) {
         this.developerId = developerId;
     }
 

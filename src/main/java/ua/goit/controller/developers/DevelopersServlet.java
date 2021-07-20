@@ -73,8 +73,8 @@ public class DevelopersServlet extends HttpServlet {
     private void addDevelopersOnProjects(HttpServletRequest req, DevelopersDTO developersDTO) {
         if(!req.getParameter("projects").equals("")) {
             String[] s = req.getParameter("projects").split(",");
-            List<Long> projectIds = Arrays.stream(s)
-                    .map(Long::parseLong)
+            List<Integer> projectIds = Arrays.stream(s)
+                    .map(Integer::parseInt)
                     .collect(Collectors.toList());
 
             List<DevelopersOnProjectsDTO> developersOnProjectsDTOListToAdd = projectIds.stream()

@@ -27,7 +27,7 @@ public class DevelopersConverter {
         List<DevelopersDAO> developersDAOList = new ArrayList<>();
         while (resultSet.next()) {
             DevelopersDAO developersDAO = new DevelopersDAO();
-            developersDAO.setDeveloperId(resultSet.getLong("developer_id"));
+            developersDAO.setDeveloperId(resultSet.getInt("developer_id"));
             developersDAO.setFirstName(resultSet.getString("first_name"));
             developersDAO.setLastName(resultSet.getString("last_name"));
             developersDAO.setGender(resultSet.getString("gender"));
@@ -44,7 +44,7 @@ public class DevelopersConverter {
     public static DevelopersDAO toDeveloper(ResultSet resultSet) throws SQLException {
         DevelopersDAO developersDAO = new DevelopersDAO();
         while (resultSet.next()) {
-            developersDAO.setDeveloperId(resultSet.getLong("developer_id"));
+            developersDAO.setDeveloperId(resultSet.getInt("developer_id"));
             developersDAO.setFirstName(resultSet.getString("first_name"));
             developersDAO.setLastName(resultSet.getString("last_name"));
             developersDAO.setGender(resultSet.getString("gender"));

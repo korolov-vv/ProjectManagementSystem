@@ -29,13 +29,13 @@ public class DeleteCompanyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        CompaniesDAO companiesDAOForDelete = companiesRepository.findById(Long.parseLong(id));
+        CompaniesDAO companiesDAOForDelete = companiesRepository.findById(Integer.parseInt(id));
         List<CustomersAndCompaniesDAO> customersAndCompaniesDAOList = customersAndCompaniesRepository.findForCompany(
                 companiesDAOForDelete.getCompanyId());
         if(customersAndCompaniesDAOList.size() > 0) {
             customersAndCompaniesRepository.deleteForCompany(companiesDAOForDelete.getCompanyId());
         }
-        companiesRepository.delete(companiesDAOForDelete.getCompanyName());
+        companiesRepository.delete(String.valueOf(companiesDAOForDelete.getCompanyId()));
         req.setAttribute("id", companiesDAOForDelete.getCompanyId());
         req.getRequestDispatcher("/view/companies/deleteCompany.jsp").forward(req, resp);
     }

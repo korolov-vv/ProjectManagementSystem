@@ -1,7 +1,14 @@
 package ua.goit.dao.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "skills")
 public class SkillsDAO {
-    private long recordId;
+    @Id
+    private int recordId;
     private Stack satck;
     private Levels level;
     private String developerEmail;
@@ -9,18 +16,18 @@ public class SkillsDAO {
     public SkillsDAO() {
     }
 
-    public SkillsDAO(long recordId, Stack satck, Levels level, String developerEmail) {
+    public SkillsDAO(int recordId, Stack satck, Levels level, String developerEmail) {
         this.recordId = recordId;
         this.satck = satck;
         this.level = level;
         this.developerEmail = developerEmail;
     }
 
-    public long getRecordId() {
+    public int getRecordId() {
         return recordId;
     }
 
-    public void setRecordId(long recordId) {
+    public void setRecordId(int recordId) {
         this.recordId = recordId;
     }
 

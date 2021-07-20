@@ -23,7 +23,7 @@ public class CompaniesConverter {
         List<CompaniesDAO> companiesDAOList = new ArrayList<>();
         while (resultSet.next()) {
             CompaniesDAO companiesDAO = new CompaniesDAO();
-            companiesDAO.setCompanyId(resultSet.getLong("company_id"));
+            companiesDAO.setCompanyId(resultSet.getInt("company_id"));
             companiesDAO.setCompanyName(resultSet.getString("company_name"));
             companiesDAO.setNumberOfDevelopers(resultSet.getInt("number_of_developers"));
             companiesDAOList.add(companiesDAO);
@@ -34,7 +34,7 @@ public class CompaniesConverter {
     public static CompaniesDAO toCompany(ResultSet resultSet) throws SQLException {
         CompaniesDAO companiesDAO = new CompaniesDAO();
         while (resultSet.next()) {
-            companiesDAO.setCompanyId(resultSet.getLong("company_id"));
+            companiesDAO.setCompanyId(resultSet.getInt("company_id"));
             companiesDAO.setCompanyName(resultSet.getString("company_name"));
             companiesDAO.setNumberOfDevelopers(resultSet.getInt("number_of_developers"));
         }

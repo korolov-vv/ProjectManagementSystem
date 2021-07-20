@@ -63,7 +63,7 @@ public class DevelopersRepository implements Repository<DevelopersDAO> {
     }
 
     @Override
-    public DevelopersDAO findById(long id) {
+    public DevelopersDAO findById(int id) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEVELOPERS_BY_ID)) {
             preparedStatement.setLong(1, id);

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DevelopersDTO {
-    private long developerId;
+    private int developerId;
     private String firstName;
     private String lastName;
     private String gender;
@@ -22,7 +22,7 @@ public class DevelopersDTO {
     public DevelopersDTO() {
     }
 
-    public DevelopersDTO(long developerId, String firstName, String lastName, String gender, int age,
+    public DevelopersDTO(int developerId, String firstName, String lastName, String gender, int age,
                          int experienceInYears, int companyId, int salary, String developerEmail) {
         this.developerId = developerId;
         this.firstName = firstName;
@@ -35,7 +35,7 @@ public class DevelopersDTO {
         this.developerEmail = developerEmail;
     }
 
-    public DevelopersDTO(long developerId, String firstName, String lastName, String gender, int age,
+    public DevelopersDTO(int developerId, String firstName, String lastName, String gender, int age,
                          int experienceInYears, int companyId, int salary, String developerEmail,
                          HashMap<Stack, Levels> skills, List<Long> projectIds) {
         this.developerId = developerId;
@@ -51,11 +51,11 @@ public class DevelopersDTO {
         this.projectIds = projectIds;
     }
 
-    public long getDeveloperId() {
+    public int getDeveloperId() {
         return developerId;
     }
 
-    public void setDeveloperId(long developerId) {
+    public void setDeveloperId(int developerId) {
         this.developerId = developerId;
     }
 

@@ -83,16 +83,16 @@ public class UpdateCompanyServlet extends HttpServlet {
 
     private List<CustomersAndCompaniesDTO> createCustomersAndCompaniesList(HttpServletRequest req, CompaniesDTO companiesDTO) {
         List<CustomersAndCompaniesDTO> customersAndCompaniesDTOList = new ArrayList<>();
-        List<Long> customers = new ArrayList<>();
-        List<Long> projects = new ArrayList<>();
+        List<Integer> customers = new ArrayList<>();
+        List<Integer> projects = new ArrayList<>();
         if(!req.getParameter("customers").equals("")) {
             customers = Arrays.stream(req.getParameter("customers").split(","))
-                    .map(Long::parseLong)
+                    .map(Integer::parseInt)
                     .collect(Collectors.toList());
         }
         if(!req.getParameter("projects").equals("")) {
             projects = Arrays.stream(req.getParameter("projects").split(","))
-                    .map(Long::parseLong)
+                    .map(Integer::parseInt)
                     .collect(Collectors.toList());
         }
         for (int i = 0; i < customers.size() || i< projects.size(); i++) {

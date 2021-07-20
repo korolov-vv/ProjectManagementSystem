@@ -4,7 +4,7 @@ import ua.goit.dao.model.Levels;
 import ua.goit.dao.model.Stack;
 
 public class SkillsDTO {
-    private long recordId;
+    private int recordId;
     private Stack stack;
     private Levels level;
     private String developerEmail;
@@ -12,18 +12,18 @@ public class SkillsDTO {
     public SkillsDTO() {
     }
 
-    public SkillsDTO(long recordId, Stack stack, Levels level, String developerEmail) {
+    public SkillsDTO(int recordId, Stack stack, Levels level, String developerEmail) {
         this.recordId = recordId;
         this.stack = stack;
         this.level = level;
         this.developerEmail = developerEmail;
     }
 
-    public long getRecordId() {
+    public int getRecordId() {
         return recordId;
     }
 
-    public void setRecordId(long recordId) {
+    public void setRecordId(int recordId) {
         this.recordId = recordId;
     }
 

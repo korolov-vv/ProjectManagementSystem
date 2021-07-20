@@ -28,7 +28,7 @@ public class DeleteDeveloperServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        DevelopersDAO developersDAOForDelete = developersRepository.findById(Long.parseLong(id));
+        DevelopersDAO developersDAOForDelete = developersRepository.findById(Integer.parseInt(id));
         List<DevelopersOnProjectsDAO> developersOnProjectsDAOList = developersOnProjectsRepository.findByDeveloper(
                 developersDAOForDelete.getDeveloperId());
         if(developersOnProjectsDAOList.size() > 0) {

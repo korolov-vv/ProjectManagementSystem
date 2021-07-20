@@ -3,7 +3,7 @@ package ua.goit.dto;
 import java.util.List;
 
 public class CompaniesDTO {
-    private long companyId;
+    private int companyId;
     private String companyName;
     private int numberOfDevelopers;
     private List<Long> projectIds;
@@ -12,13 +12,13 @@ public class CompaniesDTO {
     public CompaniesDTO() {
     }
 
-    public CompaniesDTO(long companyId, String companyName, int numberOfDevelopers) {
+    public CompaniesDTO(int companyId, String companyName, int numberOfDevelopers) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.numberOfDevelopers = numberOfDevelopers;
     }
 
-    public CompaniesDTO(long companyId, String companyName, int numberOfDevelopers, List<Long> projectIds, List<Long> customerIds) {
+    public CompaniesDTO(int companyId, String companyName, int numberOfDevelopers, List<Long> projectIds, List<Long> customerIds) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.numberOfDevelopers = numberOfDevelopers;
@@ -26,11 +26,11 @@ public class CompaniesDTO {
         this.customerIds = customerIds;
     }
 
-    public long getCompanyId() {
+    public int getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(long companyId) {
+    public void setCompanyId(int companyId) {
         this.companyId = companyId;
     }
 

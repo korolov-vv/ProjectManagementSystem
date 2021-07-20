@@ -1,22 +1,31 @@
 package ua.goit.dao.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "customers")
 public class CustomersDAO {
-    private long customerId;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "customer_id")
+    private int customerId;
+    @Column(name = "customer_name")
     private String customerName;
 
     public CustomersDAO() {
     }
 
-    public CustomersDAO(long customerId, String customerName) {
+    public CustomersDAO(int customerId, String customerName) {
         this.customerId = customerId;
         this.customerName = customerName;
     }
 
-    public long getCustomerId() {
+    public int getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(long customerId) {
+    public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
 

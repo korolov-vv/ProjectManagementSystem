@@ -63,11 +63,11 @@ public class CompaniesServlet extends HttpServlet {
     private List<CustomersAndCompaniesDTO> createCustomersAndCompaniesList(HttpServletRequest req, CompaniesDTO companiesDTO) {
         List<CustomersAndCompaniesDTO> customersAndCompaniesDTOList = new ArrayList<>();
         if(!req.getParameter("customers").equals("") && !req.getParameter("projects").equals("")) {
-            List<Long> customers = Arrays.stream(req.getParameter("customers").split(","))
-                    .map(Long::parseLong)
+            List<Integer> customers = Arrays.stream(req.getParameter("customers").split(","))
+                    .map(Integer::parseInt)
                     .collect(Collectors.toList());
-            List<Long> projects = Arrays.stream(req.getParameter("projects").split(","))
-                    .map(Long::parseLong)
+            List<Integer> projects = Arrays.stream(req.getParameter("projects").split(","))
+                    .map(Integer::parseInt)
                     .collect(Collectors.toList());
             for (int i = 0; i < customers.size() || i < projects.size(); i++) {
                 CustomersAndCompaniesDTO customersAndCompaniesDTO = new CustomersAndCompaniesDTO();

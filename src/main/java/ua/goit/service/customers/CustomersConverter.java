@@ -18,7 +18,7 @@ public class CustomersConverter {
     public static CustomersDAO toCustomer(ResultSet resultSet) throws SQLException {
         CustomersDAO customersDAO = new CustomersDAO();
         while (resultSet.next()){
-            customersDAO.setCustomerId(resultSet.getLong("customer_id"));
+            customersDAO.setCustomerId(resultSet.getInt("customer_id"));
             customersDAO.setCustomerName(resultSet.getString("customer_name"));
         }
         return customersDAO;

@@ -29,9 +29,9 @@ public class CustomersAndCompaniesConverter {
         List<CustomersAndCompaniesDAO> customersAndCompaniesDAOList = new ArrayList<>();
         while (resultSet.next()) {
             CustomersAndCompaniesDAO customersAndCompaniesDAO = new CustomersAndCompaniesDAO();
-            customersAndCompaniesDAO.setCompanyId(resultSet.getLong("company_id"));
-            customersAndCompaniesDAO.setCustomerId(resultSet.getLong("customer_id"));
-            customersAndCompaniesDAO.setProjectId(resultSet.getLong("project_id"));
+            customersAndCompaniesDAO.setCompanyId(resultSet.getInt("company_id"));
+            customersAndCompaniesDAO.setCustomerId(resultSet.getInt("customer_id"));
+            customersAndCompaniesDAO.setProjectId(resultSet.getInt("project_id"));
             customersAndCompaniesDAOList.add(customersAndCompaniesDAO);
         }
         return customersAndCompaniesDAOList;
@@ -40,9 +40,9 @@ public class CustomersAndCompaniesConverter {
     public static CustomersAndCompaniesDAO toCustomerAndCompanies(ResultSet resultSet) throws SQLException {
         CustomersAndCompaniesDAO customersAndCompaniesDAO = new CustomersAndCompaniesDAO();
         while (resultSet.next()) {
-            customersAndCompaniesDAO.setCompanyId(resultSet.getLong("company_id"));
-            customersAndCompaniesDAO.setCustomerId(resultSet.getLong("customer_id"));
-            customersAndCompaniesDAO.setProjectId(resultSet.getLong("project_id"));
+            customersAndCompaniesDAO.setCompanyId(resultSet.getInt("company_id"));
+            customersAndCompaniesDAO.setCustomerId(resultSet.getInt("customer_id"));
+            customersAndCompaniesDAO.setProjectId(resultSet.getInt("project_id"));
         }
         return customersAndCompaniesDAO;
     }
