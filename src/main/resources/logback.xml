@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="HOME_LOG" value="C:\\\\Users\\vadym\\Documents\\HD\\Vadym\\JAVA\\logs\\project_management.log" />
+    <property name="HOME_LOG" value="C:\\\\Users\\vadym\\Documents\\HD\\Vadym\\JAVA\\ProjectManagementSystem\\logs\\project_management.log" />
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">

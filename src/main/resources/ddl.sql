@@ -79,3 +79,6 @@ CREATE TABLE developers_on_projects
    FOREIGN KEY (developer_id) REFERENCES developers(developer_id),
    PRIMARY KEY (project_id, developer_id)
 );
+
+UPDATE companies
+set number_of_developers = 10;
