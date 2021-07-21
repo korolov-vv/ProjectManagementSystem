@@ -82,3 +82,34 @@ CREATE TABLE developers_on_projects
 
 UPDATE companies
 set number_of_developers = 10;
+
+ALTER TABLE developers ALTER COLUMN developer_id SET NOT NULL;
+ALTER TABLE developers ALTER COLUMN company_id SET NOT NULL;
+ALTER TABLE developers ALTER COLUMN developer_email SET NOT NULL;
+
+ALTER TABLE skills ALTER COLUMN record_id SET NOT NULL;
+ALTER TABLE skills ALTER COLUMN developer_email SET NOT NULL;
+
+ALTER TABLE skills
+    ALTER COLUMN stack SET DATA TYPE VARCHAR (255),
+    ALTER COLUMN level SET DATA TYPE VARCHAR (255);
+
+CREATE TABLE companies_projects
+(
+    company_id int NOT NULL,
+    project_id int NOT NULL,
+    FOREIGN KEY (project_id) REFERENCES projects(project_id),
+    FOREIGN KEY (company_id) REFERENCES companies(company_id),
+    PRIMARY KEY (project_id, company_id)
+);
+
+CREATE TABLE companies_customers
+(
+    company_id int NOT NULL,
+    customer_id int NOT NULL,
+    FOREIGN KEY (company_id) REFERENCES companies(company_id),
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+    PRIMARY KEY (customer_id, company_id)
+);
+
+DROP TABLE customers_and_companies;
