@@ -10,7 +10,7 @@
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">Qweasdzxc123@</property>
         <!-- JDBC connection pool settings ... using built-in test pool -->
-        <property name="hibernate.connection.pool_size">1</property>
+        <property name="hibernate.connection.pool_size">20</property>
         <!-- Select our SQL dialect -->
         <property name="dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
         <!-- Drop and re-create the database schema on startup -->
@@ -27,6 +27,7 @@
         <mapping class="ua.goit.dao.model.ProjectsDAO" />
         <mapping class="ua.goit.dao.model.SkillsDAO" />
         <mapping class="ua.goit.dao.model.DevelopersOnProjectsDAO" />
-        <mapping class="ua.goit.dao.model.CustomersAndCompaniesDAO" />
+        <mapping class="ua.goit.dao.model.CompaniesCustomersDAO" />
+        <mapping class="ua.goit.dao.model.CompaniesProjectsDAO" />
     </session-factory>
 </hibernate-configuration>

@@ -15,7 +15,7 @@ public class SkillsConverter {
     }
 
     public static SkillsDTO fromSkill(SkillsDAO skillsDAO) {
-        return new SkillsDTO(skillsDAO.getRecordId(), skillsDAO.getSatck(),
+        return new SkillsDTO(skillsDAO.getRecordId(), skillsDAO.getStack(),
                 skillsDAO.getLevel(), skillsDAO.getDeveloperEmail());
     }
 
@@ -23,7 +23,7 @@ public class SkillsConverter {
         SkillsDAO skillsDAO = new SkillsDAO();
         while (resultSet.next()) {
             skillsDAO.setRecordId(resultSet.getInt("record_id"));
-            skillsDAO.setSatck(Stack.valueOf(resultSet.getString("stack")));
+            skillsDAO.setStack(Stack.valueOf(resultSet.getString("stack")));
             skillsDAO.setLevel(Levels.valueOf(resultSet.getString("level")));
             skillsDAO.setDeveloperEmail(resultSet.getString("developer_email"));
         }

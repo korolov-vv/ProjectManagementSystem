@@ -1,71 +1,75 @@
 package ua.goit.dao;
 
-import com.zaxxer.hikari.HikariDataSource;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ua.goit.dao.model.SkillsDAO;
 import ua.goit.dao.model.Stack;
-import ua.goit.service.skills.SkillsConverter;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class SkillsRepository implements Repository<SkillsDAO> {
-    private final HikariDataSource dataSource;
 
-    private static final String INSERT = "INSERT INTO skills (record_id, stack, level, developer_email) " +
-            "VALUES (default, ?, ?, ?);";
-    private static final String SELECT_SKILLS_BY_RECORD_ID = "SELECT stack, level, developer_email " +
-            "FROM skills WHERE record_id=?;";
-    private static final String SELECT_SKILLS_BY_DEVELOPER_EMAIL = "SELECT stack, level, developer_email " +
-            "FROM skills WHERE developer_email=?;";
+    private static final Logger LOG = LoggerFactory.getLogger(SkillsRepository.class);
 
-    private static final String SELECT_SKILLS_FOR_DEVELOPER_BY_EMAIL = "SELECT stack, level, developer_email " +
-            "FROM skills WHERE developer_email=? AND stack=?;";
+    private final SessionFactory sessionFactory;
 
-    private static final String UPDATE = "UPDATE skills SET stack=?, level=?, developer_email=?) " +
-            "WHERE record_id=?;";
-    private static final String DELETE = "DELETE FROM skills WHERE record_id=?;";
+    private static final String SELECT_SKILLS_BY_DEVELOPER_EMAIL = "FROM SkillsDAO s WHERE s.developerEmail = :developerEmail";
 
-    public SkillsRepository(HikariDataSource dataSource) {
-        this.dataSource = dataSource;
+    private static final String SELECT_SKILLS_OF_DEVELOPER_BY_EMAIL = "FROM SkillsDAO s " +
+            "WHERE s.developerEmail = :developerEmail AND s.stack = :stack";
+
+    public SkillsRepository(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
-
 
     @Override
     public SkillsDAO findById(int id) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(SELECT_SKILLS_BY_RECORD_ID)) {
-            preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return SkillsConverter.toSkill(resultSet);
-        } catch (SQLException ex) {
+        SkillsDAO skillsDAO = new SkillsDAO();
+        try (Session session = sessionFactory.openSession()) {
+            skillsDAO = session.get(SkillsDAO.class, id);
+        } catch (Exception ex) {
+            LOG.debug(ex.getMessage());
             ex.printStackTrace();
         }
-        return new SkillsDAO();
+        return skillsDAO;
     }
 
     @Override
     public SkillsDAO findByUniqueValue(String email) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(SELECT_SKILLS_BY_DEVELOPER_EMAIL)) {
-            preparedStatement.setString(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return SkillsConverter.toSkill(resultSet);
-        } catch (SQLException ex) {
+        List<SkillsDAO> skillsDAOList = new ArrayList<>();
+        Transaction transaction;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            Query<SkillsDAO> query = session.createQuery(SELECT_SKILLS_BY_DEVELOPER_EMAIL, SkillsDAO.class);
+            query.setParameter("developerEmail", email);
+            skillsDAOList = query.list();
+            transaction.commit();
+        } catch (Exception ex) {
+            LOG.debug(ex.getMessage());
             ex.printStackTrace();
         }
-        return new SkillsDAO();
+        return skillsDAOList.get(0);
     }
 
-    public SkillsDAO findSkillsForDeveloperByEmail(String email, Stack stack) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(SELECT_SKILLS_FOR_DEVELOPER_BY_EMAIL)) {
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(1, String.valueOf(stack));
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return SkillsConverter.toSkill(resultSet);
-        } catch (SQLException ex) {
+    public SkillsDAO findSkillOfDeveloperByEmail(String email, Stack stack) {
+        List<SkillsDAO> skillsDAOList;
+        Transaction transaction;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            Query<SkillsDAO> query = session.createQuery(SELECT_SKILLS_OF_DEVELOPER_BY_EMAIL, SkillsDAO.class);
+            query.setParameter("developerEmail", email);
+            query.setParameter("stack", stack);
+            skillsDAOList = query.list();
+            transaction.commit();
+            return skillsDAOList.get(0);
+        } catch (Exception ex) {
+            LOG.debug(ex.getMessage());
             ex.printStackTrace();
         }
         return new SkillsDAO();
@@ -73,35 +77,48 @@ public class SkillsRepository implements Repository<SkillsDAO> {
 
     @Override
     public void create(SkillsDAO skillsDAO) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(INSERT)) {
-            preparedStatement.setString(1, skillsDAO.getSatck().toString());
-            preparedStatement.setString(2, skillsDAO.getLevel().toString());
-            preparedStatement.setString(3, skillsDAO.getDeveloperEmail());
-        } catch (SQLException ex) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            session.save(skillsDAO);
+            transaction.commit();
+        } catch (Exception ex) {
+            LOG.debug(ex.getMessage());
             ex.printStackTrace();
+            if (Objects.nonNull(transaction)) {
+                transaction.rollback();
+            }
         }
     }
 
     @Override
     public void update(SkillsDAO skillsDAO) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(UPDATE)) {
-            preparedStatement.setString(1, skillsDAO.getSatck().toString());
-            preparedStatement.setString(2, skillsDAO.getLevel().toString());
-            preparedStatement.setString(3, skillsDAO.getDeveloperEmail());
-            preparedStatement.setLong(4, skillsDAO.getRecordId());
-        } catch (SQLException ex) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            session.saveOrUpdate(skillsDAO);
+            transaction.commit();
+        } catch (Exception ex) {
+            LOG.debug(ex.getMessage());
             ex.printStackTrace();
+            if (Objects.nonNull(transaction)) {
+                transaction.rollback();
+            }
         }
     }
 
     @Override
     public void delete(String id) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(DELETE)) {
-            preparedStatement.setLong(1, Long.getLong(id));
-        } catch (SQLException ex) {
+        Transaction transaction;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            SkillsDAO skillsDAO = session.get(SkillsDAO.class, id);
+            if (skillsDAO != null) {
+                session.delete(skillsDAO);
+            }
+            transaction.commit();
+        } catch (Exception ex) {
+            LOG.debug(ex.getMessage());
             ex.printStackTrace();
         }
     }

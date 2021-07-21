@@ -1,13 +1,10 @@
 package ua.goit.controller.projects;
 
-import ua.goit.config.DatabaseConnectionManager;
-import ua.goit.dao.CustomersAndCompaniesRepository;
+import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.DevelopersOnProjectsRepository;
 import ua.goit.dao.ProjectsRepository;
-import ua.goit.dto.CustomersAndCompaniesDTO;
 import ua.goit.dto.DevelopersOnProjectsDTO;
 import ua.goit.dto.ProjectsDTO;
-import ua.goit.service.customers.CustomersAndCompaniesService;
 import ua.goit.service.developers.DevelopersOnProjectsService;
 import ua.goit.service.projects.ProjectService;
 
@@ -18,29 +15,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @WebServlet("/projects")
 public class ProjectsServlet extends HttpServlet {
     private ProjectsRepository projectsRepository;
     private DevelopersOnProjectsRepository developersOnProjectsRepository;
-    private CustomersAndCompaniesRepository customersAndCompaniesRepository;
     private ProjectService projectService;
     private DevelopersOnProjectsService developersOnProjectsService;
-    private CustomersAndCompaniesService customersAndCompaniesService;
 
     @Override
     public void init() {
-        this.projectsRepository = new ProjectsRepository(DatabaseConnectionManager.getDataSource());
-        this.developersOnProjectsRepository = new DevelopersOnProjectsRepository(DatabaseConnectionManager.getDataSource());
-        this.customersAndCompaniesRepository = new CustomersAndCompaniesRepository(DatabaseConnectionManager.getDataSource());
+        this.projectsRepository = new ProjectsRepository(HibernateDatabaseConnector.getSessionFactory());
+        this.developersOnProjectsRepository = new DevelopersOnProjectsRepository(HibernateDatabaseConnector.getSessionFactory());
         this.projectService = new ProjectService(projectsRepository);
-        this.developersOnProjectsService = new DevelopersOnProjectsService(developersOnProjectsRepository);
-        this.customersAndCompaniesService = new CustomersAndCompaniesService(customersAndCompaniesRepository);
-
+//        this.developersOnProjectsService = new DevelopersOnProjectsService(developersOnProjectsRepository);
     }
 
     @Override
@@ -52,7 +41,6 @@ public class ProjectsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ProjectsDTO projectsDTO = addProject(req);
         addDevelopersOnProject(req, projectsDTO);
-        addCustomersAndCompanies(req, projectsDTO);
         resp.sendRedirect(req.getContextPath() + "/projects");
     }
 
@@ -86,42 +74,5 @@ public class ProjectsServlet extends HttpServlet {
                         } else developersOnProjectsRepository.update(d);
                     });
         }
-    }
-
-    private void addCustomersAndCompanies(HttpServletRequest req, ProjectsDTO projectsDTO) {
-        List<CustomersAndCompaniesDTO> customersAndCompaniesDTOList = createCustomersAndCompaniesList(req, projectsDTO);
-        customersAndCompaniesDTOList.stream()
-                .map((cc) ->
-                    customersAndCompaniesRepository.findUniqueRecord(cc.getCompanyId(), cc.getCustomerId(), cc.getProjectId()))
-                .forEach(c -> {
-                    if(c.getCustomerId() == 0 && c.getProjectId() == 0 && c.getCompanyId() == 0) {
-                        customersAndCompaniesRepository.create(c);
-                    } else customersAndCompaniesRepository.update(c);
-                });
-    }
-
-    private List<CustomersAndCompaniesDTO> createCustomersAndCompaniesList(HttpServletRequest req, ProjectsDTO projectsDTO) {
-
-            List<CustomersAndCompaniesDTO> customersAndCompaniesDTOList = new ArrayList<>();
-        if (!req.getParameter("customers").equals("") && !req.getParameter("companies").equals("")) {
-            List<Integer> customers = Arrays.stream(req.getParameter("customers").split(","))
-                    .map(Integer::parseInt)
-                    .collect(Collectors.toList());
-            List<Integer> companies = Arrays.stream(req.getParameter("companies").split(","))
-                    .map(Integer::parseInt)
-                    .collect(Collectors.toList());
-            for (int i = 0; i < customers.size() || i < companies.size(); i++) {
-                CustomersAndCompaniesDTO customersAndCompaniesDTO = new CustomersAndCompaniesDTO();
-                customersAndCompaniesDTO.setProjectId(projectsDTO.getProjectId());
-                if (i < customers.size()) {
-                    customersAndCompaniesDTO.setCustomerId(customers.get(i));
-                }
-                if (i < companies.size()) {
-                    customersAndCompaniesDTO.setCompanyId(companies.get(i));
-                }
-                customersAndCompaniesDTOList.add(customersAndCompaniesDTO);
-            }
-        }
-        return customersAndCompaniesDTOList;
     }
 }

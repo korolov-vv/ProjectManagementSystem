@@ -31,6 +31,7 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
         try (Session session = sessionFactory.openSession()) {
             companiesDAO = session.get(CompaniesDAO.class, id);
         } catch (Exception ex) {
+            LOG.debug(ex.getMessage());
             ex.printStackTrace();
         }
         return companiesDAO;
@@ -40,7 +41,6 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
     public CompaniesDAO findByUniqueValue(String companyName) {
         List<CompaniesDAO> companiesDAOList = new ArrayList<>();
         Transaction transaction;
-        CompaniesDAO companiesDAO = new CompaniesDAO();
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             Query<CompaniesDAO> query = session.createQuery(SELECT_BY_NAME, CompaniesDAO.class);
@@ -48,6 +48,7 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
             companiesDAOList = query.list();
             transaction.commit();
         } catch (Exception ex) {
+            LOG.debug(ex.getMessage());
             ex.printStackTrace();
         }
         return companiesDAOList.get(0);
@@ -61,6 +62,7 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
             session.save(companiesDAO);
             transaction.commit();
         } catch (Exception ex) {
+            LOG.debug(ex.getMessage());
             ex.printStackTrace();
             if (Objects.nonNull(transaction)) {
                 transaction.rollback();
@@ -76,6 +78,7 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
             session.saveOrUpdate(companiesDAO);
             transaction.commit();
         } catch (Exception ex) {
+            LOG.debug(ex.getMessage());
             ex.printStackTrace();
             if (Objects.nonNull(transaction)) {
                 transaction.rollback();
@@ -94,6 +97,7 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
             }
             transaction.commit();
         } catch (Exception ex) {
+            LOG.debug(ex.getMessage());
             ex.printStackTrace();
         }
     }
@@ -108,6 +112,7 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
             }
             transaction.commit();
         } catch (Exception ex) {
+            LOG.debug(ex.getMessage());
             ex.printStackTrace();
         }
     }

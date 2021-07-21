@@ -1,6 +1,6 @@
 package ua.goit.controller.developers;
 
-import ua.goit.config.DatabaseConnectionManager;
+import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.DevelopersRepository;
 import ua.goit.dao.model.DevelopersDAO;
 import ua.goit.dto.DevelopersDTO;
@@ -19,7 +19,7 @@ public class FindByIdServlet extends HttpServlet {
 
     @Override
     public void init() {
-        this.developersRepository = new DevelopersRepository(DatabaseConnectionManager.getDataSource());
+        this.developersRepository = new DevelopersRepository(HibernateDatabaseConnector.getSessionFactory());
     }
 
     @Override

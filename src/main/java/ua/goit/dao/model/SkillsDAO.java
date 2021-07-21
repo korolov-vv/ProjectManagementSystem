@@ -1,24 +1,34 @@
 package ua.goit.dao.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "skills")
-public class SkillsDAO {
+public class SkillsDAO implements Serializable {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "record_id", nullable = false)
     private int recordId;
-    private Stack satck;
+    @Column(name = "stack")
+    @Enumerated(EnumType.STRING)
+    private Stack stack;
+    @Column(name = "level")
+    @Enumerated(EnumType.STRING)
     private Levels level;
+    @Column(name = "developer_email")
     private String developerEmail;
+    @ManyToOne(targetEntity = DevelopersDAO.class, fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinColumn(name="developer_email", insertable=false, updatable=false, nullable = false)
+    private DevelopersDAO developersDAO;
 
     public SkillsDAO() {
     }
 
-    public SkillsDAO(int recordId, Stack satck, Levels level, String developerEmail) {
+    public SkillsDAO(int recordId, Stack stack, Levels level, String developerEmail) {
         this.recordId = recordId;
-        this.satck = satck;
+        this.stack = stack;
         this.level = level;
         this.developerEmail = developerEmail;
     }
@@ -31,12 +41,12 @@ public class SkillsDAO {
         this.recordId = recordId;
     }
 
-    public Stack getSatck() {
-        return satck;
+    public Stack getStack() {
+        return stack;
     }
 
-    public void setSatck(Stack satck) {
-        this.satck = satck;
+    public void setStack(Stack stack) {
+        this.stack = stack;
     }
 
     public Levels getLevel() {
@@ -55,13 +65,21 @@ public class SkillsDAO {
         this.developerEmail = developerEmail;
     }
 
+    public DevelopersDAO getDevelopersDAO() {
+        return developersDAO;
+    }
+
+    public void setDevelopersDAO(DevelopersDAO developersDAO) {
+        this.developersDAO = developersDAO;
+    }
+
     @Override
     public String toString() {
-        return "Skills{" +
+        return "SkillsDAO{" +
                 "recordId=" + recordId +
-                ", stack=" + satck +
+                ", stack=" + stack +
                 ", level=" + level +
-                ", developer_email='" + developerEmail + '\'' +
+                ", developerEmail='" + developerEmail + '\'' +
                 '}';
     }
 }

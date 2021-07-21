@@ -2,6 +2,8 @@ package ua.goit.dao.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -16,6 +18,20 @@ public class CompaniesDAO implements Serializable {
     private String companyName;
     @Column(name = "number_of_developers")
     private int numberOfDevelopers;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "companies_projects",
+            joinColumns = { @JoinColumn(name = "company_id") },
+            inverseJoinColumns = { @JoinColumn(name = "project_id") }
+    )
+    Set<ProjectsDAO> projects = new HashSet<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "companies_customers",
+            joinColumns = { @JoinColumn(name = "company_id") },
+            inverseJoinColumns = { @JoinColumn(name = "customer_id") }
+    )
+    Set<CustomersDAO> customers = new HashSet<>();
 
     public CompaniesDAO() {
     }
@@ -48,6 +64,22 @@ public class CompaniesDAO implements Serializable {
 
     public void setNumberOfDevelopers(int numberOfDevelopers) {
         this.numberOfDevelopers = numberOfDevelopers;
+    }
+
+    public Set<ProjectsDAO> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<ProjectsDAO> projects) {
+        this.projects = projects;
+    }
+
+    public Set<CustomersDAO> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Set<CustomersDAO> customers) {
+        this.customers = customers;
     }
 
     @Override

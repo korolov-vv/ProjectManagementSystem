@@ -1,11 +1,14 @@
 package ua.goit.dao.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "projects")
-public class ProjectsDAO {
+public class ProjectsDAO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +26,10 @@ public class ProjectsDAO {
     private int numberOfDevelopers;
     @Column(name ="date_of_beginning")
     private LocalDate dateOfBeginning;
+    @ManyToMany(mappedBy = "projects", cascade = CascadeType.ALL)
+    private Set<DevelopersDAO> developers = new HashSet<>();
+    @ManyToMany(mappedBy = "projects", cascade = CascadeType.ALL)
+    private Set<CompaniesDAO> companies = new HashSet<>();
 
     public ProjectsDAO() {
     }
@@ -94,16 +101,32 @@ public class ProjectsDAO {
         this.dateOfBeginning = dateOfBeginning;
     }
 
+    public Set<DevelopersDAO> getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(Set<DevelopersDAO> developers) {
+        this.developers = developers;
+    }
+
+    public Set<CompaniesDAO> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(Set<CompaniesDAO> companies) {
+        this.companies = companies;
+    }
+
     @Override
     public String toString() {
-        return "Projects{" +
+        return "ProjectsDAO{" +
                 "projectId=" + projectId +
                 ", projectName='" + projectName + '\'' +
                 ", stage='" + stage + '\'' +
-                ", timePeriod=" + timePeriod +
-                ", coast=" + coast +
-                ", numberOfDevelopers=" + numberOfDevelopers +
-                ", dateOfBegining=" + dateOfBeginning +
+                ", timePeriod=" + timePeriod + '\'' +
+                ", coast=" + coast + '\'' +
+                ", numberOfDevelopers=" + numberOfDevelopers + '\'' +
+                ", dateOfBeginning=" + dateOfBeginning + '\'' +
                 '}';
     }
 }

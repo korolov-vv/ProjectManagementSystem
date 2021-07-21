@@ -1,17 +1,28 @@
-package ua.goit.dto;
+package ua.goit.dao.model;
 
-public class CustomersAndCompaniesDTO {
-    private int companyId;
-    private int customerId;
-    private int projectId;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
 
-    public CustomersAndCompaniesDTO() {
+@Entity
+@Table(name = "companies_customers")
+public class CompaniesCustomersDAO implements Serializable {
+
+    @Id
+    @Column(name = "company_id")
+    int companyId;
+    @Id
+    @Column(name = "customer_id")
+    int customerId;
+
+    public CompaniesCustomersDAO() {
     }
 
-    public CustomersAndCompaniesDTO(int companyId, int customerId, int projectId) {
+    public CompaniesCustomersDAO(int companyId, int customerId) {
         this.companyId = companyId;
         this.customerId = customerId;
-        this.projectId = projectId;
     }
 
     public int getCompanyId() {
@@ -30,20 +41,11 @@ public class CustomersAndCompaniesDTO {
         this.customerId = customerId;
     }
 
-    public int getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
-    }
-
     @Override
     public String toString() {
-        return "CustomersAndCompaniesDTO{" +
+        return "CompaniesCustomersDAO{" +
                 "companyId=" + companyId +
                 ", customerId=" + customerId +
-                ", projectId=" + projectId +
                 '}';
     }
 }

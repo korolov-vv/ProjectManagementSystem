@@ -163,18 +163,3 @@ insert into developers_on_projects values (7, 5);
 insert into developers_on_projects values (8, 5);
 insert into developers_on_projects values (8, 4);
 insert into developers_on_projects values (8, 2);
-
-insert into customers_and_companies values (1, 1, 8);
-insert into customers_and_companies values (1, 2, 7);
-insert into customers_and_companies values (2, 2, 6);
-insert into customers_and_companies values (3, 4, 5);
-insert into customers_and_companies values (4, 5, 4);
-insert into customers_and_companies values (5, 2, 1);
-insert into customers_and_companies values (6, 1, 1);
-insert into customers_and_companies values (6, 2, 1);
-insert into customers_and_companies values (7, 2, 8);
-insert into customers_and_companies values (7, 5, 1);
-insert into customers_and_companies values (7, 4, 7);
-insert into customers_and_companies values (8, 2, 4);
-insert into customers_and_companies values (3, 2, 6);
-insert into customers_and_companies values (5, 1, 2);

@@ -1,7 +1,6 @@
 package ua.goit.controller.projects;
 
-import ua.goit.config.DatabaseConnectionManager;
-import ua.goit.dao.CustomersAndCompaniesRepository;
+import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.DevelopersOnProjectsRepository;
 import ua.goit.dao.ProjectsRepository;
 import ua.goit.dto.ProjectsDTO;
@@ -21,13 +20,11 @@ public class ProjectsListServlet extends HttpServlet {
 
     private ProjectsRepository projectsRepository;
     private DevelopersOnProjectsRepository developersOnProjectsRepository;
-    private CustomersAndCompaniesRepository customersAndCompaniesRepository;
 
     @Override
     public void init() {
-        this.projectsRepository = new ProjectsRepository(DatabaseConnectionManager.getDataSource());
-        this.developersOnProjectsRepository = new DevelopersOnProjectsRepository(DatabaseConnectionManager.getDataSource());
-        this.customersAndCompaniesRepository = new CustomersAndCompaniesRepository(DatabaseConnectionManager.getDataSource());
+        this.projectsRepository = new ProjectsRepository(HibernateDatabaseConnector.getSessionFactory());
+        this.developersOnProjectsRepository = new DevelopersOnProjectsRepository(HibernateDatabaseConnector.getSessionFactory());
     }
 
     @Override

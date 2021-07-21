@@ -1,15 +1,19 @@
 package ua.goit.dao.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "developers_on_projects")
-public class DevelopersOnProjectsDAO {
+public class DevelopersOnProjectsDAO implements Serializable {
     @Id
+    @Column(name = "developer_id")
     private int developerId;
     @Id
+    @Column(name = "project_id")
     private int projectId;
 
     public DevelopersOnProjectsDAO() {
