@@ -3,6 +3,7 @@ package ua.goit.controller.companies;
 import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.CompaniesRepository;
 import ua.goit.dao.model.CompaniesDAO;
+import ua.goit.dao.SingleEntityRepository;
 import ua.goit.dto.CompaniesDTO;
 import ua.goit.service.companies.CompaniesConverter;
 
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 
 @WebServlet("/companies/list")
 public class CompaniesListServlet extends HttpServlet {
-    private CompaniesRepository companiesRepository;
+    private SingleEntityRepository<CompaniesDAO> companiesRepository;
 
     @Override
     public void init() throws ServletException {
@@ -26,9 +27,9 @@ public class CompaniesListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<CompaniesDAO> companiesDAOList = companiesRepository.findAllCompanies();
+        List<CompaniesDAO> companiesDAOList = companiesRepository.findAll();
         List<CompaniesDTO> companiesDTOList = companiesDAOList.stream()
-                .map(CompaniesConverter::fromCompany)
+                .map(CompaniesConverter::fromCompaniesDAO)
                 .collect(Collectors.toList());
         req.setAttribute("companies", companiesDTOList);
         req.getRequestDispatcher("/view/companies/listOfCompanies.jsp").forward(req, resp);

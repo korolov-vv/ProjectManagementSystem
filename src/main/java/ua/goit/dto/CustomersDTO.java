@@ -1,11 +1,12 @@
 package ua.goit.dto;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CustomersDTO {
     private int customerId;
     private String customerName;
-    private List<Long> projectIds;
+    private Set<CompaniesDTO> companies;
 
     public CustomersDTO() {
     }
@@ -13,12 +14,13 @@ public class CustomersDTO {
     public CustomersDTO(int customerId, String customerName) {
         this.customerId = customerId;
         this.customerName = customerName;
+        this.companies = new HashSet<>();
     }
 
-    public CustomersDTO(int customerId, String customerName, List<Long> projectIds) {
+    public CustomersDTO(int customerId, String customerName, Set<CompaniesDTO> companies) {
         this.customerId = customerId;
         this.customerName = customerName;
-        this.projectIds = projectIds;
+        this.companies = companies;
     }
 
     public int getCustomerId() {
@@ -37,12 +39,12 @@ public class CustomersDTO {
         this.customerName = customerName;
     }
 
-    public List<Long> getProjectIds() {
-        return projectIds;
+    public Set<CompaniesDTO> getCompanies() {
+        return companies;
     }
 
-    public void setProjectIds(List<Long> projectIds) {
-        this.projectIds = projectIds;
+    public void setCompanies(Set<CompaniesDTO> companies) {
+        this.companies = companies;
     }
 
     @Override
@@ -50,7 +52,7 @@ public class CustomersDTO {
         return "CustomersDTO{" +
                 "customerId=" + customerId +
                 ", customerName='" + customerName + '\'' +
-                ", projectId=" + projectIds +
+                ", companies=" + companies +
                 '}';
     }
 }

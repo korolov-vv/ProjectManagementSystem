@@ -2,6 +2,8 @@ package ua.goit.controller.companies;
 
 import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.CompaniesRepository;
+import ua.goit.dao.SingleEntityRepository;
+import ua.goit.dao.model.CompaniesDAO;
 import ua.goit.dto.CompaniesDTO;
 import ua.goit.service.companies.CompaniesService;
 
@@ -14,7 +16,7 @@ import java.io.IOException;
 
 @WebServlet("/companies/update")
 public class UpdateCompanyServlet extends HttpServlet {
-    private CompaniesRepository companiesRepository;
+    private SingleEntityRepository<CompaniesDAO> companiesRepository;
     private CompaniesService companiesService;
 
     @Override

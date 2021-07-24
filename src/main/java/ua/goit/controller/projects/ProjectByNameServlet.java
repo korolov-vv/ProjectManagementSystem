@@ -1,8 +1,8 @@
 package ua.goit.controller.projects;
 
 import ua.goit.config.HibernateDatabaseConnector;
-import ua.goit.dao.DevelopersOnProjectsRepository;
 import ua.goit.dao.ProjectsRepository;
+import ua.goit.dao.SingleEntityRepository;
 import ua.goit.dao.model.ProjectsDAO;
 import ua.goit.dto.ProjectsDTO;
 import ua.goit.service.projects.ProjectsConverter;
@@ -17,13 +17,11 @@ import java.io.IOException;
 @WebServlet("/projects/project")
 public class ProjectByNameServlet extends HttpServlet {
 
-    private ProjectsRepository projectsRepository;
-    private DevelopersOnProjectsRepository developersOnProjectsRepository;
+    private SingleEntityRepository<ProjectsDAO> projectsRepository;
 
     @Override
     public void init() {
         this.projectsRepository = new ProjectsRepository(HibernateDatabaseConnector.getSessionFactory());
-        this.developersOnProjectsRepository = new DevelopersOnProjectsRepository(HibernateDatabaseConnector.getSessionFactory());
     }
 
     @Override
@@ -35,7 +33,7 @@ public class ProjectByNameServlet extends HttpServlet {
             req.setAttribute("message", ex.getMessage());
             req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
         }else {
-            ProjectsDTO project = ProjectsConverter.fromProject(projectsDAO);
+            ProjectsDTO project = ProjectsConverter.fromProjectsDAO(projectsDAO);
             req.setAttribute("project", project);
             req.getRequestDispatcher("/view/projects/findProjectByName.jsp").forward(req, resp);
         }

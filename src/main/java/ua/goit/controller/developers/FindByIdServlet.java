@@ -2,6 +2,7 @@ package ua.goit.controller.developers;
 
 import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.DevelopersRepository;
+import ua.goit.dao.SingleEntityRepository;
 import ua.goit.dao.model.DevelopersDAO;
 import ua.goit.dto.DevelopersDTO;
 import ua.goit.service.developers.DevelopersConverter;
@@ -15,7 +16,7 @@ import java.io.IOException;
 
 @WebServlet("/developers/developer")
 public class FindByIdServlet extends HttpServlet {
-    private DevelopersRepository developersRepository;
+    private SingleEntityRepository<DevelopersDAO> developersRepository;
 
     @Override
     public void init() {
@@ -31,7 +32,7 @@ public class FindByIdServlet extends HttpServlet {
             req.setAttribute("message", ex.getMessage());
             req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
         }else {
-            DevelopersDTO developersDTO = DevelopersConverter.fromDeveloper(developersDAO);
+            DevelopersDTO developersDTO = DevelopersConverter.fromDevelopersDAO(developersDAO);
             req.setAttribute("developer", developersDTO);
             req.getRequestDispatcher("/view/developers/findDeveloperById.jsp").forward(req, resp);
         }

@@ -1,10 +1,7 @@
 package ua.goit.dto;
 
-import ua.goit.dao.model.Levels;
-import ua.goit.dao.model.Stack;
-
-import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DevelopersDTO {
     private int developerId;
@@ -16,8 +13,8 @@ public class DevelopersDTO {
     private int companyId;
     private int salary;
     private String developerEmail;
-    private HashMap<Stack, Levels> skills;
-    private List<Long> projectIds;
+    private Set<SkillsDTO> skills;
+    private Set<ProjectsDTO> projects;
 
     public DevelopersDTO() {
     }
@@ -33,11 +30,13 @@ public class DevelopersDTO {
         this.companyId = companyId;
         this.salary = salary;
         this.developerEmail = developerEmail;
+        this.skills = new HashSet<>();
+        this.projects = new HashSet<>();
     }
 
     public DevelopersDTO(int developerId, String firstName, String lastName, String gender, int age,
                          int experienceInYears, int companyId, int salary, String developerEmail,
-                         HashMap<Stack, Levels> skills, List<Long> projectIds) {
+                         Set<SkillsDTO> skills, Set<ProjectsDTO> projects) {
         this.developerId = developerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -48,7 +47,7 @@ public class DevelopersDTO {
         this.salary = salary;
         this.developerEmail = developerEmail;
         this.skills = skills;
-        this.projectIds = projectIds;
+        this.projects = projects;
     }
 
     public int getDeveloperId() {
@@ -123,20 +122,20 @@ public class DevelopersDTO {
         this.developerEmail = developerEmail;
     }
 
-    public HashMap<Stack, Levels> getSkills() {
+    public Set<SkillsDTO> getSkills() {
         return skills;
     }
 
-    public void setSkills(HashMap<Stack, Levels> skills) {
+    public void setSkills(Set<SkillsDTO> skills) {
         this.skills = skills;
     }
 
-    public List<Long> getProjectIds() {
-        return projectIds;
+    public Set<ProjectsDTO> getProjects() {
+        return projects;
     }
 
-    public void setProjectIds(List<Long> projectIds) {
-        this.projectIds = projectIds;
+    public void setProjects(Set<ProjectsDTO> projects) {
+        this.projects = projects;
     }
 
     @Override
@@ -152,7 +151,7 @@ public class DevelopersDTO {
                 ", salary=" + salary +
                 ", developerEmail='" + developerEmail + '\'' +
                 ", skills=" + skills +
-                ", projectIds=" + projectIds +
+                ", projects=" + projects +
                 '}';
     }
 }

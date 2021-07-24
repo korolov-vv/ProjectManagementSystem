@@ -1,5 +1,7 @@
 package ua.goit.dao.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -26,9 +28,11 @@ public class ProjectsDAO implements Serializable {
     private int numberOfDevelopers;
     @Column(name ="date_of_beginning")
     private LocalDate dateOfBeginning;
-    @ManyToMany(mappedBy = "projects", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private Set<DevelopersDAO> developers = new HashSet<>();
-    @ManyToMany(mappedBy = "projects", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private Set<CompaniesDAO> companies = new HashSet<>();
 
     public ProjectsDAO() {
@@ -43,6 +47,22 @@ public class ProjectsDAO implements Serializable {
         this.coast = coast;
         this.numberOfDevelopers = numberOfDevelopers;
         this.dateOfBeginning = dateOfBeginning;
+        this.developers = new HashSet<>();
+        this.companies = new HashSet<>();
+    }
+
+    public ProjectsDAO(int projectId, String projectName, String stage, int timePeriod, int coast,
+                       int numberOfDevelopers, LocalDate dateOfBeginning, Set<DevelopersDAO> developers,
+                       Set<CompaniesDAO> companies) {
+        this.projectId = projectId;
+        this.projectName = projectName;
+        this.stage = stage;
+        this.timePeriod = timePeriod;
+        this.coast = coast;
+        this.numberOfDevelopers = numberOfDevelopers;
+        this.dateOfBeginning = dateOfBeginning;
+        this.developers = developers;
+        this.companies = companies;
     }
 
     public int getProjectId() {
@@ -123,10 +143,12 @@ public class ProjectsDAO implements Serializable {
                 "projectId=" + projectId +
                 ", projectName='" + projectName + '\'' +
                 ", stage='" + stage + '\'' +
-                ", timePeriod=" + timePeriod + '\'' +
-                ", coast=" + coast + '\'' +
-                ", numberOfDevelopers=" + numberOfDevelopers + '\'' +
-                ", dateOfBeginning=" + dateOfBeginning + '\'' +
+                ", timePeriod=" + timePeriod +
+                ", coast=" + coast +
+                ", numberOfDevelopers=" + numberOfDevelopers +
+                ", dateOfBeginning=" + dateOfBeginning +
+                ", developers=" + developers +
+                ", companies=" + companies +
                 '}';
     }
 }

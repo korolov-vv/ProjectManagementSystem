@@ -13,9 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SkillsRepository implements Repository<SkillsDAO> {
+public class SkillsRepository implements SingleEntityRepository<SkillsDAO> {
 
     private static final Logger LOG = LoggerFactory.getLogger(SkillsRepository.class);
+    private static final String SELECT_ALL_DEVELOPERS = "FROM SkillsDAO s";
 
     private final SessionFactory sessionFactory;
 
@@ -38,6 +39,24 @@ public class SkillsRepository implements Repository<SkillsDAO> {
             ex.printStackTrace();
         }
         return skillsDAO;
+    }
+
+    @Override
+    public List<SkillsDAO> findAll() {
+        List<SkillsDAO> skillsDAOList = new ArrayList<>();
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            Query<SkillsDAO> query = session.createQuery(SELECT_ALL_DEVELOPERS,
+                    SkillsDAO.class);
+            LOG.debug("Executing query: " + query.getQueryString());
+            skillsDAOList = query.getResultList();
+            transaction.commit();
+        } catch (Exception ex) {
+            LOG.debug("Unable to execute query: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return skillsDAOList;
     }
 
     @Override
@@ -108,7 +127,7 @@ public class SkillsRepository implements Repository<SkillsDAO> {
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(int id) {
         Transaction transaction;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
@@ -123,5 +142,19 @@ public class SkillsRepository implements Repository<SkillsDAO> {
         }
     }
 
-
+    @Override
+    public void delete(String name) {
+        Transaction transaction;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            SkillsDAO skillsDAO = session.get(SkillsDAO.class, name);
+            if (skillsDAO != null) {
+                session.delete(skillsDAO);
+            }
+            transaction.commit();
+        } catch (Exception ex) {
+            LOG.debug(ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
 }

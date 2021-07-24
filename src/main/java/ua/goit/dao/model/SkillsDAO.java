@@ -19,7 +19,7 @@ public class SkillsDAO implements Serializable {
     private Levels level;
     @Column(name = "developer_email")
     private String developerEmail;
-    @ManyToOne(targetEntity = DevelopersDAO.class, fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(targetEntity = DevelopersDAO.class, fetch = FetchType.EAGER)
     @JoinColumn(name="developer_email", insertable=false, updatable=false, nullable = false)
     private DevelopersDAO developersDAO;
 

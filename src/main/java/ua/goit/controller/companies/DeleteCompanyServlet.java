@@ -2,6 +2,7 @@ package ua.goit.controller.companies;
 
 import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.CompaniesRepository;
+import ua.goit.dao.SingleEntityRepository;
 import ua.goit.dao.model.CompaniesDAO;
 
 import javax.servlet.ServletException;
@@ -13,7 +14,7 @@ import java.io.IOException;
 
 @WebServlet("/companies/deleteCompany")
 public class DeleteCompanyServlet extends HttpServlet {
-    private CompaniesRepository companiesRepository;
+    private SingleEntityRepository<CompaniesDAO> companiesRepository;
 
     @Override
     public void init() throws ServletException {

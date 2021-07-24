@@ -1,26 +1,39 @@
 package ua.goit.service.customers;
 
+import ua.goit.dao.model.CompaniesDAO;
 import ua.goit.dao.model.CustomersDAO;
+import ua.goit.dto.CompaniesDTO;
 import ua.goit.dto.CustomersDTO;
+import ua.goit.service.companies.CompaniesConverter;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CustomersConverter {
-    public static CustomersDAO toCustomer(CustomersDTO customersDTO){
-        return new CustomersDAO(customersDTO.getCustomerId(), customersDTO.getCustomerName());
+    public static CustomersDAO toCustomerDAO(CustomersDTO customersDTO){
+        Set<CompaniesDAO> companies = toCompaniesDAO(customersDTO.getCompanies());
+        return new CustomersDAO(customersDTO.getCustomerId(), customersDTO.getCustomerName(), companies);
     }
 
-    public static CustomersDTO fromCustomer(CustomersDAO customersDAO) {
-        return new CustomersDTO(customersDAO.getCustomerId(), customersDAO.getCustomerName());
+    public static CustomersDTO fromCustomerDAO(CustomersDAO customersDAO) {
+        Set<CompaniesDTO> companies = fromCompaniesDAO(customersDAO.getCompanies());
+        return new CustomersDTO(customersDAO.getCustomerId(), customersDAO.getCustomerName(), companies);
     }
 
-    public static CustomersDAO toCustomer(ResultSet resultSet) throws SQLException {
-        CustomersDAO customersDAO = new CustomersDAO();
-        while (resultSet.next()){
-            customersDAO.setCustomerId(resultSet.getInt("customer_id"));
-            customersDAO.setCustomerName(resultSet.getString("customer_name"));
-        }
-        return customersDAO;
+    private static Set<CompaniesDAO> toCompaniesDAO(Set<CompaniesDTO> companiesDTOSet) {
+        if(companiesDTOSet == null) {
+            return new HashSet<>();
+        }else return companiesDTOSet.stream()
+                .map(CompaniesConverter::toCompaniesDAO)
+                .collect(Collectors.toSet());
+    }
+
+    private static Set<CompaniesDTO> fromCompaniesDAO(Set<CompaniesDAO> companiesDAOSet) {
+        if(companiesDAOSet == null) {
+            return new HashSet<>();
+        }else return companiesDAOSet.stream()
+                .map(CompaniesConverter::fromCompaniesDAO)
+                .collect(Collectors.toSet());
     }
 }

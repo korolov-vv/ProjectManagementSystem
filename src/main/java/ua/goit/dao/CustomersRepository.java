@@ -12,9 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CustomersRepository implements Repository<CustomersDAO> {
+public class CustomersRepository implements SingleEntityRepository<CustomersDAO> {
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomersRepository.class);
+    private static final String SELECT_ALL_CUSTOMERS = "FROM CustomersDAO c";
 
     private final SessionFactory sessionFactory;
 
@@ -82,6 +83,21 @@ public class CustomersRepository implements Repository<CustomersDAO> {
     }
 
     @Override
+    public void delete(int id) {
+        Transaction transaction;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            CustomersDAO customersDAO = session.get(CustomersDAO.class, id);
+            if (customersDAO != null) {
+                session.delete(customersDAO);
+            }
+            transaction.commit();
+        } catch (Exception ex) {
+            LOG.debug(ex.getMessage());
+        }
+    }
+
+    @Override
     public void delete(String name) {
         Transaction transaction;
         try (Session session = sessionFactory.openSession()) {
@@ -94,5 +110,23 @@ public class CustomersRepository implements Repository<CustomersDAO> {
         } catch (Exception ex) {
             LOG.debug(ex.getMessage());
         }
+    }
+
+    @Override
+    public List<CustomersDAO> findAll() {
+        List<CustomersDAO> customersDAOList = new ArrayList<>();
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            Query<CustomersDAO> query = session.createQuery(SELECT_ALL_CUSTOMERS,
+                    CustomersDAO.class);
+            LOG.debug("Executing query: " + query.getQueryString());
+            customersDAOList = query.getResultList();
+            transaction.commit();
+        } catch (Exception ex) {
+            LOG.debug("Unable to execute query: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return customersDAOList;
     }
 }

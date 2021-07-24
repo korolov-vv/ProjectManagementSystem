@@ -3,11 +3,6 @@ package ua.goit.service.developers;
 import ua.goit.dao.model.DevelopersOnProjectsDAO;
 import ua.goit.dto.DevelopersOnProjectsDTO;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class DevelopersOnProjectsConverter {
     public static DevelopersOnProjectsDAO toDevelopersOnProjects(DevelopersOnProjectsDTO developersOnProjectsDTO) {
         return new DevelopersOnProjectsDAO(
@@ -23,7 +18,7 @@ public class DevelopersOnProjectsConverter {
         );
     }
 
-    public static DevelopersOnProjectsDAO toDeveloperOnProject(ResultSet resultSet) throws SQLException {
+/*    public static DevelopersOnProjectsDAO toDeveloperOnProject(ResultSet resultSet) throws SQLException {
         DevelopersOnProjectsDAO developersOnProjectsDAO = new DevelopersOnProjectsDAO();
         while (resultSet.next()) {
             developersOnProjectsDAO.setDeveloperId(resultSet.getInt("developer_id"));
@@ -41,5 +36,5 @@ public class DevelopersOnProjectsConverter {
             developersOnProjectsDAOList.add(developersOnProjectsDAO);
         }
         return developersOnProjectsDAOList;
-    }
+    }*/
 }

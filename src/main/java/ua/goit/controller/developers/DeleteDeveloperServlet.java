@@ -1,8 +1,8 @@
 package ua.goit.controller.developers;
 
 import ua.goit.config.HibernateDatabaseConnector;
-import ua.goit.dao.DevelopersOnProjectsRepository;
 import ua.goit.dao.DevelopersRepository;
+import ua.goit.dao.SingleEntityRepository;
 import ua.goit.dao.model.DevelopersDAO;
 
 import javax.servlet.ServletException;
@@ -14,13 +14,11 @@ import java.io.IOException;
 
 @WebServlet("/developers/deleteDeveloper")
 public class DeleteDeveloperServlet extends HttpServlet {
-    private DevelopersRepository developersRepository;
-    private DevelopersOnProjectsRepository developersOnProjectsRepository;
+    private SingleEntityRepository<DevelopersDAO> developersRepository;
 
     @Override
     public void init() throws ServletException {
         this.developersRepository = new DevelopersRepository(HibernateDatabaseConnector.getSessionFactory());
-        this.developersOnProjectsRepository = new DevelopersOnProjectsRepository(HibernateDatabaseConnector.getSessionFactory());
     }
 
     @Override

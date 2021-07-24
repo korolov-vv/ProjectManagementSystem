@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ProjectsRepository implements Repository<ProjectsDAO> {
+public class ProjectsRepository implements SingleEntityRepository<ProjectsDAO> {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProjectsRepository.class);
 
@@ -86,6 +86,23 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
         }
     }
 
+    @Override
+    public void delete(int id) {
+        Transaction transaction;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            ProjectsDAO projectsDAO = session.get(ProjectsDAO.class, id);
+            if (projectsDAO != null) {
+                session.delete(projectsDAO);
+            }
+            transaction.commit();
+        } catch (Exception ex) {
+            LOG.debug(ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
     public void delete(String name) {
         Transaction transaction;
         try (Session session = sessionFactory.openSession()) {
@@ -101,7 +118,8 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
         }
     }
 
-    public List<ProjectsDAO> findAllProjects() {
+    @Override
+    public List<ProjectsDAO> findAll() {
         List<ProjectsDAO> projectsDAOList = new ArrayList<>();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {

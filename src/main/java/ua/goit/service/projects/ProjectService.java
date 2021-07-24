@@ -1,28 +1,28 @@
 package ua.goit.service.projects;
 
-import ua.goit.dao.Repository;
 import ua.goit.dao.model.ProjectsDAO;
+import ua.goit.dao.SingleEntityRepository;
 import ua.goit.dto.ProjectsDTO;
 
 public class ProjectService {
-    private Repository<ProjectsDAO> repository;
+    private SingleEntityRepository<ProjectsDAO> repository;
 
-    public ProjectService(Repository<ProjectsDAO> repository) {
+    public ProjectService(SingleEntityRepository<ProjectsDAO> repository) {
         this.repository = repository;
     }
 
     public ProjectsDTO create(ProjectsDTO projectsDTO) {
-        ProjectsDAO projectsDAO = ProjectsConverter.toProject(projectsDTO);
+        ProjectsDAO projectsDAO = ProjectsConverter.toProjectsDAO(projectsDTO);
         repository.create(projectsDAO);
         ProjectsDAO savedProjectsDAO = repository.findByUniqueValue(projectsDAO.getProjectName());
-        return ProjectsConverter.fromProject(savedProjectsDAO);
+        return ProjectsConverter.fromProjectsDAO(savedProjectsDAO);
     }
 
     public ProjectsDTO update(ProjectsDTO projectsDTO) {
-        ProjectsDAO projectsDAO = ProjectsConverter.toProject(projectsDTO);
+        ProjectsDAO projectsDAO = ProjectsConverter.toProjectsDAO(projectsDTO);
         repository.update(projectsDAO);
         ProjectsDAO updatedProjectsDAO = repository.findById(projectsDAO.getProjectId());
-        return ProjectsConverter.fromProject(updatedProjectsDAO);
+        return ProjectsConverter.fromProjectsDAO(updatedProjectsDAO);
     }
 
     public void delete(String name) {
@@ -30,10 +30,10 @@ public class ProjectService {
     }
 
     public ProjectsDTO findById(int id) {
-        return ProjectsConverter.fromProject(repository.findById(id));
+        return ProjectsConverter.fromProjectsDAO(repository.findById(id));
     }
 
     public ProjectsDTO findByUniqueValue(String value) {
-        return ProjectsConverter.fromProject(repository.findByUniqueValue(value));
+        return ProjectsConverter.fromProjectsDAO(repository.findByUniqueValue(value));
     }
 }

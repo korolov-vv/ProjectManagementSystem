@@ -1,5 +1,7 @@
 package ua.goit.dao.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -18,19 +20,21 @@ public class CompaniesDAO implements Serializable {
     private String companyName;
     @Column(name = "number_of_developers")
     private int numberOfDevelopers;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "companies_projects",
             joinColumns = { @JoinColumn(name = "company_id") },
             inverseJoinColumns = { @JoinColumn(name = "project_id") }
     )
+    @Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     Set<ProjectsDAO> projects = new HashSet<>();
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "companies_customers",
             joinColumns = { @JoinColumn(name = "company_id") },
             inverseJoinColumns = { @JoinColumn(name = "customer_id") }
     )
+    @Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     Set<CustomersDAO> customers = new HashSet<>();
 
     public CompaniesDAO() {
@@ -40,6 +44,17 @@ public class CompaniesDAO implements Serializable {
         this.companyId = companyId;
         this.companyName = companyName;
         this.numberOfDevelopers = numberOfDevelopers;
+        this.projects = new HashSet<>();
+        this.customers = new HashSet<>();
+    }
+
+    public CompaniesDAO(int companyId, String companyName, int numberOfDevelopers, Set<ProjectsDAO> projects,
+                        Set<CustomersDAO> customers) {
+        this.companyId = companyId;
+        this.companyName = companyName;
+        this.numberOfDevelopers = numberOfDevelopers;
+        this.projects = projects;
+        this.customers = customers;
     }
 
     public int getCompanyId() {
@@ -84,10 +99,12 @@ public class CompaniesDAO implements Serializable {
 
     @Override
     public String toString() {
-        return "Companies{" +
+        return "CompaniesDAO{" +
                 "companyId=" + companyId +
                 ", companyName='" + companyName + '\'' +
                 ", numberOfDevelopers=" + numberOfDevelopers +
+                ", projects=" + projects +
+                ", customers=" + customers +
                 '}';
     }
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CompaniesRepository implements Repository<CompaniesDAO> {
+public class CompaniesRepository implements SingleEntityRepository<CompaniesDAO> {
     private final static Logger LOG = LoggerFactory.getLogger(CompaniesRepository.class);
 
     private final SessionFactory sessionFactory;
@@ -102,6 +102,7 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
         }
     }
 
+    @Override
     public void delete(int id) {
         Transaction transaction;
         try (Session session = sessionFactory.openSession()) {
@@ -117,7 +118,8 @@ public class CompaniesRepository implements Repository<CompaniesDAO> {
         }
     }
 
-    public List<CompaniesDAO> findAllCompanies() {
+    @Override
+    public List<CompaniesDAO> findAll() {
         List<CompaniesDAO> companiesDAOList = new ArrayList<>();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {

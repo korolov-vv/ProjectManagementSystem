@@ -1,5 +1,7 @@
 package ua.goit.dao.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -15,7 +17,8 @@ public class CustomersDAO implements Serializable {
     private int customerId;
     @Column(name = "customer_name")
     private String customerName;
-    @ManyToMany(mappedBy = "customers", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "customers", fetch = FetchType.EAGER)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private Set<CompaniesDAO> companies = new HashSet<>();
 
     public CustomersDAO() {
@@ -24,6 +27,13 @@ public class CustomersDAO implements Serializable {
     public CustomersDAO(int customerId, String customerName) {
         this.customerId = customerId;
         this.customerName = customerName;
+        this.companies = new HashSet<>();
+    }
+
+    public CustomersDAO(int customerId, String customerName, Set<CompaniesDAO> companies) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.companies = companies;
     }
 
     public int getCustomerId() {

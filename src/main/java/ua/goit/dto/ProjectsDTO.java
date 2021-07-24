@@ -1,7 +1,8 @@
 package ua.goit.dto;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ProjectsDTO {
     private int projectId;
@@ -11,9 +12,8 @@ public class ProjectsDTO {
     private int coast;
     private int numberOfDevelopers;
     private LocalDate dateOfBeginning;
-    private List<Long> developerIds;
-    private List<Long> companyIds;
-    private List<Long> customerIds;
+    private Set<DevelopersDTO> developers;
+    private Set<CompaniesDTO> companies;
 
 
     public ProjectsDTO() {
@@ -28,11 +28,13 @@ public class ProjectsDTO {
         this.coast = coast;
         this.numberOfDevelopers = numberOfDevelopers;
         this.dateOfBeginning = dateOfBeginning;
+        this.developers = new HashSet<>();
+        this.companies = new HashSet<>();
     }
 
     public ProjectsDTO(int projectId, String projectName, String stage, int timePeriod, int coast,
-                       int numberOfDevelopers, LocalDate dateOfBeginning, List<Long> developerIds, List<Long> companyIds,
-                       List<Long> customerIds) {
+                       int numberOfDevelopers, LocalDate dateOfBeginning, Set<DevelopersDTO> developers,
+                       Set<CompaniesDTO> companies) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.stage = stage;
@@ -40,9 +42,8 @@ public class ProjectsDTO {
         this.coast = coast;
         this.numberOfDevelopers = numberOfDevelopers;
         this.dateOfBeginning = dateOfBeginning;
-        this.developerIds = developerIds;
-        this.companyIds = companyIds;
-        this.customerIds = customerIds;
+        this.developers = developers;
+        this.companies = companies;
     }
 
     public int getProjectId() {
@@ -101,28 +102,20 @@ public class ProjectsDTO {
         this.dateOfBeginning = dateOfBeginning;
     }
 
-    public List<Long> getDeveloperIds() {
-        return developerIds;
+    public Set<DevelopersDTO> getDevelopers() {
+        return developers;
     }
 
-    public void setDeveloperIds(List<Long> developerIds) {
-        this.developerIds = developerIds;
+    public void setDevelopers(Set<DevelopersDTO> developers) {
+        this.developers = developers;
     }
 
-    public List<Long> getCompanyIds() {
-        return companyIds;
+    public Set<CompaniesDTO> getCompanies() {
+        return companies;
     }
 
-    public void setCompanyIds(List<Long> companyIds) {
-        this.companyIds = companyIds;
-    }
-
-    public List<Long> getCustomerIds() {
-        return customerIds;
-    }
-
-    public void setCustomerIds(List<Long> customerIds) {
-        this.customerIds = customerIds;
+    public void setCompanies(Set<CompaniesDTO> companies) {
+        this.companies = companies;
     }
 
     @Override
@@ -135,9 +128,8 @@ public class ProjectsDTO {
                 ", coast=" + coast +
                 ", numberOfDevelopers=" + numberOfDevelopers +
                 ", dateOfBeginning=" + dateOfBeginning +
-                ", developerId=" + developerIds +
-                ", companyId=" + companyIds +
-                ", customerId=" + customerIds +
+                ", developers=" + developers +
+                ", companies=" + companies +
                 '}';
     }
 }

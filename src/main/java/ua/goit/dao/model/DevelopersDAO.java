@@ -1,5 +1,7 @@
 package ua.goit.dao.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -29,15 +31,17 @@ public class DevelopersDAO implements Serializable {
     private int salary;
     @Column(name = "developer_email", nullable = false)
     private String developerEmail;
-    @OneToMany(mappedBy = "developersDAO", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "developersDAO", fetch = FetchType.EAGER)
+    @Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private Set<SkillsDAO> skills = new HashSet<>();
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "developers_on_projects",
             joinColumns = { @JoinColumn(name = "developer_id") },
             inverseJoinColumns = { @JoinColumn(name = "project_id") }
     )
-    Set<ProjectsDAO> projects = new HashSet<>();
+    @Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private Set<ProjectsDAO> projects = new HashSet<>();
 
     public DevelopersDAO() {
     }
@@ -53,6 +57,24 @@ public class DevelopersDAO implements Serializable {
         this.companyId = companyId;
         this.salary = salary;
         this.developerEmail = developerEmail;
+        this.skills = new HashSet<>();
+        this.projects = new HashSet<>();
+    }
+
+    public DevelopersDAO(int developerId, String firstName, String lastName, String gender, int age,
+                         int experienceInYears, int companyId, int salary, String developerEmail,
+                         Set<SkillsDAO> skills, Set<ProjectsDAO> projects) {
+        this.developerId = developerId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.age = age;
+        this.experienceInYears = experienceInYears;
+        this.companyId = companyId;
+        this.salary = salary;
+        this.developerEmail = developerEmail;
+        this.skills = skills;
+        this.projects = projects;
     }
 
     public int getDeveloperId() {

@@ -1,13 +1,14 @@
 package ua.goit.dto;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CompaniesDTO {
     private int companyId;
     private String companyName;
     private int numberOfDevelopers;
-    private List<Long> projectIds;
-    private List<Long> customerIds;
+    private Set<ProjectsDTO> projects;
+    private Set<CustomersDTO> customers;
 
     public CompaniesDTO() {
     }
@@ -16,14 +17,16 @@ public class CompaniesDTO {
         this.companyId = companyId;
         this.companyName = companyName;
         this.numberOfDevelopers = numberOfDevelopers;
+        this.projects = new HashSet<>();
+        this.customers = new HashSet<>();
     }
 
-    public CompaniesDTO(int companyId, String companyName, int numberOfDevelopers, List<Long> projectIds, List<Long> customerIds) {
+    public CompaniesDTO(int companyId, String companyName, int numberOfDevelopers, Set<ProjectsDTO> projects, Set<CustomersDTO> customers) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.numberOfDevelopers = numberOfDevelopers;
-        this.projectIds = projectIds;
-        this.customerIds = customerIds;
+        this.projects = projects;
+        this.customers = customers;
     }
 
     public int getCompanyId() {
@@ -50,20 +53,20 @@ public class CompaniesDTO {
         this.numberOfDevelopers = numberOfDevelopers;
     }
 
-    public List<Long> getProjectIds() {
-        return projectIds;
+    public Set<ProjectsDTO> getProjects() {
+        return projects;
     }
 
-    public void setProjectIds(List<Long> projectIds) {
-        this.projectIds = projectIds;
+    public void setProjects(Set<ProjectsDTO> projects) {
+        this.projects = projects;
     }
 
-    public List<Long> getCustomerIds() {
-        return customerIds;
+    public Set<CustomersDTO> getCustomers() {
+        return customers;
     }
 
-    public void setCustomerIds(List<Long> customerIds) {
-        this.customerIds = customerIds;
+    public void setCustomers(Set<CustomersDTO> customers) {
+        this.customers = customers;
     }
 
     @Override
@@ -72,8 +75,8 @@ public class CompaniesDTO {
                 "companyId=" + companyId +
                 ", companyName='" + companyName + '\'' +
                 ", numberOfDevelopers=" + numberOfDevelopers +
-                ", projectIds=" + projectIds +
-                ", customerIds=" + customerIds +
+                ", projects=" + projects +
+                ", customers=" + customers +
                 '}';
     }
 }

@@ -1,11 +1,14 @@
 package ua.goit.controller.projects;
 
 import ua.goit.config.HibernateDatabaseConnector;
-import ua.goit.dao.DevelopersOnProjectsRepository;
+import ua.goit.dao.DevelopersRepository;
 import ua.goit.dao.ProjectsRepository;
-import ua.goit.dto.DevelopersOnProjectsDTO;
+import ua.goit.dao.SingleEntityRepository;
+import ua.goit.dao.model.DevelopersDAO;
+import ua.goit.dao.model.ProjectsDAO;
+import ua.goit.dto.DevelopersDTO;
 import ua.goit.dto.ProjectsDTO;
-import ua.goit.service.developers.DevelopersOnProjectsService;
+import ua.goit.service.developers.DevelopersConverter;
 import ua.goit.service.projects.ProjectService;
 
 import javax.servlet.ServletException;
@@ -16,20 +19,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @WebServlet("/projects")
 public class ProjectsServlet extends HttpServlet {
-    private ProjectsRepository projectsRepository;
-    private DevelopersOnProjectsRepository developersOnProjectsRepository;
+    private SingleEntityRepository<ProjectsDAO> projectsRepository;
+    private SingleEntityRepository<DevelopersDAO> developersRepository;
     private ProjectService projectService;
-    private DevelopersOnProjectsService developersOnProjectsService;
 
     @Override
     public void init() {
         this.projectsRepository = new ProjectsRepository(HibernateDatabaseConnector.getSessionFactory());
-        this.developersOnProjectsRepository = new DevelopersOnProjectsRepository(HibernateDatabaseConnector.getSessionFactory());
+        this.developersRepository = new DevelopersRepository(HibernateDatabaseConnector.getSessionFactory());
         this.projectService = new ProjectService(projectsRepository);
-//        this.developersOnProjectsService = new DevelopersOnProjectsService(developersOnProjectsRepository);
     }
 
     @Override
@@ -39,12 +42,13 @@ public class ProjectsServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        ProjectsDTO projectsDTO = addProject(req);
-        addDevelopersOnProject(req, projectsDTO);
+        ProjectsDTO projectsDTO = setProject(req);
+        projectsDTO.setDevelopers(setDevelopers(req, projectsDTO));
+        projectService.create(projectsDTO);
         resp.sendRedirect(req.getContextPath() + "/projects");
     }
 
-    private ProjectsDTO addProject(HttpServletRequest req) {
+    private ProjectsDTO setProject(HttpServletRequest req) {
         ProjectsDTO projectsDTO = new ProjectsDTO();
         projectsDTO.setProjectName(req.getParameter("name"));
         projectsDTO.setStage(req.getParameter("stage"));
@@ -52,27 +56,20 @@ public class ProjectsServlet extends HttpServlet {
         projectsDTO.setCoast(Integer.parseInt(req.getParameter("coast")));
         projectsDTO.setNumberOfDevelopers(Integer.parseInt(req.getParameter("number of developers")));
         projectsDTO.setDateOfBeginning(LocalDate.parse(req.getParameter("start date")));
-        projectService.create(projectsDTO);
         return projectsDTO;
     }
 
-    private void addDevelopersOnProject(HttpServletRequest req, ProjectsDTO projectsDTO) {
-        if(!req.getParameter("developers").equals("")) {
+    private Set<DevelopersDTO> setDevelopers(HttpServletRequest req, ProjectsDTO projectsDTO) {
+        Set<DevelopersDTO> developersDTOSet = new HashSet<>();
+        if (!req.getParameter("developers").equals("")) {
             String[] s = req.getParameter("developers").split(",");
             Arrays.stream(s)
                     .map(Integer::parseInt)
-                    .map((d) -> {
-                        DevelopersOnProjectsDTO developersOnProjectsDTO = new DevelopersOnProjectsDTO();
-                        developersOnProjectsDTO.setProjectId(projectsDTO.getProjectId());
-                        developersOnProjectsDTO.setDeveloperId(d);
-                        return developersOnProjectsDTO;
-                    })
-                    .map(d -> developersOnProjectsRepository.findUniqueValue(d.getDeveloperId(), d.getProjectId()))
-                    .forEach(d -> {
-                        if (d.getDeveloperId() == 0 && d.getProjectId() == 0) {
-                            developersOnProjectsRepository.create(d);
-                        } else developersOnProjectsRepository.update(d);
+                    .forEach((d) -> {
+                        DevelopersDTO developersDTO = DevelopersConverter.fromDevelopersDAO(developersRepository.findById(d));
+                        developersDTOSet.add(developersDTO);
                     });
         }
+        return developersDTOSet;
     }
 }

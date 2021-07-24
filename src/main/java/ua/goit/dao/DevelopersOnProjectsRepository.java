@@ -67,6 +67,18 @@ public class DevelopersOnProjectsRepository implements MultiEntityRepository<Dev
         }
     }
 
+    @Override
+    public DevelopersOnProjectsDAO findById(int id) {
+        DevelopersOnProjectsDAO developersOnProjectsDAO = new DevelopersOnProjectsDAO();
+        try (Session session = sessionFactory.openSession()) {
+            developersOnProjectsDAO = session.get(DevelopersOnProjectsDAO.class, id);
+        } catch (Exception ex) {
+            LOG.debug(ex.getMessage());
+            ex.printStackTrace();
+        }
+        return developersOnProjectsDAO;
+    }
+
     private void createOrUpdate(DevelopersOnProjectsDAO developersOnProjectsDAO) {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
