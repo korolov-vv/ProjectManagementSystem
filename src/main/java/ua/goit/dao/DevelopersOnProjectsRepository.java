@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import ua.goit.dao.model.DevelopersOnProjectsDAO;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class DevelopersOnProjectsRepository implements MultiEntityRepository<DevelopersOnProjectsDAO> {
 
@@ -68,7 +69,7 @@ public class DevelopersOnProjectsRepository implements MultiEntityRepository<Dev
     }
 
     @Override
-    public DevelopersOnProjectsDAO findById(int id) {
+    public Optional<DevelopersOnProjectsDAO> findById(int id) {
         DevelopersOnProjectsDAO developersOnProjectsDAO = new DevelopersOnProjectsDAO();
         try (Session session = sessionFactory.openSession()) {
             developersOnProjectsDAO = session.get(DevelopersOnProjectsDAO.class, id);
@@ -76,7 +77,7 @@ public class DevelopersOnProjectsRepository implements MultiEntityRepository<Dev
             LOG.debug(ex.getMessage());
             ex.printStackTrace();
         }
-        return developersOnProjectsDAO;
+        return Optional.ofNullable(developersOnProjectsDAO);
     }
 
     private void createOrUpdate(DevelopersOnProjectsDAO developersOnProjectsDAO) {

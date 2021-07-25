@@ -1,16 +1,16 @@
 package ua.goit.service.skills;
 
-import ua.goit.dao.model.SkillsDAO;
-import ua.goit.dto.SkillsDTO;
+import ua.goit.dao.model.SkillDAO;
+import ua.goit.dto.SkillDTO;
 
 public class SkillsConverter {
-    public static SkillsDAO toSkillsDAO(SkillsDTO skillsDTO) {
-        return new SkillsDAO(skillsDTO.getRecordId(), skillsDTO.getStack(),
-                skillsDTO.getLevel(), skillsDTO.getDeveloperEmail());
+    public static SkillDAO toSkillsDAO(SkillDTO skillDTO) {
+        return new SkillDAO(skillDTO.getRecordId(), skillDTO.getStack(),
+                skillDTO.getLevel(), skillDTO.getDeveloperEmail());
     }
 
-    public static SkillsDTO fromSkillsDAO(SkillsDAO skillsDAO) {
-        return new SkillsDTO(skillsDAO.getRecordId(), skillsDAO.getStack(),
-                skillsDAO.getLevel(), skillsDAO.getDeveloperEmail());
+    public static SkillDTO fromSkillsDAO(SkillDAO skillDAO) {
+        return new SkillDTO(skillDAO.getRecordId(), skillDAO.getStack(),
+                skillDAO.getLevel(), skillDAO.getDeveloperEmail());
     }
 }

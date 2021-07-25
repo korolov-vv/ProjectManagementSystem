@@ -3,8 +3,8 @@ package ua.goit.controller.developers;
 import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.DevelopersRepository;
 import ua.goit.dao.SingleEntityRepository;
-import ua.goit.dao.model.DevelopersDAO;
-import ua.goit.dto.DevelopersDTO;
+import ua.goit.dao.model.DeveloperDAO;
+import ua.goit.dto.DeveloperDTO;
 import ua.goit.service.developers.DevelopersService;
 
 import javax.servlet.ServletException;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @WebServlet("/developers/list")
 public class DevelopersListServlet extends HttpServlet {
-    private SingleEntityRepository<DevelopersDAO> developersRepository;
+    private SingleEntityRepository<DeveloperDAO> developersRepository;
     private DevelopersService developersService;
 
     @Override
@@ -28,8 +28,8 @@ public class DevelopersListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<DevelopersDTO> developersDTOList = developersService.findAll();
-        req.setAttribute("developers", developersDTOList);
+        List<DeveloperDTO> developerDTOList = developersService.findAll();
+        req.setAttribute("developers", developerDTOList);
         req.getRequestDispatcher("/view/developers/listOfDevelopers.jsp").forward(req, resp);
     }
 }

@@ -1,36 +1,23 @@
-package ua.goit.dao.model;
+package ua.goit.dto;
 
-import org.hibernate.annotations.Cascade;
-
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "customers")
-public class CustomersDAO implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
+public class CustomerDTO {
     private int customerId;
-    @Column(name = "customer_name")
     private String customerName;
-    @ManyToMany(mappedBy = "customers", fetch = FetchType.EAGER)
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    private Set<CompaniesDAO> companies = new HashSet<>();
+    private Set<CompanyDTO> companies;
 
-    public CustomersDAO() {
+    public CustomerDTO() {
     }
 
-    public CustomersDAO(int customerId, String customerName) {
+    public CustomerDTO(int customerId, String customerName) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.companies = new HashSet<>();
     }
 
-    public CustomersDAO(int customerId, String customerName, Set<CompaniesDAO> companies) {
+    public CustomerDTO(int customerId, String customerName, Set<CompanyDTO> companies) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.companies = companies;
@@ -52,19 +39,20 @@ public class CustomersDAO implements Serializable {
         this.customerName = customerName;
     }
 
-    public Set<CompaniesDAO> getCompanies() {
+    public Set<CompanyDTO> getCompanies() {
         return companies;
     }
 
-    public void setCompanies(Set<CompaniesDAO> companies) {
+    public void setCompanies(Set<CompanyDTO> companies) {
         this.companies = companies;
     }
 
     @Override
     public String toString() {
-        return "Customers{" +
+        return "CustomersDTO{" +
                 "customerId=" + customerId +
                 ", customerName='" + customerName + '\'' +
+                ", companies=" + companies +
                 '}';
     }
 }

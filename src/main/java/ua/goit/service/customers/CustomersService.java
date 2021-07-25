@@ -1,27 +1,28 @@
 package ua.goit.service.customers;
 
-import ua.goit.dao.model.CustomersDAO;
+import ua.goit.dao.model.CustomerDAO;
 import ua.goit.dao.SingleEntityRepository;
-import ua.goit.dto.CustomersDTO;
+import ua.goit.dto.CustomerDTO;
 
 public class CustomersService {
-    private SingleEntityRepository<CustomersDAO> repository;
+    private SingleEntityRepository<CustomerDAO> repository;
 
-    public CustomersService(SingleEntityRepository<CustomersDAO> repository) {
+    public CustomersService(SingleEntityRepository<CustomerDAO> repository) {
         this.repository = repository;
     }
 
-    public CustomersDTO create(CustomersDTO customersDTO) {
-        CustomersDAO customersDAO = CustomersConverter.toCustomerDAO(customersDTO);
-        repository.create(customersDAO);
-        CustomersDAO savedCustomersDAO = repository.findById(customersDAO.getCustomerId());
-        return CustomersConverter.fromCustomerDAO(savedCustomersDAO);
+    public CustomerDTO create(CustomerDTO customerDTO) {
+        CustomerDAO customerDAO = CustomersConverter.toCustomerDAO(customerDTO);
+        repository.create(customerDAO);
+        CustomerDAO savedCustomerDAO = repository.findById(customerDAO.getCustomerId()).orElseThrow();
+        return CustomersConverter.fromCustomerDAO(savedCustomerDAO);
     }
 
-    public CustomersDTO update(CustomersDTO customersDTO) {
-        CustomersDAO customersDAO = CustomersConverter.toCustomerDAO(customersDTO);
-        repository.update(customersDAO);
-        CustomersDAO updatedCustomersDAO = repository.findByUniqueValue(customersDTO.getCustomerName());
-        return CustomersConverter.fromCustomerDAO(updatedCustomersDAO);
+    public CustomerDTO update(CustomerDTO customerDTO) {
+        CustomerDAO customerDAO = CustomersConverter.toCustomerDAO(customerDTO);
+        repository.update(customerDAO);
+        CustomerDAO updatedCustomerDAO = repository.findByUniqueParameter("customerName",
+                customerDTO.getCustomerName()).orElseThrow();
+        return CustomersConverter.fromCustomerDAO(updatedCustomerDAO);
     }
 }

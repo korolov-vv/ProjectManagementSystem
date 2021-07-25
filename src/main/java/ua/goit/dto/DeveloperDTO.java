@@ -3,7 +3,7 @@ package ua.goit.dto;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DevelopersDTO {
+public class DeveloperDTO {
     private int developerId;
     private String firstName;
     private String lastName;
@@ -13,14 +13,14 @@ public class DevelopersDTO {
     private int companyId;
     private int salary;
     private String developerEmail;
-    private Set<SkillsDTO> skills;
-    private Set<ProjectsDTO> projects;
+    private Set<SkillDTO> skills;
+    private Set<ProjectDTO> projects;
 
-    public DevelopersDTO() {
+    public DeveloperDTO() {
     }
 
-    public DevelopersDTO(int developerId, String firstName, String lastName, String gender, int age,
-                         int experienceInYears, int companyId, int salary, String developerEmail) {
+    public DeveloperDTO(int developerId, String firstName, String lastName, String gender, int age,
+                        int experienceInYears, int companyId, int salary, String developerEmail) {
         this.developerId = developerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -34,9 +34,9 @@ public class DevelopersDTO {
         this.projects = new HashSet<>();
     }
 
-    public DevelopersDTO(int developerId, String firstName, String lastName, String gender, int age,
-                         int experienceInYears, int companyId, int salary, String developerEmail,
-                         Set<SkillsDTO> skills, Set<ProjectsDTO> projects) {
+    public DeveloperDTO(int developerId, String firstName, String lastName, String gender, int age,
+                        int experienceInYears, int companyId, int salary, String developerEmail,
+                        Set<SkillDTO> skills, Set<ProjectDTO> projects) {
         this.developerId = developerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -122,19 +122,19 @@ public class DevelopersDTO {
         this.developerEmail = developerEmail;
     }
 
-    public Set<SkillsDTO> getSkills() {
+    public Set<SkillDTO> getSkills() {
         return skills;
     }
 
-    public void setSkills(Set<SkillsDTO> skills) {
+    public void setSkills(Set<SkillDTO> skills) {
         this.skills = skills;
     }
 
-    public Set<ProjectsDTO> getProjects() {
+    public Set<ProjectDTO> getProjects() {
         return projects;
     }
 
-    public void setProjects(Set<ProjectsDTO> projects) {
+    public void setProjects(Set<ProjectDTO> projects) {
         this.projects = projects;
     }
 

@@ -1,11 +1,12 @@
 package ua.goit.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SingleEntityRepository<T> extends Repository<T> {
     List<T> findAll();
 
-    T findByUniqueValue(String value);
+    Optional<T> findByUniqueParameter(String nameParameter, String value);
 
-    void delete(String name);
+    void deleteByParameter(String nameParameter, String name);
 }

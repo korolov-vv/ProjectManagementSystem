@@ -1,11 +1,11 @@
 package ua.goit.service.projects;
 
-import ua.goit.dao.model.CompaniesDAO;
-import ua.goit.dao.model.DevelopersDAO;
-import ua.goit.dao.model.ProjectsDAO;
-import ua.goit.dto.CompaniesDTO;
-import ua.goit.dto.DevelopersDTO;
-import ua.goit.dto.ProjectsDTO;
+import ua.goit.dao.model.CompanyDAO;
+import ua.goit.dao.model.DeveloperDAO;
+import ua.goit.dao.model.ProjectDAO;
+import ua.goit.dto.CompanyDTO;
+import ua.goit.dto.DeveloperDTO;
+import ua.goit.dto.ProjectDTO;
 import ua.goit.service.companies.CompaniesConverter;
 import ua.goit.service.developers.DevelopersConverter;
 
@@ -14,50 +14,50 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProjectsConverter {
-    public static ProjectsDAO toProjectsDAO(ProjectsDTO projectsDTO) {
-        Set<DevelopersDAO> developers = toDevelopersDAO(projectsDTO.getDevelopers());
-        Set<CompaniesDAO> companies = toCompaniesDAO(projectsDTO.getCompanies());
-        return new ProjectsDAO(projectsDTO.getProjectId(), projectsDTO.getProjectName(), projectsDTO.getStage(),
-                projectsDTO.getTimePeriod(), projectsDTO.getCoast(), projectsDTO.getNumberOfDevelopers(),
-                projectsDTO.getDateOfBeginning(), developers, companies);
+    public static ProjectDAO toProjectsDAO(ProjectDTO projectDTO) {
+        Set<DeveloperDAO> developers = toDevelopersDAO(projectDTO.getDevelopers());
+        Set<CompanyDAO> companies = toCompaniesDAO(projectDTO.getCompanies());
+        return new ProjectDAO(projectDTO.getProjectId(), projectDTO.getProjectName(), projectDTO.getStage(),
+                projectDTO.getTimePeriod(), projectDTO.getCoast(), projectDTO.getNumberOfDevelopers(),
+                projectDTO.getDateOfBeginning(), developers, companies);
     }
 
-    public static ProjectsDTO fromProjectsDAO(ProjectsDAO projectsDAO) {
-        Set<DevelopersDTO> developers = fromDevelopersDAO(projectsDAO.getDevelopers());
-        Set<CompaniesDTO> companies = fromCompaniesDAO(projectsDAO.getCompanies());
-        return new ProjectsDTO(projectsDAO.getProjectId(), projectsDAO.getProjectName(), projectsDAO.getStage(),
-                projectsDAO.getTimePeriod(), projectsDAO.getCoast(), projectsDAO.getNumberOfDevelopers(),
-                projectsDAO.getDateOfBeginning(), developers, companies);
+    public static ProjectDTO fromProjectsDAO(ProjectDAO projectDAO) {
+        Set<DeveloperDTO> developers = fromDevelopersDAO(projectDAO.getDevelopers());
+        Set<CompanyDTO> companies = fromCompaniesDAO(projectDAO.getCompanies());
+        return new ProjectDTO(projectDAO.getProjectId(), projectDAO.getProjectName(), projectDAO.getStage(),
+                projectDAO.getTimePeriod(), projectDAO.getCoast(), projectDAO.getNumberOfDevelopers(),
+                projectDAO.getDateOfBeginning(), developers, companies);
     }
 
-    private static Set<DevelopersDAO> toDevelopersDAO(Set<DevelopersDTO> developersDTOSet) {
-        if(developersDTOSet == null) {
+    private static Set<DeveloperDAO> toDevelopersDAO(Set<DeveloperDTO> developerDTOSet) {
+        if(developerDTOSet == null) {
             return new HashSet<>();
-        }else return developersDTOSet.stream()
+        }else return developerDTOSet.stream()
                 .map(DevelopersConverter::toDevelopersDAO)
                 .collect(Collectors.toSet());
     }
 
-    private static Set<CompaniesDAO> toCompaniesDAO(Set<CompaniesDTO> companiesDTOSet) {
-        if(companiesDTOSet == null) {
+    private static Set<CompanyDAO> toCompaniesDAO(Set<CompanyDTO> companyDTOSet) {
+        if(companyDTOSet == null) {
             return new HashSet<>();
-        }else return companiesDTOSet.stream()
+        }else return companyDTOSet.stream()
                 .map(CompaniesConverter::toCompaniesDAO)
                 .collect(Collectors.toSet());
     }
 
-    private static Set<DevelopersDTO> fromDevelopersDAO(Set<DevelopersDAO> developersDAOSet) {
-        if(developersDAOSet == null) {
+    private static Set<DeveloperDTO> fromDevelopersDAO(Set<DeveloperDAO> developerDAOSet) {
+        if(developerDAOSet == null) {
             return new HashSet<>();
-        }else return developersDAOSet.stream()
+        }else return developerDAOSet.stream()
                 .map(DevelopersConverter::fromDevelopersDAO)
                 .collect(Collectors.toSet());
     }
 
-    private static Set<CompaniesDTO> fromCompaniesDAO(Set<CompaniesDAO> companiesDAOSet) {
-        if(companiesDAOSet == null) {
+    private static Set<CompanyDTO> fromCompaniesDAO(Set<CompanyDAO> companyDAOSet) {
+        if(companyDAOSet == null) {
             return new HashSet<>();
-        }else return companiesDAOSet.stream()
+        }else return companyDAOSet.stream()
                 .map(CompaniesConverter::fromCompaniesDAO)
                 .collect(Collectors.toSet());
     }

@@ -4,13 +4,13 @@ import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.DevelopersRepository;
 import ua.goit.dao.ProjectsRepository;
 import ua.goit.dao.SingleEntityRepository;
-import ua.goit.dao.model.DevelopersDAO;
+import ua.goit.dao.model.DeveloperDAO;
 import ua.goit.dao.model.Levels;
-import ua.goit.dao.model.ProjectsDAO;
+import ua.goit.dao.model.ProjectDAO;
 import ua.goit.dao.model.Stack;
-import ua.goit.dto.DevelopersDTO;
-import ua.goit.dto.ProjectsDTO;
-import ua.goit.dto.SkillsDTO;
+import ua.goit.dto.DeveloperDTO;
+import ua.goit.dto.ProjectDTO;
+import ua.goit.dto.SkillDTO;
 import ua.goit.service.developers.DevelopersService;
 import ua.goit.service.projects.ProjectsConverter;
 
@@ -28,8 +28,8 @@ import java.util.stream.Collectors;
 
 @WebServlet("/developers")
 public class DevelopersServlet extends HttpServlet {
-    private SingleEntityRepository<DevelopersDAO> developersRepository;
-    private SingleEntityRepository<ProjectsDAO> projectsRepository;
+    private SingleEntityRepository<DeveloperDAO> developersRepository;
+    private SingleEntityRepository<ProjectDAO> projectsRepository;
     private DevelopersService developersService;
 
     @Override
@@ -46,27 +46,27 @@ public class DevelopersServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        DevelopersDTO developersDTO = setDeveloper(req);
-        developersDTO.setSkills(setSkills(req, developersDTO));
-        developersDTO.setProjects(setProjects(req));
-        developersService.create(developersDTO);
+        DeveloperDTO developerDTO = setDeveloper(req);
+        developerDTO.setSkills(setSkills(req, developerDTO));
+        developerDTO.setProjects(setProjects(req));
+        developersService.create(developerDTO);
         resp.sendRedirect(req.getContextPath() + "/developers");
     }
 
-    private DevelopersDTO setDeveloper(HttpServletRequest req) {
-        DevelopersDTO developersDTO = new DevelopersDTO();
-        developersDTO.setFirstName(req.getParameter("first name"));
-        developersDTO.setLastName(req.getParameter("last name"));
-        developersDTO.setGender(req.getParameter("gender"));
-        developersDTO.setAge(Integer.parseInt(req.getParameter("age")));
-        developersDTO.setExperienceInYears(Integer.parseInt(req.getParameter("experience")));
-        developersDTO.setCompanyId(Integer.parseInt(req.getParameter("company")));
-        developersDTO.setSalary(Integer.parseInt(req.getParameter("salary")));
-        developersDTO.setDeveloperEmail(req.getParameter("email"));
-        return developersDTO;
+    private DeveloperDTO setDeveloper(HttpServletRequest req) {
+        DeveloperDTO developerDTO = new DeveloperDTO();
+        developerDTO.setFirstName(req.getParameter("first name"));
+        developerDTO.setLastName(req.getParameter("last name"));
+        developerDTO.setGender(req.getParameter("gender"));
+        developerDTO.setAge(Integer.parseInt(req.getParameter("age")));
+        developerDTO.setExperienceInYears(Integer.parseInt(req.getParameter("experience")));
+        developerDTO.setCompanyId(Integer.parseInt(req.getParameter("company")));
+        developerDTO.setSalary(Integer.parseInt(req.getParameter("salary")));
+        developerDTO.setDeveloperEmail(req.getParameter("email"));
+        return developerDTO;
     }
 
-    private Set<ProjectsDTO> setProjects(HttpServletRequest req) {
+    private Set<ProjectDTO> setProjects(HttpServletRequest req) {
         if(!req.getParameter("projects").equals("")) {
             String[] s = req.getParameter("projects").split(",");
             List<Integer> projectIds = Arrays.stream(s)
@@ -75,20 +75,20 @@ public class DevelopersServlet extends HttpServlet {
 
             return projectIds.stream()
                     .map((p) -> {
-                        return projectsRepository.findById(p);
+                        return projectsRepository.findById(p).orElseThrow();
                     })
                     .map(ProjectsConverter::fromProjectsDAO)
                     .collect(Collectors.toSet());
         }else return new HashSet<>();
     }
 
-    private Set<SkillsDTO> setSkills(HttpServletRequest req, DevelopersDTO developersDTO) {
-        SkillsDTO skillsDTO = new SkillsDTO();
-        Set<SkillsDTO> skillsDTOSet = new HashSet<>();
-        skillsDTO.setDeveloperEmail(developersDTO.getDeveloperEmail());
-        skillsDTO.setStack(Stack.valueOf(req.getParameter("stack")));
-        skillsDTO.setLevel(Levels.valueOf(req.getParameter("level")));
-        skillsDTOSet.add(skillsDTO);
-        return skillsDTOSet;
+    private Set<SkillDTO> setSkills(HttpServletRequest req, DeveloperDTO developerDTO) {
+        SkillDTO skillDTO = new SkillDTO();
+        Set<SkillDTO> skillDTOSet = new HashSet<>();
+        skillDTO.setDeveloperEmail(developerDTO.getDeveloperEmail());
+        skillDTO.setStack(Stack.valueOf(req.getParameter("stack")));
+        skillDTO.setLevel(Levels.valueOf(req.getParameter("level")));
+        skillDTOSet.add(skillDTO);
+        return skillDTOSet;
     }
 }

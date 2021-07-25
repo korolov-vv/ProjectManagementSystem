@@ -62,9 +62,9 @@ CREATE TABLE skills
 
 CREATE TABLE customers_and_companies
 (
-   customer_id int NOT NULL,
-   company_id int NOT NULL,
-   project_id int NOT NULL,
+   customer_id integer NOT NULL,
+   company_id integer NOT NULL,
+   project_id integer NOT NULL,
    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
    FOREIGN KEY (company_id) REFERENCES companies(company_id),
    FOREIGN KEY (project_id) REFERENCES projects(project_id),
@@ -73,8 +73,8 @@ CREATE TABLE customers_and_companies
 
 CREATE TABLE developers_on_projects
 (
-   project_id int NOT NULL,
-   developer_id int NOT NULL,
+   project_id integer NOT NULL,
+   developer_id integer NOT NULL,
    FOREIGN KEY (project_id) REFERENCES projects(project_id),
    FOREIGN KEY (developer_id) REFERENCES developers(developer_id),
    PRIMARY KEY (project_id, developer_id)
@@ -96,8 +96,8 @@ ALTER TABLE skills
 
 CREATE TABLE companies_projects
 (
-    company_id int NOT NULL,
-    project_id int NOT NULL,
+    company_id integer NOT NULL,
+    project_id integer NOT NULL,
     FOREIGN KEY (project_id) REFERENCES projects(project_id),
     FOREIGN KEY (company_id) REFERENCES companies(company_id),
     PRIMARY KEY (project_id, company_id)
@@ -105,8 +105,8 @@ CREATE TABLE companies_projects
 
 CREATE TABLE companies_customers
 (
-    company_id int NOT NULL,
-    customer_id int NOT NULL,
+    company_id integer NOT NULL,
+    customer_id integer NOT NULL,
     FOREIGN KEY (company_id) REFERENCES companies(company_id),
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
     PRIMARY KEY (customer_id, company_id)

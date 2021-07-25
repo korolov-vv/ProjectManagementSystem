@@ -3,7 +3,7 @@ package ua.goit.controller.developers;
 import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.DevelopersRepository;
 import ua.goit.dao.SingleEntityRepository;
-import ua.goit.dao.model.DevelopersDAO;
+import ua.goit.dao.model.DeveloperDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @WebServlet("/developers/deleteDeveloper")
 public class DeleteDeveloperServlet extends HttpServlet {
-    private SingleEntityRepository<DevelopersDAO> developersRepository;
+    private SingleEntityRepository<DeveloperDAO> developersRepository;
 
     @Override
     public void init() throws ServletException {
@@ -24,9 +24,9 @@ public class DeleteDeveloperServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        DevelopersDAO developersDAOForDelete = developersRepository.findById(Integer.parseInt(id));
+        DeveloperDAO developerDAOForDelete = developersRepository.findById(Integer.parseInt(id)).orElseThrow();
         developersRepository.delete(Integer.parseInt(id));
-        req.setAttribute("id", developersDAOForDelete.getDeveloperId());
+        req.setAttribute("id", developerDAOForDelete.getDeveloperId());
         req.getRequestDispatcher("/view/developers/deleteDeveloper.jsp").forward(req, resp);
     }
 }

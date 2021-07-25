@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "developers")
-public class DevelopersDAO implements Serializable {
+public class DeveloperDAO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class DevelopersDAO implements Serializable {
     private String developerEmail;
     @OneToMany(mappedBy = "developersDAO", fetch = FetchType.EAGER)
     @Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    private Set<SkillsDAO> skills = new HashSet<>();
+    private Set<SkillDAO> skills = new HashSet<>();
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "developers_on_projects",
@@ -41,13 +41,13 @@ public class DevelopersDAO implements Serializable {
             inverseJoinColumns = { @JoinColumn(name = "project_id") }
     )
     @Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    private Set<ProjectsDAO> projects = new HashSet<>();
+    private Set<ProjectDAO> projects = new HashSet<>();
 
-    public DevelopersDAO() {
+    public DeveloperDAO() {
     }
 
-    public DevelopersDAO(int developerId, String firstName, String lastName, String gender, int age,
-                         int experienceInYears, int companyId, int salary, String developerEmail) {
+    public DeveloperDAO(int developerId, String firstName, String lastName, String gender, int age,
+                        int experienceInYears, int companyId, int salary, String developerEmail) {
         this.developerId = developerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -61,9 +61,9 @@ public class DevelopersDAO implements Serializable {
         this.projects = new HashSet<>();
     }
 
-    public DevelopersDAO(int developerId, String firstName, String lastName, String gender, int age,
-                         int experienceInYears, int companyId, int salary, String developerEmail,
-                         Set<SkillsDAO> skills, Set<ProjectsDAO> projects) {
+    public DeveloperDAO(int developerId, String firstName, String lastName, String gender, int age,
+                        int experienceInYears, int companyId, int salary, String developerEmail,
+                        Set<SkillDAO> skills, Set<ProjectDAO> projects) {
         this.developerId = developerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -149,19 +149,19 @@ public class DevelopersDAO implements Serializable {
         this.developerEmail = developerEmail;
     }
 
-    public Set<SkillsDAO> getSkills() {
+    public Set<SkillDAO> getSkills() {
         return skills;
     }
 
-    public void setSkills(Set<SkillsDAO> skills) {
+    public void setSkills(Set<SkillDAO> skills) {
         this.skills = skills;
     }
 
-    public Set<ProjectsDAO> getProjects() {
+    public Set<ProjectDAO> getProjects() {
         return projects;
     }
 
-    public void setProjects(Set<ProjectsDAO> projects) {
+    public void setProjects(Set<ProjectDAO> projects) {
         this.projects = projects;
     }
 

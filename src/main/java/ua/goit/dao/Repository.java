@@ -1,5 +1,7 @@
 package ua.goit.dao;
 
+import java.util.Optional;
+
 public interface Repository<T> {
 
     void create(T entity);
@@ -8,5 +10,5 @@ public interface Repository<T> {
 
     void delete(int id);
 
-    T findById(int id);
+    Optional<T> findById(int id);
 }

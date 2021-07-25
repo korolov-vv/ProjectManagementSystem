@@ -3,8 +3,8 @@ package ua.goit.controller.companies;
 import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.CompaniesRepository;
 import ua.goit.dao.SingleEntityRepository;
-import ua.goit.dao.model.CompaniesDAO;
-import ua.goit.dto.CompaniesDTO;
+import ua.goit.dao.model.CompanyDAO;
+import ua.goit.dto.CompanyDTO;
 import ua.goit.service.companies.CompaniesService;
 
 import javax.servlet.ServletException;
@@ -16,7 +16,7 @@ import java.io.IOException;
 
 @WebServlet("/companies")
 public class CompaniesServlet extends HttpServlet {
-    private SingleEntityRepository<CompaniesDAO> companiesRepository;
+    private SingleEntityRepository<CompanyDAO> companiesRepository;
     private CompaniesService companiesService;
 
     @Override
@@ -32,15 +32,15 @@ public class CompaniesServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CompaniesDTO companiesDTO = addCompany(req);
+        CompanyDTO companyDTO = addCompany(req);
         resp.sendRedirect(req.getContextPath() + "/companies");
     }
 
-    private CompaniesDTO addCompany(HttpServletRequest req) {
-        CompaniesDTO companiesDTO = new CompaniesDTO();
-        companiesDTO.setCompanyName(req.getParameter("company name"));
-        companiesDTO.setNumberOfDevelopers(Integer.parseInt(req.getParameter("number of developers")));
-        companiesService.create(companiesDTO);
-        return companiesDTO;
+    private CompanyDTO addCompany(HttpServletRequest req) {
+        CompanyDTO companyDTO = new CompanyDTO();
+        companyDTO.setCompanyName(req.getParameter("company name"));
+        companyDTO.setNumberOfDevelopers(Integer.parseInt(req.getParameter("number of developers")));
+        companiesService.create(companyDTO);
+        return companyDTO;
     }
 }

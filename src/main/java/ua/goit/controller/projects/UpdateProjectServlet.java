@@ -4,10 +4,10 @@ import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.DevelopersRepository;
 import ua.goit.dao.ProjectsRepository;
 import ua.goit.dao.SingleEntityRepository;
-import ua.goit.dao.model.DevelopersDAO;
-import ua.goit.dao.model.ProjectsDAO;
-import ua.goit.dto.DevelopersDTO;
-import ua.goit.dto.ProjectsDTO;
+import ua.goit.dao.model.DeveloperDAO;
+import ua.goit.dao.model.ProjectDAO;
+import ua.goit.dto.DeveloperDTO;
+import ua.goit.dto.ProjectDTO;
 import ua.goit.service.developers.DevelopersConverter;
 import ua.goit.service.projects.ProjectService;
 
@@ -24,8 +24,8 @@ import java.util.Set;
 
 @WebServlet("/projects/update")
 public class UpdateProjectServlet extends HttpServlet {
-    private SingleEntityRepository<ProjectsDAO> projectsRepository;
-    private SingleEntityRepository<DevelopersDAO> developersRepository;
+    private SingleEntityRepository<ProjectDAO> projectsRepository;
+    private SingleEntityRepository<DeveloperDAO> developersRepository;
     private ProjectService projectService;
 
     @Override
@@ -38,42 +38,42 @@ public class UpdateProjectServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
-        ProjectsDTO projectsDTO = projectService.findByUniqueValue(name);
-        req.setAttribute("project", projectsDTO);
-        req.setAttribute("developersList", projectsDTO.getDevelopers());
+        ProjectDTO projectDTO = projectService.findByUniqueValue(name);
+        req.setAttribute("project", projectDTO);
+        req.setAttribute("developersList", projectDTO.getDevelopers());
         req.getRequestDispatcher("/view/projects/updateForm.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        ProjectsDTO projectsDTO = setProject(req);
-        projectsDTO.setDevelopers(setDevelopers(req, projectsDTO));
-        projectService.update(projectsDTO);
+        ProjectDTO projectDTO = setProject(req);
+        projectDTO.setDevelopers(setDevelopers(req, projectDTO));
+        projectService.update(projectDTO);
         resp.sendRedirect(req.getContextPath() + "/projects");
     }
 
-    private ProjectsDTO setProject(HttpServletRequest req) {
-        ProjectsDTO projectsDTO = new ProjectsDTO();
-        projectsDTO.setProjectName(req.getParameter("name"));
-        projectsDTO.setStage(req.getParameter("stage"));
-        projectsDTO.setTimePeriod(Integer.parseInt(req.getParameter("period")));
-        projectsDTO.setCoast(Integer.parseInt(req.getParameter("coast")));
-        projectsDTO.setNumberOfDevelopers(Integer.parseInt(req.getParameter("number of developers")));
-        projectsDTO.setDateOfBeginning(LocalDate.parse(req.getParameter("start date")));
-        return projectsDTO;
+    private ProjectDTO setProject(HttpServletRequest req) {
+        ProjectDTO projectDTO = new ProjectDTO();
+        projectDTO.setProjectName(req.getParameter("name"));
+        projectDTO.setStage(req.getParameter("stage"));
+        projectDTO.setTimePeriod(Integer.parseInt(req.getParameter("period")));
+        projectDTO.setCoast(Integer.parseInt(req.getParameter("coast")));
+        projectDTO.setNumberOfDevelopers(Integer.parseInt(req.getParameter("number of developers")));
+        projectDTO.setDateOfBeginning(LocalDate.parse(req.getParameter("start date")));
+        return projectDTO;
     }
 
-    private Set<DevelopersDTO> setDevelopers(HttpServletRequest req, ProjectsDTO projectsDTO) {
-        Set<DevelopersDTO> developersDTOSet = new HashSet<>();
+    private Set<DeveloperDTO> setDevelopers(HttpServletRequest req, ProjectDTO projectDTO) {
+        Set<DeveloperDTO> developerDTOSet = new HashSet<>();
         if (!req.getParameter("developers").equals("")) {
             String[] s = req.getParameter("developers").split(",");
             Arrays.stream(s)
                     .map(Integer::parseInt)
                     .forEach((d) -> {
-                        DevelopersDTO developersDTO = DevelopersConverter.fromDevelopersDAO(developersRepository.findById(d));
-                        developersDTOSet.add(developersDTO);
+                        DeveloperDTO developerDTO = DevelopersConverter.fromDevelopersDAO(developersRepository.findById(d).orElseThrow());
+                        developerDTOSet.add(developerDTO);
                     });
         }
-        return developersDTOSet;
+        return developerDTOSet;
     }
 }

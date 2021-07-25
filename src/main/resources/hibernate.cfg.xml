@@ -21,11 +21,11 @@
         <property name="hibernate.dbcp.maxIdle">10</property>
         <property name="hibernate.dbcp.minIdle">5</property>
 
-        <mapping class="ua.goit.dao.model.CompaniesDAO" />
-        <mapping class="ua.goit.dao.model.CustomersDAO" />
-        <mapping class="ua.goit.dao.model.DevelopersDAO" />
-        <mapping class="ua.goit.dao.model.ProjectsDAO" />
-        <mapping class="ua.goit.dao.model.SkillsDAO" />
+        <mapping class="ua.goit.dao.model.CompanyDAO" />
+        <mapping class="ua.goit.dao.model.CustomerDAO" />
+        <mapping class="ua.goit.dao.model.DeveloperDAO" />
+        <mapping class="ua.goit.dao.model.ProjectDAO" />
+        <mapping class="ua.goit.dao.model.SkillDAO" />
         <mapping class="ua.goit.dao.model.DevelopersOnProjectsDAO" />
         <mapping class="ua.goit.dao.model.CompaniesCustomersDAO" />
         <mapping class="ua.goit.dao.model.CompaniesProjectsDAO" />

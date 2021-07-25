@@ -1,35 +1,37 @@
 package ua.goit.service.skills;
 
 import ua.goit.dao.SingleEntityRepository;
-import ua.goit.dao.model.SkillsDAO;
-import ua.goit.dto.SkillsDTO;
+import ua.goit.dao.model.SkillDAO;
+import ua.goit.dto.SkillDTO;
 
 public class SkillsService {
-    private SingleEntityRepository<SkillsDAO> repository;
+    private SingleEntityRepository<SkillDAO> repository;
 
-    public SkillsService(SingleEntityRepository<SkillsDAO> repository) {
+    public SkillsService(SingleEntityRepository<SkillDAO> repository) {
         this.repository = repository;
     }
 
-    public SkillsDTO create(SkillsDTO skillsDTO) {
-        SkillsDAO skillsDAO = SkillsConverter.toSkillsDAO(skillsDTO);
-        repository.create(skillsDAO);
-        SkillsDAO savedSkillsDAO = repository.findByUniqueValue(skillsDAO.getDeveloperEmail());
-        return SkillsConverter.fromSkillsDAO(savedSkillsDAO);
+    public SkillDTO create(SkillDTO skillDTO) {
+        SkillDAO skillDAO = SkillsConverter.toSkillsDAO(skillDTO);
+        repository.create(skillDAO);
+        SkillDAO savedSkillDAO = repository.findByUniqueParameter("developerEmail",
+                skillDAO.getDeveloperEmail()).orElseThrow();
+        return SkillsConverter.fromSkillsDAO(savedSkillDAO);
     }
 
-    public SkillsDTO update(SkillsDTO skillsDTO) {
-        SkillsDAO skillsDAO = SkillsConverter.toSkillsDAO(skillsDTO);
-        repository.update(skillsDAO);
-        SkillsDAO updatedSkillsDAO = repository.findByUniqueValue(skillsDTO.getDeveloperEmail());
-        return SkillsConverter.fromSkillsDAO(updatedSkillsDAO);
+    public SkillDTO update(SkillDTO skillDTO) {
+        SkillDAO skillDAO = SkillsConverter.toSkillsDAO(skillDTO);
+        repository.update(skillDAO);
+        SkillDAO updatedSkillDAO = repository.findByUniqueParameter("developerEmail",
+                skillDTO.getDeveloperEmail()).orElseThrow();
+        return SkillsConverter.fromSkillsDAO(updatedSkillDAO);
     }
 
-    public void delete(String id) {
+    public void delete(int id) {
         repository.delete(id);
     }
 
-    public SkillsDTO findByDeveloper(String email) {
-        return SkillsConverter.fromSkillsDAO(repository.findByUniqueValue(email));
+    public SkillDTO findByDeveloper(String developerEmail) {
+        return SkillsConverter.fromSkillsDAO(repository.findByUniqueParameter("developerEmail", developerEmail).orElseThrow());
     }
 }

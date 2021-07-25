@@ -3,16 +3,16 @@ package ua.goit.dto;
 import ua.goit.dao.model.Levels;
 import ua.goit.dao.model.Stack;
 
-public class SkillsDTO {
+public class SkillDTO {
     private int recordId;
     private Stack stack;
     private Levels level;
     private String developerEmail;
 
-    public SkillsDTO() {
+    public SkillDTO() {
     }
 
-    public SkillsDTO(int recordId, Stack stack, Levels level, String developerEmail) {
+    public SkillDTO(int recordId, Stack stack, Levels level, String developerEmail) {
         this.recordId = recordId;
         this.stack = stack;
         this.level = level;

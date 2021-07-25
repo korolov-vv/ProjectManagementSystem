@@ -1,20 +1,15 @@
 package ua.goit.dao;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ua.goit.dao.model.ProjectsDAO;
+import ua.goit.dao.model.ProjectDAO;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+public class ProjectsRepository extends SinglRepositoryImplementation<ProjectDAO> {
 
-public class ProjectsRepository implements SingleEntityRepository<ProjectsDAO> {
+    public ProjectsRepository(SessionFactory sessionFactory) {
+        super(sessionFactory, ProjectDAO.class);
+    }
 
-    private static final Logger LOG = LoggerFactory.getLogger(ProjectsRepository.class);
+    /*    private static final Logger LOG = LoggerFactory.getLogger(ProjectsRepository.class);
 
     private final SessionFactory sessionFactory;
 
@@ -26,7 +21,7 @@ public class ProjectsRepository implements SingleEntityRepository<ProjectsDAO> {
     }
 
     @Override
-    public ProjectsDAO findById(int id) {
+    public Optional<ProjectsDAO> findById(int id) {
         ProjectsDAO projectsDAO = new ProjectsDAO();
         try (Session session = sessionFactory.openSession()) {
             projectsDAO = session.get(ProjectsDAO.class, id);
@@ -38,7 +33,7 @@ public class ProjectsRepository implements SingleEntityRepository<ProjectsDAO> {
     }
 
     @Override
-    public ProjectsDAO findByUniqueValue(String projectName) {
+    public Optional<ProjectsDAO> findByUniqueValue(String projectName) {
         List<ProjectsDAO> projectsDAOList = new ArrayList<>();
         Transaction transaction;
         try (Session session = sessionFactory.openSession()) {
@@ -132,5 +127,5 @@ public class ProjectsRepository implements SingleEntityRepository<ProjectsDAO> {
             ex.printStackTrace();
         }
         return projectsDAOList;
-    }
+    }*/
 }

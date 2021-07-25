@@ -1,20 +1,15 @@
 package ua.goit.dao;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ua.goit.dao.model.DevelopersDAO;
+import ua.goit.dao.model.DeveloperDAO;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+public class DevelopersRepository extends SinglRepositoryImplementation<DeveloperDAO> {
 
-public class DevelopersRepository implements SingleEntityRepository<DevelopersDAO> {
+    public DevelopersRepository(SessionFactory sessionFactory) {
+        super(sessionFactory, DeveloperDAO.class);
+    }
 
-    private static final Logger LOG = LoggerFactory.getLogger(DevelopersRepository.class);
+    /*private static final Logger LOG = LoggerFactory.getLogger(DevelopersRepository.class);
 
     SessionFactory sessionFactory;
 
@@ -27,7 +22,7 @@ public class DevelopersRepository implements SingleEntityRepository<DevelopersDA
     }
 
     @Override
-    public DevelopersDAO findById(int id) {
+    public Optional<DevelopersDAO> findById(int id) {
         DevelopersDAO developersDAO = new DevelopersDAO();
         try (Session session = sessionFactory.openSession()) {
             developersDAO = session.get(DevelopersDAO.class, id);
@@ -81,7 +76,7 @@ public class DevelopersRepository implements SingleEntityRepository<DevelopersDA
     }
 
     @Override
-    public DevelopersDAO findByUniqueValue(String email) {
+    public Optional<DevelopersDAO> findByUniqueValue(String email) {
         List<DevelopersDAO> developersDAOList = new ArrayList<>();
         Transaction transaction;
         try (Session session = sessionFactory.openSession()) {
@@ -128,5 +123,5 @@ public class DevelopersRepository implements SingleEntityRepository<DevelopersDA
                 transaction.rollback();
             }
         }
-    }
+    }*/
 }

@@ -3,8 +3,8 @@ package ua.goit.controller.projects;
 import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.ProjectsRepository;
 import ua.goit.dao.SingleEntityRepository;
-import ua.goit.dao.model.ProjectsDAO;
-import ua.goit.dto.ProjectsDTO;
+import ua.goit.dao.model.ProjectDAO;
+import ua.goit.dto.ProjectDTO;
 import ua.goit.service.projects.ProjectsConverter;
 
 import javax.servlet.ServletException;
@@ -17,7 +17,7 @@ import java.io.IOException;
 @WebServlet("/projects/project")
 public class ProjectByNameServlet extends HttpServlet {
 
-    private SingleEntityRepository<ProjectsDAO> projectsRepository;
+    private SingleEntityRepository<ProjectDAO> projectsRepository;
 
     @Override
     public void init() {
@@ -27,13 +27,13 @@ public class ProjectByNameServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
-        ProjectsDAO projectsDAO = projectsRepository.findByUniqueValue(name);
-        if(projectsDAO.getProjectId() == 0){
+        ProjectDAO projectDAO = projectsRepository.findByUniqueParameter("projectName", name).orElseThrow();
+        if(projectDAO.getProjectId() == 0){
             ServletException ex = new ServletException("The project does not exist");
             req.setAttribute("message", ex.getMessage());
             req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
         }else {
-            ProjectsDTO project = ProjectsConverter.fromProjectsDAO(projectsDAO);
+            ProjectDTO project = ProjectsConverter.fromProjectsDAO(projectDAO);
             req.setAttribute("project", project);
             req.getRequestDispatcher("/view/projects/findProjectByName.jsp").forward(req, resp);
         }

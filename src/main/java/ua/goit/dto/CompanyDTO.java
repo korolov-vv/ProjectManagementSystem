@@ -3,17 +3,17 @@ package ua.goit.dto;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CompaniesDTO {
+public class CompanyDTO {
     private int companyId;
     private String companyName;
     private int numberOfDevelopers;
-    private Set<ProjectsDTO> projects;
-    private Set<CustomersDTO> customers;
+    private Set<ProjectDTO> projects;
+    private Set<CustomerDTO> customers;
 
-    public CompaniesDTO() {
+    public CompanyDTO() {
     }
 
-    public CompaniesDTO(int companyId, String companyName, int numberOfDevelopers) {
+    public CompanyDTO(int companyId, String companyName, int numberOfDevelopers) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.numberOfDevelopers = numberOfDevelopers;
@@ -21,7 +21,7 @@ public class CompaniesDTO {
         this.customers = new HashSet<>();
     }
 
-    public CompaniesDTO(int companyId, String companyName, int numberOfDevelopers, Set<ProjectsDTO> projects, Set<CustomersDTO> customers) {
+    public CompanyDTO(int companyId, String companyName, int numberOfDevelopers, Set<ProjectDTO> projects, Set<CustomerDTO> customers) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.numberOfDevelopers = numberOfDevelopers;
@@ -53,19 +53,19 @@ public class CompaniesDTO {
         this.numberOfDevelopers = numberOfDevelopers;
     }
 
-    public Set<ProjectsDTO> getProjects() {
+    public Set<ProjectDTO> getProjects() {
         return projects;
     }
 
-    public void setProjects(Set<ProjectsDTO> projects) {
+    public void setProjects(Set<ProjectDTO> projects) {
         this.projects = projects;
     }
 
-    public Set<CustomersDTO> getCustomers() {
+    public Set<CustomerDTO> getCustomers() {
         return customers;
     }
 
-    public void setCustomers(Set<CustomersDTO> customers) {
+    public void setCustomers(Set<CustomerDTO> customers) {
         this.customers = customers;
     }
 

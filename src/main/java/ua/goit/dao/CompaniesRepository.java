@@ -1,19 +1,15 @@
 package ua.goit.dao;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ua.goit.dao.model.CompaniesDAO;
+import ua.goit.dao.model.CompanyDAO;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+public class CompaniesRepository extends SinglRepositoryImplementation<CompanyDAO> {
 
-public class CompaniesRepository implements SingleEntityRepository<CompaniesDAO> {
-    private final static Logger LOG = LoggerFactory.getLogger(CompaniesRepository.class);
+    public CompaniesRepository(SessionFactory sessionFactory) {
+        super(sessionFactory, CompanyDAO.class);
+    }
+
+    /*private final static Logger LOG = LoggerFactory.getLogger(CompaniesRepository.class);
 
     private final SessionFactory sessionFactory;
 
@@ -26,7 +22,7 @@ public class CompaniesRepository implements SingleEntityRepository<CompaniesDAO>
     }
 
     @Override
-    public CompaniesDAO findById(int id) {
+    public Optional<CompaniesDAO> findById(int id) {
         CompaniesDAO companiesDAO = new CompaniesDAO();
         try (Session session = sessionFactory.openSession()) {
             companiesDAO = session.get(CompaniesDAO.class, id);
@@ -38,7 +34,7 @@ public class CompaniesRepository implements SingleEntityRepository<CompaniesDAO>
     }
 
     @Override
-    public CompaniesDAO findByUniqueValue(String companyName) {
+    public Optional<CompaniesDAO> findByUniqueValue(String companyName) {
         List<CompaniesDAO> companiesDAOList = new ArrayList<>();
         Transaction transaction;
         try (Session session = sessionFactory.openSession()) {
@@ -134,5 +130,5 @@ public class CompaniesRepository implements SingleEntityRepository<CompaniesDAO>
             ex.printStackTrace();
         }
         return companiesDAOList;
-    }
+    }*/
 }

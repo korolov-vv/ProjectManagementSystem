@@ -3,8 +3,8 @@ package ua.goit.controller.developers;
 import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.DevelopersRepository;
 import ua.goit.dao.SingleEntityRepository;
-import ua.goit.dao.model.DevelopersDAO;
-import ua.goit.dto.DevelopersDTO;
+import ua.goit.dao.model.DeveloperDAO;
+import ua.goit.dto.DeveloperDTO;
 import ua.goit.service.developers.DevelopersConverter;
 
 import javax.servlet.ServletException;
@@ -16,7 +16,7 @@ import java.io.IOException;
 
 @WebServlet("/developers/developer")
 public class FindByIdServlet extends HttpServlet {
-    private SingleEntityRepository<DevelopersDAO> developersRepository;
+    private SingleEntityRepository<DeveloperDAO> developersRepository;
 
     @Override
     public void init() {
@@ -26,14 +26,14 @@ public class FindByIdServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        DevelopersDAO developersDAO = developersRepository.findById(Integer.parseInt(id));
-        if(developersDAO.getDeveloperId() == 0){
+        DeveloperDAO developerDAO = developersRepository.findById(Integer.parseInt(id)).orElseThrow();
+        if(developerDAO.getDeveloperId() == 0){
             ServletException ex = new ServletException("The developer does not exist");
             req.setAttribute("message", ex.getMessage());
             req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
         }else {
-            DevelopersDTO developersDTO = DevelopersConverter.fromDevelopersDAO(developersDAO);
-            req.setAttribute("developer", developersDTO);
+            DeveloperDTO developerDTO = DevelopersConverter.fromDevelopersDAO(developerDAO);
+            req.setAttribute("developer", developerDTO);
             req.getRequestDispatcher("/view/developers/findDeveloperById.jsp").forward(req, resp);
         }
     }

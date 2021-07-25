@@ -1,45 +1,26 @@
-package ua.goit.dao.model;
+package ua.goit.dto;
 
-import org.hibernate.annotations.Cascade;
-
-import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "projects")
-public class ProjectsDAO implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="project_id")
+public class ProjectDTO {
     private int projectId;
-    @Column(name ="project_name")
     private String projectName;
-    @Column(name ="stage")
     private String stage;
-    @Column(name ="time_period")
     private int timePeriod;
-    @Column(name ="coast")
     private int coast;
-    @Column(name ="number_of_developers")
     private int numberOfDevelopers;
-    @Column(name ="date_of_beginning")
     private LocalDate dateOfBeginning;
-    @ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    private Set<DevelopersDAO> developers = new HashSet<>();
-    @ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    private Set<CompaniesDAO> companies = new HashSet<>();
+    private Set<DeveloperDTO> developers;
+    private Set<CompanyDTO> companies;
 
-    public ProjectsDAO() {
+
+    public ProjectDTO() {
     }
 
-    public ProjectsDAO(int projectId, String projectName, String stage, int timePeriod, int coast,
-                       int numberOfDevelopers, LocalDate dateOfBeginning) {
+    public ProjectDTO(int projectId, String projectName, String stage, int timePeriod, int coast,
+                      int numberOfDevelopers, LocalDate dateOfBeginning) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.stage = stage;
@@ -51,9 +32,9 @@ public class ProjectsDAO implements Serializable {
         this.companies = new HashSet<>();
     }
 
-    public ProjectsDAO(int projectId, String projectName, String stage, int timePeriod, int coast,
-                       int numberOfDevelopers, LocalDate dateOfBeginning, Set<DevelopersDAO> developers,
-                       Set<CompaniesDAO> companies) {
+    public ProjectDTO(int projectId, String projectName, String stage, int timePeriod, int coast,
+                      int numberOfDevelopers, LocalDate dateOfBeginning, Set<DeveloperDTO> developers,
+                      Set<CompanyDTO> companies) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.stage = stage;
@@ -121,25 +102,25 @@ public class ProjectsDAO implements Serializable {
         this.dateOfBeginning = dateOfBeginning;
     }
 
-    public Set<DevelopersDAO> getDevelopers() {
+    public Set<DeveloperDTO> getDevelopers() {
         return developers;
     }
 
-    public void setDevelopers(Set<DevelopersDAO> developers) {
+    public void setDevelopers(Set<DeveloperDTO> developers) {
         this.developers = developers;
     }
 
-    public Set<CompaniesDAO> getCompanies() {
+    public Set<CompanyDTO> getCompanies() {
         return companies;
     }
 
-    public void setCompanies(Set<CompaniesDAO> companies) {
+    public void setCompanies(Set<CompanyDTO> companies) {
         this.companies = companies;
     }
 
     @Override
     public String toString() {
-        return "ProjectsDAO{" +
+        return "ProjectsDTO{" +
                 "projectId=" + projectId +
                 ", projectName='" + projectName + '\'' +
                 ", stage='" + stage + '\'' +

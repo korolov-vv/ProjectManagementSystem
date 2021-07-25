@@ -1,11 +1,11 @@
 package ua.goit.service.developers;
 
-import ua.goit.dao.model.DevelopersDAO;
-import ua.goit.dao.model.ProjectsDAO;
-import ua.goit.dao.model.SkillsDAO;
-import ua.goit.dto.DevelopersDTO;
-import ua.goit.dto.ProjectsDTO;
-import ua.goit.dto.SkillsDTO;
+import ua.goit.dao.model.DeveloperDAO;
+import ua.goit.dao.model.ProjectDAO;
+import ua.goit.dao.model.SkillDAO;
+import ua.goit.dto.DeveloperDTO;
+import ua.goit.dto.ProjectDTO;
+import ua.goit.dto.SkillDTO;
 import ua.goit.service.projects.ProjectsConverter;
 import ua.goit.service.skills.SkillsConverter;
 
@@ -16,61 +16,61 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DevelopersConverter {
-    public static DevelopersDAO toDevelopersDAO(DevelopersDTO developersDTO) {
-        Set<SkillsDAO> skills = toSkillsDAO(developersDTO.getSkills());
-        Set<ProjectsDAO> projects = toProjectsDAO(developersDTO.getProjects());
-        return new DevelopersDAO(developersDTO.getDeveloperId(), developersDTO.getFirstName(),
-                developersDTO.getLastName(), developersDTO.getGender(), developersDTO.getAge(),
-                developersDTO.getExperienceInYears(), developersDTO.getCompanyId(), developersDTO.getSalary(),
-                developersDTO.getDeveloperEmail(), skills, projects);
+    public static DeveloperDAO toDevelopersDAO(DeveloperDTO developerDTO) {
+        Set<SkillDAO> skills = toSkillsDAO(developerDTO.getSkills());
+        Set<ProjectDAO> projects = toProjectsDAO(developerDTO.getProjects());
+        return new DeveloperDAO(developerDTO.getDeveloperId(), developerDTO.getFirstName(),
+                developerDTO.getLastName(), developerDTO.getGender(), developerDTO.getAge(),
+                developerDTO.getExperienceInYears(), developerDTO.getCompanyId(), developerDTO.getSalary(),
+                developerDTO.getDeveloperEmail(), skills, projects);
     }
 
-    public static DevelopersDTO fromDevelopersDAO(DevelopersDAO developersDAO) {
-        Set<SkillsDTO> skills = fromSkillsDAO(developersDAO.getSkills());
-        Set<ProjectsDTO> projects = fromProjectsDAO(developersDAO.getProjects());
-        return new DevelopersDTO(developersDAO.getDeveloperId(), developersDAO.getFirstName(),
-                developersDAO.getLastName(), developersDAO.getGender(), developersDAO.getAge(),
-                developersDAO.getExperienceInYears(), developersDAO.getCompanyId(), developersDAO.getSalary(),
-                developersDAO.getDeveloperEmail(), skills, projects);
+    public static DeveloperDTO fromDevelopersDAO(DeveloperDAO developerDAO) {
+        Set<SkillDTO> skills = fromSkillsDAO(developerDAO.getSkills());
+        Set<ProjectDTO> projects = fromProjectsDAO(developerDAO.getProjects());
+        return new DeveloperDTO(developerDAO.getDeveloperId(), developerDAO.getFirstName(),
+                developerDAO.getLastName(), developerDAO.getGender(), developerDAO.getAge(),
+                developerDAO.getExperienceInYears(), developerDAO.getCompanyId(), developerDAO.getSalary(),
+                developerDAO.getDeveloperEmail(), skills, projects);
     }
 
-    public static List<DevelopersDTO> fromDevelopersDAOList(List<DevelopersDAO> developersDAOList) {
-        List<DevelopersDTO> developersDTOList = new ArrayList<>();
-        developersDAOList.stream()
+    public static List<DeveloperDTO> fromDevelopersDAOList(List<DeveloperDAO> developerDAOList) {
+        List<DeveloperDTO> developerDTOList = new ArrayList<>();
+        developerDAOList.stream()
                 .forEach((d) -> {
-                    developersDTOList.add(DevelopersConverter.fromDevelopersDAO(d));
+                    developerDTOList.add(DevelopersConverter.fromDevelopersDAO(d));
                 });
-        return developersDTOList;
+        return developerDTOList;
     }
 
-    private static Set<SkillsDAO> toSkillsDAO(Set<SkillsDTO> skillsDTOSet) {
-        if(skillsDTOSet == null) {
+    private static Set<SkillDAO> toSkillsDAO(Set<SkillDTO> skillDTOSet) {
+        if(skillDTOSet == null) {
             return new HashSet<>();
-        }else return skillsDTOSet.stream()
+        }else return skillDTOSet.stream()
                 .map(SkillsConverter::toSkillsDAO)
                 .collect(Collectors.toSet());
     }
 
-    private static Set<ProjectsDAO> toProjectsDAO(Set<ProjectsDTO> projectsDTOSet) {
-        if(projectsDTOSet == null) {
+    private static Set<ProjectDAO> toProjectsDAO(Set<ProjectDTO> projectDTOSet) {
+        if(projectDTOSet == null) {
             return new HashSet<>();
-        }else return projectsDTOSet.stream()
+        }else return projectDTOSet.stream()
                 .map(ProjectsConverter::toProjectsDAO)
                 .collect(Collectors.toSet());
     }
 
-    private static Set<SkillsDTO> fromSkillsDAO(Set<SkillsDAO> skillsDAOSet) {
-        if(skillsDAOSet == null) {
+    private static Set<SkillDTO> fromSkillsDAO(Set<SkillDAO> skillDAOSet) {
+        if(skillDAOSet == null) {
             return new HashSet<>();
-        }else return skillsDAOSet.stream()
+        }else return skillDAOSet.stream()
                 .map(SkillsConverter::fromSkillsDAO)
                 .collect(Collectors.toSet());
     }
 
-    private static Set<ProjectsDTO> fromProjectsDAO(Set<ProjectsDAO> projectsDAOSet) {
-        if(projectsDAOSet == null) {
+    private static Set<ProjectDTO> fromProjectsDAO(Set<ProjectDAO> projectDAOSet) {
+        if(projectDAOSet == null) {
             return new HashSet<>();
-        }else return projectsDAOSet.stream()
+        }else return projectDAOSet.stream()
                 .map(ProjectsConverter::fromProjectsDAO)
                 .collect(Collectors.toSet());
     }

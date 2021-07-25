@@ -1,26 +1,55 @@
-package ua.goit.dto;
+package ua.goit.dao.model;
 
+import org.hibernate.annotations.Cascade;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ProjectsDTO {
+@Entity
+@Table(name = "projects")
+public class ProjectDAO implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="project_id")
     private int projectId;
+    @Column(name ="project_name")
     private String projectName;
+    @Column(name ="stage")
     private String stage;
+    @Column(name ="time_period")
     private int timePeriod;
+    @Column(name ="coast")
     private int coast;
+    @Column(name ="number_of_developers")
     private int numberOfDevelopers;
+    @Column(name ="date_of_beginning")
     private LocalDate dateOfBeginning;
-    private Set<DevelopersDTO> developers;
-    private Set<CompaniesDTO> companies;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "developers_on_projects",
+            joinColumns = { @JoinColumn(name = "project_id") },
+            inverseJoinColumns = { @JoinColumn(name = "developer_id") }
+    )
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private Set<DeveloperDAO> developers = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "companies_projects",
+            joinColumns = { @JoinColumn(name = "project_id") },
+            inverseJoinColumns = { @JoinColumn(name = "company_id") }
+    )
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private Set<CompanyDAO> companies = new HashSet<>();
 
-
-    public ProjectsDTO() {
+    public ProjectDAO() {
     }
 
-    public ProjectsDTO(int projectId, String projectName, String stage, int timePeriod, int coast,
-                       int numberOfDevelopers, LocalDate dateOfBeginning) {
+    public ProjectDAO(int projectId, String projectName, String stage, int timePeriod, int coast,
+                      int numberOfDevelopers, LocalDate dateOfBeginning) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.stage = stage;
@@ -32,9 +61,9 @@ public class ProjectsDTO {
         this.companies = new HashSet<>();
     }
 
-    public ProjectsDTO(int projectId, String projectName, String stage, int timePeriod, int coast,
-                       int numberOfDevelopers, LocalDate dateOfBeginning, Set<DevelopersDTO> developers,
-                       Set<CompaniesDTO> companies) {
+    public ProjectDAO(int projectId, String projectName, String stage, int timePeriod, int coast,
+                      int numberOfDevelopers, LocalDate dateOfBeginning, Set<DeveloperDAO> developers,
+                      Set<CompanyDAO> companies) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.stage = stage;
@@ -102,25 +131,25 @@ public class ProjectsDTO {
         this.dateOfBeginning = dateOfBeginning;
     }
 
-    public Set<DevelopersDTO> getDevelopers() {
+    public Set<DeveloperDAO> getDevelopers() {
         return developers;
     }
 
-    public void setDevelopers(Set<DevelopersDTO> developers) {
+    public void setDevelopers(Set<DeveloperDAO> developers) {
         this.developers = developers;
     }
 
-    public Set<CompaniesDTO> getCompanies() {
+    public Set<CompanyDAO> getCompanies() {
         return companies;
     }
 
-    public void setCompanies(Set<CompaniesDTO> companies) {
+    public void setCompanies(Set<CompanyDAO> companies) {
         this.companies = companies;
     }
 
     @Override
     public String toString() {
-        return "ProjectsDTO{" +
+        return "ProjectsDAO{" +
                 "projectId=" + projectId +
                 ", projectName='" + projectName + '\'' +
                 ", stage='" + stage + '\'' +

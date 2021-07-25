@@ -1,39 +1,40 @@
 package ua.goit.service.projects;
 
-import ua.goit.dao.model.ProjectsDAO;
+import ua.goit.dao.model.ProjectDAO;
 import ua.goit.dao.SingleEntityRepository;
-import ua.goit.dto.ProjectsDTO;
+import ua.goit.dto.ProjectDTO;
 
 public class ProjectService {
-    private SingleEntityRepository<ProjectsDAO> repository;
+    private SingleEntityRepository<ProjectDAO> repository;
 
-    public ProjectService(SingleEntityRepository<ProjectsDAO> repository) {
+    public ProjectService(SingleEntityRepository<ProjectDAO> repository) {
         this.repository = repository;
     }
 
-    public ProjectsDTO create(ProjectsDTO projectsDTO) {
-        ProjectsDAO projectsDAO = ProjectsConverter.toProjectsDAO(projectsDTO);
-        repository.create(projectsDAO);
-        ProjectsDAO savedProjectsDAO = repository.findByUniqueValue(projectsDAO.getProjectName());
-        return ProjectsConverter.fromProjectsDAO(savedProjectsDAO);
+    public ProjectDTO create(ProjectDTO projectDTO) {
+        ProjectDAO projectDAO = ProjectsConverter.toProjectsDAO(projectDTO);
+        repository.create(projectDAO);
+        ProjectDAO savedProjectDAO = repository.findByUniqueParameter("projectName",
+                projectDAO.getProjectName()).orElseThrow();
+        return ProjectsConverter.fromProjectsDAO(savedProjectDAO);
     }
 
-    public ProjectsDTO update(ProjectsDTO projectsDTO) {
-        ProjectsDAO projectsDAO = ProjectsConverter.toProjectsDAO(projectsDTO);
-        repository.update(projectsDAO);
-        ProjectsDAO updatedProjectsDAO = repository.findById(projectsDAO.getProjectId());
-        return ProjectsConverter.fromProjectsDAO(updatedProjectsDAO);
+    public ProjectDTO update(ProjectDTO projectDTO) {
+        ProjectDAO projectDAO = ProjectsConverter.toProjectsDAO(projectDTO);
+        repository.update(projectDAO);
+        ProjectDAO updatedProjectDAO = repository.findById(projectDAO.getProjectId()).orElseThrow();
+        return ProjectsConverter.fromProjectsDAO(updatedProjectDAO);
     }
 
     public void delete(String name) {
-        repository.delete(name);
+        repository.deleteByParameter("projectName", name);
     }
 
-    public ProjectsDTO findById(int id) {
-        return ProjectsConverter.fromProjectsDAO(repository.findById(id));
+    public ProjectDTO findById(int id) {
+        return ProjectsConverter.fromProjectsDAO(repository.findById(id).orElseThrow());
     }
 
-    public ProjectsDTO findByUniqueValue(String value) {
-        return ProjectsConverter.fromProjectsDAO(repository.findByUniqueValue(value));
+    public ProjectDTO findByUniqueValue(String value) {
+        return ProjectsConverter.fromProjectsDAO(repository.findByUniqueParameter("projectName", value).orElseThrow());
     }
 }

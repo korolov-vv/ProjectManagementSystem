@@ -3,7 +3,7 @@ package ua.goit.controller.projects;
 import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.ProjectsRepository;
 import ua.goit.dao.SingleEntityRepository;
-import ua.goit.dao.model.ProjectsDAO;
+import ua.goit.dao.model.ProjectDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @WebServlet("/projects/deleteProject")
 public class DeleteProjectServlet extends HttpServlet {
-    private SingleEntityRepository<ProjectsDAO> projectsRepository;
+    private SingleEntityRepository<ProjectDAO> projectsRepository;
 
     @Override
     public void init() {
@@ -24,9 +24,9 @@ public class DeleteProjectServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
-        ProjectsDAO projectsDAOForDelete = projectsRepository.findByUniqueValue(name);
-        projectsRepository.delete(name);
-        req.setAttribute("name", projectsDAOForDelete.getProjectName());
+        ProjectDAO projectDAOForDelete = projectsRepository.findByUniqueParameter("projectName", name).orElseThrow();
+        projectsRepository.deleteByParameter("projectName", name);
+        req.setAttribute("name", projectDAOForDelete.getProjectName());
         req.getRequestDispatcher("/view/projects/deleteProject.jsp").forward(req, resp);
     }
 

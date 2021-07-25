@@ -1,20 +1,14 @@
 package ua.goit.dao;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ua.goit.dao.model.CustomersDAO;
+import ua.goit.dao.model.CustomerDAO;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+public class CustomersRepository extends SinglRepositoryImplementation<CustomerDAO> {
 
-public class CustomersRepository implements SingleEntityRepository<CustomersDAO> {
-
-    private static final Logger LOG = LoggerFactory.getLogger(CustomersRepository.class);
+    public CustomersRepository(SessionFactory sessionFactory) {
+        super(sessionFactory, CustomerDAO.class);
+    }
+    /*    private static final Logger LOG = LoggerFactory.getLogger(CustomersRepository.class);
     private static final String SELECT_ALL_CUSTOMERS = "FROM CustomersDAO c";
 
     private final SessionFactory sessionFactory;
@@ -26,7 +20,7 @@ public class CustomersRepository implements SingleEntityRepository<CustomersDAO>
     }
 
     @Override
-    public CustomersDAO findById(int id) {
+    public Optional<CustomersDAO> findById(int id) {
         CustomersDAO customersDAO = new CustomersDAO();
         try (Session session = sessionFactory.openSession()) {
              customersDAO = session.get(CustomersDAO.class, id);
@@ -37,7 +31,7 @@ public class CustomersRepository implements SingleEntityRepository<CustomersDAO>
     }
 
     @Override
-    public CustomersDAO findByUniqueValue(String customerName) {
+    public Optional<CustomersDAO> findByUniqueValue(String customerName) {
         List<CustomersDAO> customersDAOList = new ArrayList<>();
         Transaction transaction;
         try (Session session = sessionFactory.openSession()) {
@@ -128,5 +122,5 @@ public class CustomersRepository implements SingleEntityRepository<CustomersDAO>
             ex.printStackTrace();
         }
         return customersDAOList;
-    }
+    }*/
 }

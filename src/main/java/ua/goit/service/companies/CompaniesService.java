@@ -1,40 +1,49 @@
 package ua.goit.service.companies;
 
-import ua.goit.dao.model.CompaniesDAO;
 import ua.goit.dao.SingleEntityRepository;
-import ua.goit.dto.CompaniesDTO;
+import ua.goit.dao.model.CompanyDAO;
+import ua.goit.dto.CompanyDTO;
+
+import java.util.List;
 
 public class CompaniesService {
-    private SingleEntityRepository<CompaniesDAO> repository;
+    private SingleEntityRepository<CompanyDAO> repository;
 
-    public CompaniesService(SingleEntityRepository<CompaniesDAO> repository){
+    public CompaniesService(SingleEntityRepository<CompanyDAO> repository){
         this.repository = repository;
     }
 
-    public CompaniesDTO create(CompaniesDTO companiesDTO) {
-        CompaniesDAO companiesDAO = CompaniesConverter.toCompaniesDAO(companiesDTO);
-        repository.create(companiesDAO);
-        CompaniesDAO savedCompanyDAO = repository.findById(companiesDAO.getCompanyId());
+    public CompanyDTO create(CompanyDTO companyDTO) {
+        CompanyDAO companyDAO = CompaniesConverter.toCompaniesDAO(companyDTO);
+        repository.create(companyDAO);
+        CompanyDAO savedCompanyDAO = repository.findById(companyDAO.getCompanyId()).orElseThrow();
         return CompaniesConverter.fromCompaniesDAO(savedCompanyDAO);
     }
 
-    public CompaniesDTO update(CompaniesDTO companiesDTO) {
-        CompaniesDAO companiesDAO = CompaniesConverter.toCompaniesDAO(companiesDTO);
-        repository.update(companiesDAO);
-        CompaniesDAO updatedCompaniessDAO = repository.findByUniqueValue(companiesDTO.getCompanyName());
-        return CompaniesConverter.fromCompaniesDAO(updatedCompaniessDAO);
+    public CompanyDTO update(CompanyDTO companyDTO) {
+        CompanyDAO companyDAO = CompaniesConverter.toCompaniesDAO(companyDTO);
+        repository.update(companyDAO);
+        CompanyDAO updatedCompanyDAO = repository.findByUniqueParameter("companyName", companyDTO.getCompanyName()).orElseThrow();
+        return CompaniesConverter.fromCompaniesDAO(updatedCompanyDAO);
     }
 
-    public void delete (String name) {
-        repository.delete(name);
+    public void deleteByParameter(String name) {
+        repository.deleteByParameter("companyName", name);
     }
 
     public void delete(int id) {
         repository.delete(id);
     }
 
-    public CompaniesDTO findByName (String name) {
-        return CompaniesConverter.fromCompaniesDAO(repository.findByUniqueValue(name));
+    public CompanyDTO findById(int id) {
+        return CompaniesConverter.fromCompaniesDAO(repository.findById(id).orElseThrow());
     }
 
+    public CompanyDTO findByName (String name) {
+        return CompaniesConverter.fromCompaniesDAO(repository.findByUniqueParameter("companyName", name).orElseThrow());
+    }
+
+    public List<CompanyDTO> findAll() {
+        return CompaniesConverter.fromCompaniesDAOList(repository.findAll());
+    }
 }

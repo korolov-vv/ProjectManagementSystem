@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "companies")
-public class CompaniesDAO implements Serializable {
+public class CompanyDAO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +27,7 @@ public class CompaniesDAO implements Serializable {
             inverseJoinColumns = { @JoinColumn(name = "project_id") }
     )
     @Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    Set<ProjectsDAO> projects = new HashSet<>();
+    Set<ProjectDAO> projects = new HashSet<>();
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "companies_customers",
@@ -35,12 +35,12 @@ public class CompaniesDAO implements Serializable {
             inverseJoinColumns = { @JoinColumn(name = "customer_id") }
     )
     @Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    Set<CustomersDAO> customers = new HashSet<>();
+    Set<CustomerDAO> customers = new HashSet<>();
 
-    public CompaniesDAO() {
+    public CompanyDAO() {
     }
 
-    public CompaniesDAO(int companyId, String companyName, int numberOfDevelopers) {
+    public CompanyDAO(int companyId, String companyName, int numberOfDevelopers) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.numberOfDevelopers = numberOfDevelopers;
@@ -48,8 +48,8 @@ public class CompaniesDAO implements Serializable {
         this.customers = new HashSet<>();
     }
 
-    public CompaniesDAO(int companyId, String companyName, int numberOfDevelopers, Set<ProjectsDAO> projects,
-                        Set<CustomersDAO> customers) {
+    public CompanyDAO(int companyId, String companyName, int numberOfDevelopers, Set<ProjectDAO> projects,
+                      Set<CustomerDAO> customers) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.numberOfDevelopers = numberOfDevelopers;
@@ -81,19 +81,19 @@ public class CompaniesDAO implements Serializable {
         this.numberOfDevelopers = numberOfDevelopers;
     }
 
-    public Set<ProjectsDAO> getProjects() {
+    public Set<ProjectDAO> getProjects() {
         return projects;
     }
 
-    public void setProjects(Set<ProjectsDAO> projects) {
+    public void setProjects(Set<ProjectDAO> projects) {
         this.projects = projects;
     }
 
-    public Set<CustomersDAO> getCustomers() {
+    public Set<CustomerDAO> getCustomers() {
         return customers;
     }
 
-    public void setCustomers(Set<CustomersDAO> customers) {
+    public void setCustomers(Set<CustomerDAO> customers) {
         this.customers = customers;
     }
 

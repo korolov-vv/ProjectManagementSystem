@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "skills")
-public class SkillsDAO implements Serializable {
+public class SkillDAO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +19,14 @@ public class SkillsDAO implements Serializable {
     private Levels level;
     @Column(name = "developer_email")
     private String developerEmail;
-    @ManyToOne(targetEntity = DevelopersDAO.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = DeveloperDAO.class, fetch = FetchType.EAGER)
     @JoinColumn(name="developer_email", insertable=false, updatable=false, nullable = false)
-    private DevelopersDAO developersDAO;
+    private DeveloperDAO developerDAO;
 
-    public SkillsDAO() {
+    public SkillDAO() {
     }
 
-    public SkillsDAO(int recordId, Stack stack, Levels level, String developerEmail) {
+    public SkillDAO(int recordId, Stack stack, Levels level, String developerEmail) {
         this.recordId = recordId;
         this.stack = stack;
         this.level = level;
@@ -65,12 +65,12 @@ public class SkillsDAO implements Serializable {
         this.developerEmail = developerEmail;
     }
 
-    public DevelopersDAO getDevelopersDAO() {
-        return developersDAO;
+    public DeveloperDAO getDevelopersDAO() {
+        return developerDAO;
     }
 
-    public void setDevelopersDAO(DevelopersDAO developersDAO) {
-        this.developersDAO = developersDAO;
+    public void setDevelopersDAO(DeveloperDAO developerDAO) {
+        this.developerDAO = developerDAO;
     }
 
     @Override

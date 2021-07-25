@@ -3,8 +3,8 @@ package ua.goit.controller.projects;
 import ua.goit.config.HibernateDatabaseConnector;
 import ua.goit.dao.ProjectsRepository;
 import ua.goit.dao.SingleEntityRepository;
-import ua.goit.dao.model.ProjectsDAO;
-import ua.goit.dto.ProjectsDTO;
+import ua.goit.dao.model.ProjectDAO;
+import ua.goit.dto.ProjectDTO;
 import ua.goit.service.projects.ProjectsConverter;
 
 import javax.servlet.ServletException;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @WebServlet("/projects/list")
 public class ProjectsListServlet extends HttpServlet {
 
-    private SingleEntityRepository<ProjectsDAO> projectsRepository;
+    private SingleEntityRepository<ProjectDAO> projectsRepository;
 
     @Override
     public void init() {
@@ -28,10 +28,10 @@ public class ProjectsListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<ProjectsDTO> projectsDTOList = projectsRepository.findAll().stream()
+        List<ProjectDTO> projectDTOList = projectsRepository.findAll().stream()
                 .map(ProjectsConverter::fromProjectsDAO)
                 .collect(Collectors.toList());
-        req.setAttribute("projects", projectsDTOList);
+        req.setAttribute("projects", projectDTOList);
         req.getRequestDispatcher("/view/projects/list.jsp").forward(req, resp);
     }
 }

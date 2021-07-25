@@ -1,43 +1,45 @@
 package ua.goit.service.developers;
 
 import ua.goit.dao.SingleEntityRepository;
-import ua.goit.dao.model.DevelopersDAO;
-import ua.goit.dto.DevelopersDTO;
+import ua.goit.dao.model.DeveloperDAO;
+import ua.goit.dto.DeveloperDTO;
 
 import java.util.List;
 
 public class DevelopersService {
 
-    private SingleEntityRepository<DevelopersDAO> repository;
+    private SingleEntityRepository<DeveloperDAO> repository;
 
-    public DevelopersService(SingleEntityRepository<DevelopersDAO> repository) {
+    public DevelopersService(SingleEntityRepository<DeveloperDAO> repository) {
         this.repository = repository;
     }
 
 
-    public DevelopersDTO create(DevelopersDTO developersDTO) {
-        DevelopersDAO developersDAO = DevelopersConverter.toDevelopersDAO(developersDTO);
-        repository.create(developersDAO);
-        DevelopersDAO savedDevelopersDAO = repository.findByUniqueValue(developersDTO.getDeveloperEmail());
-        return DevelopersConverter.fromDevelopersDAO(savedDevelopersDAO);
+    public DeveloperDTO create(DeveloperDTO developerDTO) {
+        DeveloperDAO developerDAO = DevelopersConverter.toDevelopersDAO(developerDTO);
+        repository.create(developerDAO);
+        DeveloperDAO savedDeveloperDAO = repository.findByUniqueParameter("developerEmail",
+                developerDTO.getDeveloperEmail()).orElseThrow();
+        return DevelopersConverter.fromDevelopersDAO(savedDeveloperDAO);
     }
 
-    public DevelopersDTO update(DevelopersDTO developersDTO) {
-        DevelopersDAO developersDAO = DevelopersConverter.toDevelopersDAO(developersDTO);
-        repository.update(developersDAO);
-        DevelopersDAO updatedDevelopersDAO = repository.findByUniqueValue(developersDTO.getDeveloperEmail());
-        return DevelopersConverter.fromDevelopersDAO(updatedDevelopersDAO);
+    public DeveloperDTO update(DeveloperDTO developerDTO) {
+        DeveloperDAO developerDAO = DevelopersConverter.toDevelopersDAO(developerDTO);
+        repository.update(developerDAO);
+        DeveloperDAO updatedDeveloperDAO = repository.findByUniqueParameter("developerEmail",
+                developerDTO.getDeveloperEmail()).orElseThrow();
+        return DevelopersConverter.fromDevelopersDAO(updatedDeveloperDAO);
     }
 
     public void delete(String email) {
-        repository.delete(email);
+        repository.deleteByParameter("developerEmail", email);
     }
 
-    public DevelopersDTO findByEmail(String email) {
-        return DevelopersConverter.fromDevelopersDAO(repository.findByUniqueValue(email));
+    public DeveloperDTO findByEmail(String email) {
+        return DevelopersConverter.fromDevelopersDAO(repository.findByUniqueParameter("developerEmail", email).orElseThrow());
     }
 
-    public List<DevelopersDTO> findAll(){
+    public List<DeveloperDTO> findAll(){
         return DevelopersConverter.fromDevelopersDAOList(repository.findAll());
     }
 }

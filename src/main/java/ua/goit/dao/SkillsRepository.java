@@ -1,21 +1,15 @@
 package ua.goit.dao;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ua.goit.dao.model.SkillsDAO;
-import ua.goit.dao.model.Stack;
+import ua.goit.dao.model.SkillDAO;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+public class SkillsRepository extends SinglRepositoryImplementation<SkillDAO> {
 
-public class SkillsRepository implements SingleEntityRepository<SkillsDAO> {
+    public SkillsRepository(SessionFactory sessionFactory) {
+        super(sessionFactory, SkillDAO.class);
+    }
 
-    private static final Logger LOG = LoggerFactory.getLogger(SkillsRepository.class);
+    /*private static final Logger LOG = LoggerFactory.getLogger(SkillsRepository.class);
     private static final String SELECT_ALL_DEVELOPERS = "FROM SkillsDAO s";
 
     private final SessionFactory sessionFactory;
@@ -30,7 +24,7 @@ public class SkillsRepository implements SingleEntityRepository<SkillsDAO> {
     }
 
     @Override
-    public SkillsDAO findById(int id) {
+    public Optional<SkillsDAO> findById(int id) {
         SkillsDAO skillsDAO = new SkillsDAO();
         try (Session session = sessionFactory.openSession()) {
             skillsDAO = session.get(SkillsDAO.class, id);
@@ -60,7 +54,7 @@ public class SkillsRepository implements SingleEntityRepository<SkillsDAO> {
     }
 
     @Override
-    public SkillsDAO findByUniqueValue(String email) {
+    public Optional<SkillsDAO> findByUniqueValue(String email) {
         List<SkillsDAO> skillsDAOList = new ArrayList<>();
         Transaction transaction;
         try (Session session = sessionFactory.openSession()) {
@@ -156,5 +150,5 @@ public class SkillsRepository implements SingleEntityRepository<SkillsDAO> {
             LOG.debug(ex.getMessage());
             ex.printStackTrace();
         }
-    }
+    }*/
 }
