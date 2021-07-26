@@ -11,6 +11,6 @@ import java.io.IOException;
 public class EnterIdServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/view/developers/enterId.jsp").forward(req, resp);
+        req.getRequestDispatcher("/view/developers/enterEmail.jsp").forward(req, resp);
     }
 }

@@ -11,8 +11,8 @@
             <c:import url="/view/header.jsp" />
         </div>
         <div class="textDiv">
-            <c:set var="id" value="${id}" />
-            <a> The developer ${id} is deleted</a>
+            <c:set var="developerEmail" value="${developerEmail}" />
+            <a> The developer ${developerEmail} is deleted</a>
         </div>
     </div>
     </body>

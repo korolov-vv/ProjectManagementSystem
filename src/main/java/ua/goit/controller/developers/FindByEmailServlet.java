@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/developers/developer")
-public class FindByIdServlet extends HttpServlet {
+public class FindByEmailServlet extends HttpServlet {
     private SingleEntityRepository<DeveloperDAO> developersRepository;
 
     @Override
@@ -25,16 +25,18 @@ public class FindByIdServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
-        DeveloperDAO developerDAO = developersRepository.findById(Integer.parseInt(id)).orElseThrow();
-        if(developerDAO.getDeveloperId() == 0){
-            ServletException ex = new ServletException("The developer does not exist");
-            req.setAttribute("message", ex.getMessage());
-            req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
-        }else {
+        String developerEmail = req.getParameter("developerEmail");
+        if(developersRepository.findByUniqueParameter("developerEmail", developerEmail).isPresent()) {
+            DeveloperDAO developerDAO = developersRepository.findByUniqueParameter(
+                    "developerEmail", developerEmail
+            ).get();
             DeveloperDTO developerDTO = DevelopersConverter.fromDevelopersDAO(developerDAO);
             req.setAttribute("developer", developerDTO);
             req.getRequestDispatcher("/view/developers/findDeveloperById.jsp").forward(req, resp);
+        }else {
+            ServletException ex = new ServletException(String.format("The developer with email: %s does not exist", developerEmail));
+            req.setAttribute("message", ex.getMessage());
+            req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
         }
     }
 }

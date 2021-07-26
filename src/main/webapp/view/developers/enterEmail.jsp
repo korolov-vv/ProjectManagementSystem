@@ -12,12 +12,12 @@
         </div>
         <div class="shortForm">
             <form action="developer" accept-charset="utf-8" method="get" >
-                <div class="title">Enter ID</div>
-                <div class="subtitle">Enter the ID of the searched developer</div>
+                <div class="title">Enter email</div>
+                <div class="subtitle">Enter the email of the searched developer</div>
                 <div class="oneInput-container ic1">
-                    <input id="id" class="oneInput" type="text" name="id" placeholder=" " />
+                    <input id="developerEmail" class="oneInput" type="text" name="developerEmail" placeholder=" " />
                     <div class="oneCut"></div>
-                    <label for="id" class="onePlaceholder">type ID</label>
+                    <label for="developerEmail" class="onePlaceholder">type email</label>
                 </div>
                 <button type="submit" class="submit">SUBMIT</button>
             </form>

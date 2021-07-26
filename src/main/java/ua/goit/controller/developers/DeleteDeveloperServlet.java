@@ -23,10 +23,18 @@ public class DeleteDeveloperServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
-        DeveloperDAO developerDAOForDelete = developersRepository.findById(Integer.parseInt(id)).orElseThrow();
-        developersRepository.delete(Integer.parseInt(id));
-        req.setAttribute("id", developerDAOForDelete.getDeveloperId());
-        req.getRequestDispatcher("/view/developers/deleteDeveloper.jsp").forward(req, resp);
+        String developerEmail = req.getParameter("developerEmail");
+        if(developersRepository.findByUniqueParameter("developerEmail", developerEmail).isPresent()) {
+            DeveloperDAO developerDAOForDelete = developersRepository.findByUniqueParameter(
+                    "developerEmail", developerEmail
+            ).get();
+            developersRepository.deleteByParameter("developerEmail", developerEmail);
+            req.setAttribute("developerEmail", developerDAOForDelete.getDeveloperEmail());
+            req.getRequestDispatcher("/view/developers/deleteDeveloper.jsp").forward(req, resp);
+        }else {
+            ServletException ex = new ServletException(String.format("The developer with email: %s does not exist", developerEmail));
+            req.setAttribute("message", ex.getMessage());
+            req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
+        }
     }
 }
