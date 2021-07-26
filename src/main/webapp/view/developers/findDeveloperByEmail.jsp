@@ -5,19 +5,19 @@
     <style>
         <%@include file="/view/css/style.css" %>
     </style>
-    <title>Developers</title>
+    <title>YOUR SELECTED DEVELOPER IS</title>
 </head>
 <body>
+<c:set var="developer" value="${developer}"/>
 <div class="mainDiv">
     <div class="littleHeader">
         <c:import url="/view/header.jsp"/>
     </div>
-    <div class="bigTableDiv">
+    <div class="tableDiv">
         <div class="tbl-header">
             <table cellpadding="0" cellspacing="0" border="0">
                 <thead>
                 <tr>
-                    <td>ID</td>
                     <td>First Name</td>
                     <td>Last Name</td>
                     <td>Gender</td>
@@ -32,22 +32,15 @@
         <div class="tbl-content">
             <table cellpadding="0" cellspacing="0" border="0">
                 <tbody>
-                <c:forEach var="developer" items="${developers}">
-                    <tr>
-                        <td>${developer.developerId}</td>
-                        <td>${developer.firstName}</td>
-                        <td>${developer.lastName}</td>
-                        <td>${developer.gender}</td>
-                        <td>${developer.age}</td>
-                        <td>${developer.experienceInYears}</td>
-                        <td>${developer.salary}</td>
-                        <td>${developer.developerEmail}</td>
-                        <td><a href="/developers/update?email=${developer.developerEmail}">
-                            <button class="update">Update</button>
-                        </a>
-                        </td>
-                    </tr>
-                </c:forEach>
+                <tr>
+                    <td>${developer.firstName}</td>
+                    <td>${developer.lastName}</td>
+                    <td>${developer.gender}</td>
+                    <td>${developer.age}</td>
+                    <td>${developer.experienceInYears}</td>
+                    <td>${developer.salary}</td>
+                    <td>${developer.developerEmail}</td>
+                </tr>
                 </tbody>
             </table>
         </div>

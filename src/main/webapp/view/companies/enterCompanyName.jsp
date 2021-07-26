@@ -15,7 +15,7 @@
             <div class="title">Enter company name</div>
             <div class="subtitle">Enter the name of the searched company!</div>
             <div class="oneInput-container ic1">
-                <input id="name" class="oneInput" type="text" name="name" placeholder=" " />
+                <input required id="name" class="oneInput" type="text" name="name" placeholder=" " />
                 <div class="oneCut"></div>
                 <label for="name" class="onePlaceholder">Type name</label>
             </div>
