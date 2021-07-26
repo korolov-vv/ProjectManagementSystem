@@ -12,25 +12,23 @@ public class SkillDAO implements Serializable {
     @Column(name = "record_id", nullable = false)
     private int recordId;
     @Column(name = "stack")
-    @Enumerated(EnumType.STRING)
-    private Stack stack;
+    private String stack;
     @Column(name = "level")
-    @Enumerated(EnumType.STRING)
-    private Levels level;
-    @Column(name = "developer_email")
-    private String developerEmail;
+    private String level;
+    @Column(name = "developer_id")
+    private int developerId;
     @ManyToOne(targetEntity = DeveloperDAO.class, fetch = FetchType.EAGER)
-    @JoinColumn(name="developer_email", insertable=false, updatable=false, nullable = false)
+    @JoinColumn(name="developer_id", insertable=false, updatable=false, nullable = false)
     private DeveloperDAO developerDAO;
 
     public SkillDAO() {
     }
 
-    public SkillDAO(int recordId, Stack stack, Levels level, String developerEmail) {
+    public SkillDAO(int recordId, String stack, String level, int developerId) {
         this.recordId = recordId;
         this.stack = stack;
         this.level = level;
-        this.developerEmail = developerEmail;
+        this.developerId = developerId;
     }
 
     public int getRecordId() {
@@ -41,28 +39,36 @@ public class SkillDAO implements Serializable {
         this.recordId = recordId;
     }
 
-    public Stack getStack() {
+    public String getStack() {
         return stack;
     }
 
-    public void setStack(Stack stack) {
+    public void setStack(String stack) {
         this.stack = stack;
     }
 
-    public Levels getLevel() {
+    public String getLevel() {
         return level;
     }
 
-    public void setLevel(Levels level) {
+    public void setLevel(String level) {
         this.level = level;
     }
 
-    public String getDeveloperEmail() {
-        return developerEmail;
+    public int getDeveloperId() {
+        return developerId;
     }
 
-    public void setDeveloperEmail(String developerEmail) {
-        this.developerEmail = developerEmail;
+    public void setDeveloperId(int  developerId) {
+        this.developerId = developerId;
+    }
+
+    public DeveloperDAO getDeveloperDAO() {
+        return developerDAO;
+    }
+
+    public void setDeveloperDAO(DeveloperDAO developerDAO) {
+        this.developerDAO = developerDAO;
     }
 
     public DeveloperDAO getDevelopersDAO() {
@@ -75,11 +81,12 @@ public class SkillDAO implements Serializable {
 
     @Override
     public String toString() {
-        return "SkillsDAO{" +
+        return "SkillDAO{" +
                 "recordId=" + recordId +
                 ", stack=" + stack +
                 ", level=" + level +
-                ", developerEmail='" + developerEmail + '\'' +
+                ", developerId=" + developerId +
+                ", developerDAO=" + developerDAO +
                 '}';
     }
 }

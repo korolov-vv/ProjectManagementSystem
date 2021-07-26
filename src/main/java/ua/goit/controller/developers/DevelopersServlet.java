@@ -5,9 +5,7 @@ import ua.goit.dao.DevelopersRepository;
 import ua.goit.dao.ProjectsRepository;
 import ua.goit.dao.SingleEntityRepository;
 import ua.goit.dao.model.DeveloperDAO;
-import ua.goit.dao.model.Levels;
 import ua.goit.dao.model.ProjectDAO;
-import ua.goit.dao.model.Stack;
 import ua.goit.dto.DeveloperDTO;
 import ua.goit.dto.ProjectDTO;
 import ua.goit.dto.SkillDTO;
@@ -54,7 +52,11 @@ public class DevelopersServlet extends HttpServlet {
     }
 
     private DeveloperDTO setDeveloper(HttpServletRequest req) {
-        DeveloperDTO developerDTO = new DeveloperDTO();
+        int id = Integer.parseInt(req.getParameter("id"));
+        DeveloperDTO developerDTO;
+        if(developersRepository.findById(id).isPresent()) {
+            developerDTO = developersService.findById(id);
+        }else developerDTO = new DeveloperDTO();
         developerDTO.setFirstName(req.getParameter("first name"));
         developerDTO.setLastName(req.getParameter("last name"));
         developerDTO.setGender(req.getParameter("gender"));
@@ -85,9 +87,9 @@ public class DevelopersServlet extends HttpServlet {
     private Set<SkillDTO> setSkills(HttpServletRequest req, DeveloperDTO developerDTO) {
         SkillDTO skillDTO = new SkillDTO();
         Set<SkillDTO> skillDTOSet = new HashSet<>();
-        skillDTO.setDeveloperEmail(developerDTO.getDeveloperEmail());
-        skillDTO.setStack(Stack.valueOf(req.getParameter("stack")));
-        skillDTO.setLevel(Levels.valueOf(req.getParameter("level")));
+        skillDTO.setDeveloperId(developerDTO.getDeveloperId());
+        skillDTO.setStack(req.getParameter("stack"));
+        skillDTO.setLevel(req.getParameter("level"));
         skillDTOSet.add(skillDTO);
         return skillDTOSet;
     }

@@ -32,18 +32,4 @@ public class UpdateCompanyServlet extends HttpServlet {
         req.setAttribute("company", companyDTO);
         req.getRequestDispatcher("/view/companies/updateCompanyForm.jsp").forward(req, resp);
     }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        updateCompany(req);
-        resp.sendRedirect(req.getContextPath() + "/companies");
-    }
-
-    private CompanyDTO updateCompany(HttpServletRequest req) {
-        CompanyDTO companyDTO = new CompanyDTO();
-        companyDTO.setCompanyName(req.getParameter("company name"));
-        companyDTO.setNumberOfDevelopers(Integer.parseInt(req.getParameter("number of developers")));
-        companiesService.update(companyDTO);
-        return companyDTO;
-    }
 }

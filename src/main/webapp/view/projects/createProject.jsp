@@ -15,6 +15,7 @@
                     <form action="/projects" accept-charset="utf-8" method="post" >
                       <div class="title">Create project</div>
                       <div class="subtitle">Let's create your project!</div>
+                        <input type="hidden" name="id" value=0 />
                       <div class="input-container ic1">
                         <input id="name" class="input" type="text" name="name" placeholder=" " />
                         <div class="cut"></div>

@@ -31,7 +31,7 @@ public class DeveloperDAO implements Serializable {
     private int salary;
     @Column(name = "developer_email", nullable = false)
     private String developerEmail;
-    @OneToMany(mappedBy = "developersDAO", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "developerDAO", fetch = FetchType.EAGER)
     @Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private Set<SkillDAO> skills = new HashSet<>();
     @ManyToMany(fetch = FetchType.EAGER)

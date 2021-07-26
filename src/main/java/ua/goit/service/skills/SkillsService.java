@@ -14,16 +14,14 @@ public class SkillsService {
     public SkillDTO create(SkillDTO skillDTO) {
         SkillDAO skillDAO = SkillsConverter.toSkillsDAO(skillDTO);
         repository.create(skillDAO);
-        SkillDAO savedSkillDAO = repository.findByUniqueParameter("developerEmail",
-                skillDAO.getDeveloperEmail()).orElseThrow();
+        SkillDAO savedSkillDAO = repository.findById(skillDAO.getDeveloperId()).orElseThrow();
         return SkillsConverter.fromSkillsDAO(savedSkillDAO);
     }
 
     public SkillDTO update(SkillDTO skillDTO) {
         SkillDAO skillDAO = SkillsConverter.toSkillsDAO(skillDTO);
         repository.update(skillDAO);
-        SkillDAO updatedSkillDAO = repository.findByUniqueParameter("developerEmail",
-                skillDTO.getDeveloperEmail()).orElseThrow();
+        SkillDAO updatedSkillDAO = repository.findById(skillDTO.getDeveloperId()).orElseThrow();
         return SkillsConverter.fromSkillsDAO(updatedSkillDAO);
     }
 

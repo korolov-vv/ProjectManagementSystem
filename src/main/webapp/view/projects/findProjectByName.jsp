@@ -8,7 +8,7 @@
     <body>
         <c:set var="project" value="${project}" />
         <div class="mainDiv">
-            <div>
+            <div class="littleHeader">
                 <c:import url="/view/header.jsp" />
             </div>
             <div class="tableDiv">

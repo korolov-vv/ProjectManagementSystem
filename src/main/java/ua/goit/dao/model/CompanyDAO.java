@@ -14,7 +14,7 @@ public class CompanyDAO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "company_id")
+    @Column(name = "company_id", nullable = false)
     private int companyId;
     @Column(name = "company_name")
     private String companyName;

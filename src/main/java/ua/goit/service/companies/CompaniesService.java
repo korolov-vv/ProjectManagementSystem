@@ -7,7 +7,7 @@ import ua.goit.dto.CompanyDTO;
 import java.util.List;
 
 public class CompaniesService {
-    private SingleEntityRepository<CompanyDAO> repository;
+    private final SingleEntityRepository<CompanyDAO> repository;
 
     public CompaniesService(SingleEntityRepository<CompanyDAO> repository){
         this.repository = repository;

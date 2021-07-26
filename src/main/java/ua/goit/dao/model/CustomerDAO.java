@@ -13,7 +13,7 @@ public class CustomerDAO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
+    @Column(name = "customer_id", nullable = false)
     private int customerId;
     @Column(name = "customer_name")
     private String customerName;

@@ -1,22 +1,19 @@
 package ua.goit.dto;
 
-import ua.goit.dao.model.Levels;
-import ua.goit.dao.model.Stack;
-
 public class SkillDTO {
     private int recordId;
-    private Stack stack;
-    private Levels level;
-    private String developerEmail;
+    private String stack;
+    private String level;
+    private int developerId;
 
     public SkillDTO() {
     }
 
-    public SkillDTO(int recordId, Stack stack, Levels level, String developerEmail) {
+    public SkillDTO(int recordId, String stack, String level, int developerId) {
         this.recordId = recordId;
         this.stack = stack;
         this.level = level;
-        this.developerEmail = developerEmail;
+        this.developerId = developerId;
     }
 
     public int getRecordId() {
@@ -27,37 +24,37 @@ public class SkillDTO {
         this.recordId = recordId;
     }
 
-    public Stack getStack() {
+    public String getStack() {
         return stack;
     }
 
-    public void setStack(Stack stack) {
+    public void setStack(String stack) {
         this.stack = stack;
     }
 
-    public Levels getLevel() {
+    public String getLevel() {
         return level;
     }
 
-    public void setLevel(Levels level) {
+    public void setLevel(String level) {
         this.level = level;
     }
 
-    public String getDeveloperEmail() {
-        return developerEmail;
+    public int getDeveloperId() {
+        return developerId;
     }
 
-    public void setDeveloperEmail(String developerEmail) {
-        this.developerEmail = developerEmail;
+    public void setDeveloperId(int developerEmail) {
+        this.developerId = developerId;
     }
 
     @Override
     public String toString() {
-        return "Skills{" +
+        return "SkillDTO{" +
                 "recordId=" + recordId +
                 ", stack=" + stack +
                 ", level=" + level +
-                ", developer_email='" + developerEmail + '\'' +
+                ", developerId=" + developerId +
                 '}';
     }
 }

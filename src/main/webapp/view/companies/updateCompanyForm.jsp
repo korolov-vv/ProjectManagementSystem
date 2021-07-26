@@ -12,7 +12,7 @@
     </div>
     <div>
         <div class="form">
-            <form action="/companies/update" accept-charset="utf-8" method="post" ></br>
+            <form action="/companies" accept-charset="utf-8" method="post" ></br>
                 <div class="title">Update company</div>
                 <div class="subtitle">Let's update the company!</div>
                 <input type="hidden" name="id" value='${company.companyId}' />

@@ -11,7 +11,7 @@
             <c:import url="/view/header.jsp" />
         </div>
         <c:set var="company" value="${company}" />
-        <div class="bigTableDiv">
+        <div class="tableDiv">
             <div class="tbl-header">
                 <table cellpadding="0" cellspacing="0" border="0">
                     <thead>

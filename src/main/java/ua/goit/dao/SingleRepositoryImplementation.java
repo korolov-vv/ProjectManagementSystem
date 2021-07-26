@@ -6,20 +6,19 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.goit.dao.model.CompanyDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class SinglRepositoryImplementation<T> implements SingleEntityRepository<T> {
+public class SingleRepositoryImplementation<T> implements SingleEntityRepository<T> {
 
-    private static Logger logger;
-    private SessionFactory sessionFactory;
-    private Class<T> entityClass;
+    private final Logger logger;
+    private final SessionFactory sessionFactory;
+    private final Class<T> entityClass;
 
-    public SinglRepositoryImplementation(SessionFactory sessionFactory, Class<T> entityClass) {
+    public SingleRepositoryImplementation(SessionFactory sessionFactory, Class<T> entityClass) {
         this.sessionFactory = sessionFactory;
         this.entityClass = entityClass;
         this.logger = LoggerFactory.getLogger(entityClass);
@@ -57,7 +56,7 @@ public class SinglRepositoryImplementation<T> implements SingleEntityRepository<
         try (Session session = sessionFactory.openSession()) {
             entity = session.get(entityClass, id);
         } catch (Exception ex) {
-            logger.debug("findById error: " + ex.getMessage());
+            logger.debug(String.format("findById id = %s ", id) + ex.getMessage() + " cause: " + ex.getCause());
             ex.printStackTrace();
         }
         return Optional.ofNullable(entity);
@@ -67,7 +66,7 @@ public class SinglRepositoryImplementation<T> implements SingleEntityRepository<
     public List<T> findAll() {
         List<T> entitiesList = new ArrayList<>();
         String queryString = "FROM " + entityClass.getName() + " entity";
-        Transaction transaction = null;
+        Transaction transaction;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             Query<T> query = session.createQuery(queryString,
@@ -76,7 +75,7 @@ public class SinglRepositoryImplementation<T> implements SingleEntityRepository<
             entitiesList = query.getResultList();
             transaction.commit();
         } catch (Exception ex) {
-            logger.debug("Unable to execute query: " + ex.getMessage());
+            logger.debug("Unable to execute query: " + ex.getMessage() + " cause: " + ex.getCause());
             ex.printStackTrace();
         }
         return entitiesList;
@@ -90,11 +89,12 @@ public class SinglRepositoryImplementation<T> implements SingleEntityRepository<
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             Query<T> query = session.createQuery(queryString, entityClass);
-            query.setParameter("companyName", value);
+            query.setParameter(nameParameter, value);
+            logger.debug("Executing query: " + query.getQueryString());
             entityList = query.list();
             transaction.commit();
         } catch (Exception ex) {
-            logger.debug(ex.getMessage());
+            logger.debug(String.format("Cannot find by %s = %s", nameParameter, value) + ex.getMessage() + " cause: " + ex.getCause());
             ex.printStackTrace();
         }
         return Optional.ofNullable(entityList.get(0));
@@ -102,27 +102,22 @@ public class SinglRepositoryImplementation<T> implements SingleEntityRepository<
 
     @Override
     public void deleteByParameter(String nameParameter, String name) {
-        String queryString = createDeleteQuery(nameParameter);
         Transaction transaction;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            CompanyDAO companyDAO = session.get(CompanyDAO.class, name);
-            if (companyDAO != null) {
-                session.delete(companyDAO);
+            if(findByUniqueParameter(nameParameter, name).isPresent()) {
+                T entity = findByUniqueParameter(nameParameter, name).get();
+                session.delete(entity);
             }
             transaction.commit();
         } catch (Exception ex) {
-            logger.debug(ex.getMessage());
+            logger.debug(String.format("Cannot delete by %s = %s", nameParameter, name) + ex.getMessage() + " cause: " + ex.getCause());
             ex.printStackTrace();
         }
     }
 
     private String createFindByNameQuery(String nameParameter) {
         return "FROM " + entityClass.getName() + " entity WHERE entity." + nameParameter + " = :" + nameParameter;
-    }
-
-    private String createDeleteQuery(String nameParameter) {
-        return "DELETE FROM " + entityClass.getName() + " entity  where entity." + nameParameter + " = :" + nameParameter;
     }
 
     private void createOrUpdate(T entity) {

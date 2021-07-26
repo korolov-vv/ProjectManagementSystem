@@ -53,22 +53,11 @@ CREATE TYPE level AS ENUM('Junior', 'Middle', 'Senior');
 
 CREATE TABLE skills
 (
-    record_id SERIAL PRIMARY KEY,
-    stack stack,
-    level level,
-    developer_email varchar(255),
-	FOREIGN KEY (developer_email) REFERENCES developers(developer_email)
-);
-
-CREATE TABLE customers_and_companies
-(
-   customer_id integer NOT NULL,
-   company_id integer NOT NULL,
-   project_id integer NOT NULL,
-   FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
-   FOREIGN KEY (company_id) REFERENCES companies(company_id),
-   FOREIGN KEY (project_id) REFERENCES projects(project_id),
-   PRIMARY KEY (customer_id, company_id, project_id)
+    record_id SERIAL PRIMARY KEY NOT NULL,
+    stack VARCHAR (255),
+    level VARCHAR (255),
+    developer_id integer NOT NULL,
+	FOREIGN KEY (developer_id) REFERENCES developers(developer_id)
 );
 
 CREATE TABLE developers_on_projects
@@ -87,13 +76,6 @@ ALTER TABLE developers ALTER COLUMN developer_id SET NOT NULL;
 ALTER TABLE developers ALTER COLUMN company_id SET NOT NULL;
 ALTER TABLE developers ALTER COLUMN developer_email SET NOT NULL;
 
-ALTER TABLE skills ALTER COLUMN record_id SET NOT NULL;
-ALTER TABLE skills ALTER COLUMN developer_email SET NOT NULL;
-
-ALTER TABLE skills
-    ALTER COLUMN stack SET DATA TYPE VARCHAR (255),
-    ALTER COLUMN level SET DATA TYPE VARCHAR (255);
-
 CREATE TABLE companies_projects
 (
     company_id integer NOT NULL,
@@ -111,5 +93,3 @@ CREATE TABLE companies_customers
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
     PRIMARY KEY (customer_id, company_id)
 );
-
-DROP TABLE customers_and_companies;

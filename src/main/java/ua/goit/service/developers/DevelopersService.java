@@ -35,6 +35,10 @@ public class DevelopersService {
         repository.deleteByParameter("developerEmail", email);
     }
 
+    public DeveloperDTO findById(int id) {
+        return DevelopersConverter.fromDevelopersDAO(repository.findById(id).orElseThrow());
+    }
+
     public DeveloperDTO findByEmail(String email) {
         return DevelopersConverter.fromDevelopersDAO(repository.findByUniqueParameter("developerEmail", email).orElseThrow());
     }

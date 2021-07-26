@@ -14,7 +14,7 @@ public class ProjectDAO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="project_id")
+    @Column(name ="project_id", nullable = false)
     private int projectId;
     @Column(name ="project_name")
     private String projectName;

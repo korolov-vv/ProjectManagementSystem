@@ -49,7 +49,11 @@ public class ProjectsServlet extends HttpServlet {
     }
 
     private ProjectDTO setProject(HttpServletRequest req) {
-        ProjectDTO projectDTO = new ProjectDTO();
+        int id = Integer.parseInt(req.getParameter("id"));
+        ProjectDTO projectDTO;
+        if(projectsRepository.findById(id).isPresent()) {
+            projectDTO = projectService.findById(id);
+        }else projectDTO = new ProjectDTO();
         projectDTO.setProjectName(req.getParameter("name"));
         projectDTO.setStage(req.getParameter("stage"));
         projectDTO.setTimePeriod(Integer.parseInt(req.getParameter("period")));

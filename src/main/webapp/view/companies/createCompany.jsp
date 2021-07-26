@@ -15,6 +15,7 @@
                 <form action="/companies" accept-charset="utf-8" method="post" ></br>
                     <div class="title">Create company</div>
                     <div class="subtitle">Let's create the company!</div>
+                    <input type="hidden" name="id" value=0 />
                     <div class="input-container ic1">
                         <input id="company name" class="input" type="text" name="company name" placeholder=" " />
                         <div class="cut"></div>
