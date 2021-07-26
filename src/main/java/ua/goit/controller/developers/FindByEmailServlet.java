@@ -32,7 +32,7 @@ public class FindByEmailServlet extends HttpServlet {
             ).get();
             DeveloperDTO developerDTO = DevelopersConverter.fromDevelopersDAO(developerDAO);
             req.setAttribute("developer", developerDTO);
-            req.getRequestDispatcher("/view/developers/findDeveloperById.jsp").forward(req, resp);
+            req.getRequestDispatcher("/view/developers/findDeveloperByEmail.jsp").forward(req, resp);
         }else {
             ServletException ex = new ServletException(String.format("The developer with email: %s does not exist", developerEmail));
             req.setAttribute("message", ex.getMessage());

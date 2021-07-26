@@ -2,6 +2,8 @@ package ua.goit.service.companies;
 
 import ua.goit.dao.model.CompanyDAO;
 import ua.goit.dto.CompanyDTO;
+import ua.goit.service.customers.CustomersConverter;
+import ua.goit.service.projects.ProjectsConverter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,11 +13,20 @@ import java.util.stream.Collectors;
 
 public class CompaniesConverter {
     public static CompanyDAO toCompaniesDAO(CompanyDTO companyDTO) {
-        return new CompanyDAO(companyDTO.getCompanyId(), companyDTO.getCompanyName(),
-                companyDTO.getNumberOfDevelopers());
+        CompanyDAO companyDAO = getCompanyDAO(companyDTO);
+        companyDAO.setProjects(ProjectsConverter.toProjectsDAOSet(companyDTO.getProjects()));
+        companyDAO.setCustomers(CustomersConverter.toCustomersDAOSet(companyDTO.getCustomers()));
+        return companyDAO;
     }
 
     public static CompanyDTO fromCompaniesDAO(CompanyDAO companyDAO) {
+        CompanyDTO companyDTO = getCompanyDTO(companyDAO);
+        companyDTO.setProjects(ProjectsConverter.fromProjectsDAOSet(companyDAO.getProjects()));
+        companyDTO.setCustomers(CustomersConverter.fromCustomersDAOSet(companyDAO.getCustomers()));
+        return companyDTO;
+    }
+
+    private static CompanyDTO getCompanyDTO(CompanyDAO companyDAO) {
         return new CompanyDTO(companyDAO.getCompanyId(), companyDAO.getCompanyName(),
                 companyDAO.getNumberOfDevelopers());
     }
@@ -33,7 +44,7 @@ public class CompaniesConverter {
         if(companyDTOSet == null) {
             return new HashSet<>();
         }else return companyDTOSet.stream()
-                .map(CompaniesConverter::toCompaniesDAO)
+                .map(CompaniesConverter::getCompanyDAO)
                 .collect(Collectors.toSet());
     }
 
@@ -41,7 +52,16 @@ public class CompaniesConverter {
         if(companyDAOSet == null) {
             return new HashSet<>();
         }else return companyDAOSet.stream()
-                .map(CompaniesConverter::fromCompaniesDAO)
+                .map(CompaniesConverter::fromCompaniesDAOForSet)
                 .collect(Collectors.toSet());
+    }
+
+    private static CompanyDAO getCompanyDAO(CompanyDTO companyDTO) {
+        return new CompanyDAO(companyDTO.getCompanyId(), companyDTO.getCompanyName(),
+                companyDTO.getNumberOfDevelopers());
+    }
+
+    private static CompanyDTO fromCompaniesDAOForSet(CompanyDAO companyDAO) {
+        return getCompanyDTO(companyDAO);
     }
 }

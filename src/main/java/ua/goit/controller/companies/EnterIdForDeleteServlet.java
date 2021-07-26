@@ -11,6 +11,6 @@ import java.io.IOException;
 public class EnterIdForDeleteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/view/companies/enterEmailForDelete.jsp").forward(req, resp);
+        req.getRequestDispatcher("/view/companies/enterIdForDelete.jsp").forward(req, resp);
     }
 }

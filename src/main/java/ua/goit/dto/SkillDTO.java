@@ -44,7 +44,7 @@ public class SkillDTO {
         return developerId;
     }
 
-    public void setDeveloperId(int developerEmail) {
+    public void setDeveloperId(int developerId) {
         this.developerId = developerId;
     }
 

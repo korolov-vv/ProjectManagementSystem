@@ -17,7 +17,7 @@
             <form action="/developers" accept-charset="utf-8" method="post"></br>
                 <div class="title">Create developer</div>
                 <div class="subtitle">Let's create the developer!</div>
-                <input type="hidden" name="id" value=0/>
+                <input type="hidden" name="id" value=0 />
                 <div class="input-container ic1">
                     <input required id="email" class="input" type="text" name="email" placeholder=" "/>
                     <div class="cut"></div>
