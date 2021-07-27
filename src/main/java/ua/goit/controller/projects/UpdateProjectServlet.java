@@ -56,8 +56,8 @@ public class UpdateProjectServlet extends HttpServlet {
                     .map((id) -> s.concat(id + ","))
                     .collect(Collectors.joining());
             LOG.debug("-----------------------------------------------------The list of projects is set: " + developersList);
-            return developersList;
-        }else return developersList;
+        }
+        return developersList;
     }
 
     private String getCompanyIds(ProjectDTO projectDTO) {
@@ -70,7 +70,7 @@ public class UpdateProjectServlet extends HttpServlet {
                     .map((id) -> s.concat(id + ","))
                     .collect(Collectors.joining());
             LOG.debug("-----------------------------------------------------The list of projects is set: " + companies);
-            return companies;
-        }else return companies;
+        }
+        return companies;
     }
 }

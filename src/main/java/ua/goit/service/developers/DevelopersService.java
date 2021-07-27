@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DevelopersService {
 
-    private SingleEntityRepository<DeveloperDAO> repository;
+    private final SingleEntityRepository<DeveloperDAO> repository;
 
     public DevelopersService(SingleEntityRepository<DeveloperDAO> repository) {
         this.repository = repository;

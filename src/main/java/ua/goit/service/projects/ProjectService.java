@@ -5,7 +5,7 @@ import ua.goit.dao.model.ProjectDAO;
 import ua.goit.dto.ProjectDTO;
 
 public class ProjectService {
-    private SingleEntityRepository<ProjectDAO> repository;
+    private final SingleEntityRepository<ProjectDAO> repository;
 
     public ProjectService(SingleEntityRepository<ProjectDAO> repository) {
         this.repository = repository;

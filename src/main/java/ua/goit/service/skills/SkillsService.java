@@ -5,7 +5,7 @@ import ua.goit.dao.model.SkillDAO;
 import ua.goit.dto.SkillDTO;
 
 public class SkillsService {
-    private SingleEntityRepository<SkillDAO> repository;
+    private final SingleEntityRepository<SkillDAO> repository;
 
     public SkillsService(SingleEntityRepository<SkillDAO> repository) {
         this.repository = repository;

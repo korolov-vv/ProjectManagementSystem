@@ -51,8 +51,8 @@ public class UpdateCompanyServlet extends HttpServlet {
                     .map((id) -> s.concat(id + ","))
                     .collect(Collectors.joining());
             LOG.debug("-----------------------------------------------------The list of projects is set: " + projects);
-            return projects;
-        }else return projects;
+        }
+        return projects;
     }
 
     private String getCustomerIds(CompanyDTO companyDTO) {
@@ -65,7 +65,7 @@ public class UpdateCompanyServlet extends HttpServlet {
                     .map((id) -> s.concat(id + ","))
                     .collect(Collectors.joining());
             LOG.debug("-----------------------------------------------------The list of customers is set: " + customers);
-            return customers;
-        }else return customers;
+        }
+        return customers;
     }
 }

@@ -56,8 +56,8 @@ public class UpdateDeveloperServlet extends HttpServlet {
                     .map((id) -> s.concat(id + ","))
                     .collect(Collectors.joining());
             LOG.debug("-----------------------------------------------------The list of projects is set: " + projectsList);
-            return projectsList;
-        }else return projectsList;
+        }
+        return projectsList;
     }
 
     private SkillDTO getSkillDTO(DeveloperDTO developerDTO) {

@@ -5,7 +5,7 @@ import ua.goit.dao.model.CustomerDAO;
 import ua.goit.dto.CustomerDTO;
 
 public class CustomersService {
-    private SingleEntityRepository<CustomerDAO> repository;
+    private final SingleEntityRepository<CustomerDAO> repository;
 
     public CustomersService(SingleEntityRepository<CustomerDAO> repository) {
         this.repository = repository;
