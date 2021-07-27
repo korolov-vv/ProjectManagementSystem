@@ -63,7 +63,7 @@ public class SingleRepositoryImplementation<T> implements SingleEntityRepository
         if(entity == null) {
             return Optional.empty();
         }else {
-            return Optional.empty();
+            return Optional.of(entity);
         }
     }
 
