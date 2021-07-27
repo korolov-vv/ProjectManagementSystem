@@ -1,7 +1,7 @@
 package ua.goit.service.customers;
 
-import ua.goit.dao.model.CustomerDAO;
 import ua.goit.dao.SingleEntityRepository;
+import ua.goit.dao.model.CustomerDAO;
 import ua.goit.dto.CustomerDTO;
 
 public class CustomersService {

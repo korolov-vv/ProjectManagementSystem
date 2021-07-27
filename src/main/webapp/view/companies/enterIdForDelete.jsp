@@ -17,7 +17,7 @@
             <div class="title">Enter company id</div>
             <div class="subtitle">Enter the company id for delete!</div>
             <div class="oneInput-container ic1">
-                <input required id="id" class="oneInput" type="text" name="id" placeholder=" "/>
+                <input required id="id" class="oneInput" type="number" name="id" placeholder=" "/>
                 <div class="oneCut"></div>
                 <label for="id" class="onePlaceholder">Type id</label>
             </div>

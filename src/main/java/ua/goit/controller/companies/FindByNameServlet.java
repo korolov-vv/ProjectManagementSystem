@@ -26,14 +26,15 @@ public class FindByNameServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
-        CompanyDAO companyDAO = companiesRepository.findByUniqueParameter("companyName", name).orElseThrow();
-        if(companyDAO.getCompanyId() == 0){
-            ServletException ex = new ServletException("The company does not exist");
+        if (companiesRepository.findByUniqueParameter("companyName", name).isPresent()) {
+            CompanyDAO companyDAO = companiesRepository.findByUniqueParameter("companyName", name).orElseThrow();
+            CompanyDTO companyDTO = CompaniesConverter.fromCompaniesDAO(companyDAO);
+            req.setAttribute("company", companyDTO);
+            req.getRequestDispatcher("/view/companies/findCompanyByName.jsp").forward(req, resp);
+        } else {
+            ServletException ex = new ServletException(String.format("The company with name %s does not exist", name));
             req.setAttribute("message", ex.getMessage());
             req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
         }
-        CompanyDTO companyDTO = CompaniesConverter.fromCompaniesDAO(companyDAO);
-        req.setAttribute("company", companyDTO);
-        req.getRequestDispatcher("/view/companies/findCompanyByName.jsp").forward(req, resp);
     }
 }

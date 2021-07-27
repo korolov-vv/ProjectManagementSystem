@@ -27,12 +27,12 @@ public class ProjectByNameServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
-        ProjectDAO projectDAO = projectsRepository.findByUniqueParameter("projectName", name).orElseThrow();
-        if(projectDAO.getProjectId() == 0){
-            ServletException ex = new ServletException("The project does not exist");
+        if (projectsRepository.findByUniqueParameter("projectName", name).isEmpty()) {
+            ServletException ex = new ServletException(String.format("The project with %s does not exist", name));
             req.setAttribute("message", ex.getMessage());
             req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
-        }else {
+        } else {
+            ProjectDAO projectDAO = projectsRepository.findByUniqueParameter("projectName", name).orElseThrow();
             ProjectDTO project = ProjectsConverter.fromProjectsDAO(projectDAO);
             req.setAttribute("project", project);
             req.getRequestDispatcher("/view/projects/findProjectByName.jsp").forward(req, resp);

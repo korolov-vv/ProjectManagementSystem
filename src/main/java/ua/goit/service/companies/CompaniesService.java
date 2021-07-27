@@ -36,7 +36,7 @@ public class CompaniesService {
     }
 
     public CompanyDTO findById(int id) {
-        return CompaniesConverter.fromCompaniesDAO(repository.findById(id).orElseThrow());
+        return CompaniesConverter.fromCompaniesDAO(repository.findById(id).orElse(new CompanyDAO()));
     }
 
     public CompanyDTO findByName (String name) {

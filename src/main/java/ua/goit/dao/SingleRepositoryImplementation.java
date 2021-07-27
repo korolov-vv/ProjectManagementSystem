@@ -6,6 +6,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.goit.exception.DatabaseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,11 @@ public class SingleRepositoryImplementation<T> implements SingleEntityRepository
             logger.debug(String.format("findById id = %s ", id) + ex.getMessage() + " cause: " + ex.getCause());
             ex.printStackTrace();
         }
-        return Optional.ofNullable(entity);
+        if(entity == null) {
+            return Optional.empty();
+        }else {
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -97,7 +102,11 @@ public class SingleRepositoryImplementation<T> implements SingleEntityRepository
             logger.debug(String.format("Cannot find by %s = %s", nameParameter, value) + ex.getMessage() + " cause: " + ex.getCause());
             ex.printStackTrace();
         }
-        return Optional.ofNullable(entityList.get(0));
+        if(entityList.size() != 0) {
+            return Optional.of(entityList.get(0));
+        }else {
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -108,7 +117,7 @@ public class SingleRepositoryImplementation<T> implements SingleEntityRepository
             if(findByUniqueParameter(nameParameter, name).isPresent()) {
                 T entity = findByUniqueParameter(nameParameter, name).get();
                 session.delete(entity);
-            }
+            }else throw new DatabaseException(String.format("The object with %s %s not found", nameParameter, name));
             transaction.commit();
         } catch (Exception ex) {
             logger.debug(String.format("Cannot delete by %s = %s", nameParameter, name) + ex.getMessage() + " cause: " + ex.getCause());

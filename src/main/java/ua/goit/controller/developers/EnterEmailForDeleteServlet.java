@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/developers/enterIdForDelete")
-public class EnterIdForDeleteServlet extends HttpServlet {
+public class EnterEmailForDeleteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/view/developers/enterEmailForDelete.jsp").forward(req, resp);

@@ -1,7 +1,7 @@
 package ua.goit.service.projects;
 
-import ua.goit.dao.model.ProjectDAO;
 import ua.goit.dao.SingleEntityRepository;
+import ua.goit.dao.model.ProjectDAO;
 import ua.goit.dto.ProjectDTO;
 
 public class ProjectService {

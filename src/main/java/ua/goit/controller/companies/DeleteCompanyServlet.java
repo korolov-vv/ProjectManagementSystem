@@ -29,13 +29,22 @@ public class DeleteCompanyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         CompanyDTO companyDTOForDelete = deleteCompaniesDTO(id);
-        req.setAttribute("id", companyDTOForDelete.getCompanyId());
-        req.getRequestDispatcher("/view/companies/deleteCompany.jsp").forward(req, resp);
+        if (companyDTOForDelete.getCompanyId() == 0) {
+            ServletException ex = new ServletException(String.format("The company with id %s not found", id));
+            req.setAttribute("message", ex.getMessage());
+            req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
+        } else {
+            req.setAttribute("id", companyDTOForDelete.getCompanyId());
+            req.getRequestDispatcher("/view/companies/deleteCompany.jsp").forward(req, resp);
+        }
     }
 
     private CompanyDTO deleteCompaniesDTO(int id) {
-        CompanyDTO companyDTOForDelete = companiesService.findById(id);
-        companiesRepository.delete(companyDTOForDelete.getCompanyId());
+        CompanyDTO companyDTOForDelete;
+        companyDTOForDelete = companiesService.findById(id);
+        if(companyDTOForDelete.getCompanyId() != 0) {
+            companiesRepository.delete(companyDTOForDelete.getCompanyId());
+        }
         return companyDTOForDelete;
     }
 }
